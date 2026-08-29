@@ -6,7 +6,7 @@
   <meta name="description" content="MediRoute — AI-Powered Emergency Healthcare Platform. Find the nearest hospital with available beds in seconds. Real-time bed tracking, ambulance dispatch, and AI-driven hospital recommendations.">
   <meta name="keywords" content="emergency healthcare, hospital finder, bed availability, ambulance tracking, AI healthcare, India, PMJAY">
   <meta name="author" content="MediRoute">
-  <meta name="theme-color" content="#00D4AA">
+  <meta name="theme-color" content="#00E6B8">
 
   <title>MediRoute — AI-Powered Emergency Healthcare</title>
 
@@ -29,7 +29,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🏥</text></svg>">
 
   <style>
-    /* Critical inline styles for immediate rendering */
+    /* Critical inline map overrides */
     .leaflet-container { background: var(--bg-secondary) !important; }
     .leaflet-popup-content-wrapper { background: var(--bg-elevated) !important; color: var(--text-primary) !important; border: 1px solid var(--glass-border) !important; border-radius: var(--radius-md) !important; box-shadow: var(--shadow-lg) !important; }
     .leaflet-popup-tip { background: var(--bg-elevated) !important; border: 1px solid var(--glass-border) !important; }
@@ -38,80 +38,20 @@
     .leaflet-control-zoom a:hover { background: var(--bg-surface) !important; }
     .custom-marker { background: none !important; border: none !important; }
     .route-line { animation: pulse 2s infinite; }
-
-    /* App loading state */
-    .app-loading {
-      position: fixed;
-      inset: 0;
-      background: var(--bg-deep);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease-out;
-    }
-    .app-loading.fade-out {
-      opacity: 0;
-      pointer-events: none;
-    }
-    .app-loading__logo {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      animation: heartbeat 1.5s ease-in-out infinite;
-    }
-    .app-loading__text {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #F1F2F6;
-      margin-bottom: 0.5rem;
-    }
-    .app-loading__text span { color: #00D4AA; }
-    .app-loading__sub {
-      color: #6B7A99;
-      font-size: 0.875rem;
-      margin-bottom: 2rem;
-    }
-    .app-loading__bar {
-      width: 200px;
-      height: 3px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .app-loading__bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #00D4AA, #6C63FF);
-      border-radius: 999px;
-      animation: loadingBar 1.5s ease-in-out infinite;
-    }
-    @keyframes loadingBar {
-      0% { width: 0%; margin-left: 0%; }
-      50% { width: 60%; margin-left: 20%; }
-      100% { width: 0%; margin-left: 100%; }
-    }
   </style>
 </head>
 <body>
-  <!-- Loading Screen -->
-  <div class="app-loading" id="app-loading">
-    <div class="app-loading__logo">🏥</div>
-    <div class="app-loading__text">Medi<span>Route</span></div>
-    <div class="app-loading__sub">AI-Powered Emergency Healthcare</div>
-    <div class="app-loading__bar"><div class="app-loading__bar-fill"></div></div>
-  </div>
 
-  <!-- App Shell -->
+  <!-- Pristine App Shell -->
   <div class="app">
-    <!-- Top Widescreen Navbar -->
+    <!-- Widescreen Top Navigation Header -->
     <header class="app-header">
       <div class="header-brand" onclick="window.location.hash='landing'">
         <span class="brand-logo-icon">🏥</span>
         <span class="brand-logo-text">Medi<span>Route</span></span>
       </div>
 
-      <!-- Navigation Tabs with Icons -->
+      <!-- Visible Navigation Tabs with Icons -->
       <nav class="top-nav-tabs">
         <button class="top-nav-tab active" data-page="landing"><span class="tab-icon">🏠</span> Home</button>
         <button class="top-nav-tab" data-page="emergency"><span class="tab-icon">🚨</span> Emergency</button>
@@ -125,11 +65,6 @@
       </nav>
 
       <div class="header-tools">
-        <div class="live-pill hide-mobile">
-          <span class="pulse-dot"></span>
-          <span>Live</span>
-        </div>
-        <span id="header-clock" class="header-time hide-mobile">--:--</span>
         <div style="position: relative;" id="notification-container">
           <button class="icon-btn" id="notifications-btn" title="Notifications">
             🔔
@@ -142,13 +77,7 @@
             <div style="font-size: 12px;">✅ System Alert: All 48 emergency centers online</div>
           </div>
         </div>
-        <div class="theme-switch" id="theme-toggle" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 12px;border-radius:999px;background:var(--glass-bg);border:1px solid var(--glass-border);transition:all 0.3s ease;">
-          <span style="font-size:14px;">🌙</span>
-          <div style="width:36px;height:20px;border-radius:999px;background:var(--color-primary);position:relative;transition:background 0.3s ease;">
-            <div id="theme-toggle-knob" style="width:16px;height:16px;border-radius:50%;background:white;position:absolute;top:2px;left:2px;transition:transform 0.3s ease;box-shadow:0 1px 3px rgba(0,0,0,0.3);"></div>
-          </div>
-          <span style="font-size:14px;">☀️</span>
-        </div>
+        <button class="icon-btn" id="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
         <div class="avatar-pill" onclick="window.location.hash='patient'" title="Patient Profile">AM</div>
       </div>
     </header>
@@ -163,16 +92,18 @@
     </main>
   </div>
 
-  <!-- SOS Floating Action Button -->
-  <button class="sos-fab" id="sos-fab" title="Emergency SOS">
-    <span class="sos-fab__ring"></span>
-    SOS
-  </button>
+  <!-- Global SOS Floating Button -->
+  <button class="sos-fab" id="sos-fab" title="EMERGENCY SOS">SOS</button>
 
-  <!-- Scripts (load order matters) -->
+  <!-- Core Data & Helper Scripts -->
   <script src="js/data.js"></script>
-  <script src="js/ai-engine.js"></script>
+  <script src="js/store.js"></script>
   <script src="js/components.js"></script>
+
+  <!-- SIH PS 26047 AI & Clinical Engine -->
+  <script src="js/ai-engine.js"></script>
+
+  <!-- Page Controllers -->
   <script src="js/pages/landing.js"></script>
   <script src="js/pages/emergency.js"></script>
   <script src="js/pages/dashboard.js"></script>
@@ -182,19 +113,8 @@
   <script src="js/pages/intake.js"></script>
   <script src="js/pages/doctor-triage.js"></script>
   <script src="js/pages/ayush.js"></script>
-  <script src="js/app.js"></script>
 
-  <script>
-    // Remove loading screen after everything is ready
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const loader = document.getElementById('app-loading');
-        if (loader) {
-          loader.classList.add('fade-out');
-          setTimeout(() => loader.remove(), 500);
-        }
-      }, 800);
-    });
-  </script>
+  <!-- App Entrypoint -->
+  <script src="js/app.js"></script>
 </body>
 </html>
