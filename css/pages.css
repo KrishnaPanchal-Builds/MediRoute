@@ -832,6 +832,127 @@
   background: rgba(var(--color-accent-rgb), 0.15);
 }
 
+/* Compact Circular Launcher Cards */
+.quick-launcher-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.compact-circle-card {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  padding: 1rem 1.25rem !important;
+  border-radius: var(--radius-xl) !important;
+  text-decoration: none !important;
+  color: var(--text-primary) !important;
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.compact-circle-card:hover {
+  background: var(--glass-bg-hover) !important;
+  border-color: rgba(var(--color-primary-rgb), 0.5) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 24px rgba(var(--color-primary-rgb), 0.2) !important;
+}
+
+.circle-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.2), rgba(var(--color-accent-rgb), 0.2));
+  border: 1px solid rgba(var(--color-primary-rgb), 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  box-shadow: 0 0 15px rgba(var(--color-primary-rgb), 0.2);
+}
+
+.circle-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.circle-info h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 2px 0;
+}
+
+.circle-info span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+/* Compact Capability Pills */
+.compact-capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+.capability-pill {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  padding: 0.85rem 1.15rem !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  transition: all 0.25s ease !important;
+}
+
+.capability-pill:hover {
+  background: var(--glass-bg-hover) !important;
+  border-color: rgba(var(--color-primary-rgb), 0.3) !important;
+  transform: translateY(-2px) !important;
+}
+
+.pill-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(var(--color-primary-rgb), 0.1);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.pill-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.pill-text strong {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pill-text span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
 .insurance-card__provider {
   font-size: var(--text-xl);
   font-weight: var(--weight-bold);

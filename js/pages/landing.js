@@ -55,28 +55,37 @@
             </div>
           </section>
 
-          <!-- Quick Action Command Center Grid -->
+          <!-- Quick Action Command Center (Sleek Compact Circular Launcher Pills) -->
           <section class="command-center container mt-4">
-            <div class="grid grid--2 gap-2">
-              <a href="#emergency" class="launcher-card card card--glass card--hover card--glow animate-slide-up">
-                <div class="launcher-icon">🚨</div>
-                <h3>Emergency Hospital Finder</h3>
-                <p>Instant AI scoring, OSRM routes, GPS</p>
+            <h2 class="section-title text-center mb-3">Quick Emergency Access</h2>
+            <div class="quick-launcher-bar flex flex-center flex-wrap gap-2">
+              <a href="#emergency" class="compact-circle-card card card--glass card--hover card--glow animate-slide-up">
+                <div class="circle-avatar">🚨</div>
+                <div class="circle-info">
+                  <h4>Emergency Finder</h4>
+                  <span>Instant Bed Match & Routing</span>
+                </div>
               </a>
-              <a href="#intake" class="launcher-card card card--glass card--hover card--glow animate-slide-up" style="animation-delay: 0.1s">
-                <div class="launcher-icon">🤖</div>
-                <h3>AI Clinical Intake</h3>
-                <p>Voice & Touch Multilingual Triage, Body Map, QR</p>
+              <a href="#intake" class="compact-circle-card card card--glass card--hover card--glow animate-slide-up" style="animation-delay: 0.1s">
+                <div class="circle-avatar">🤖</div>
+                <div class="circle-info">
+                  <h4>AI Intake Triage</h4>
+                  <span>Voice & Touch Scanner</span>
+                </div>
               </a>
-              <a href="#doctor-triage" class="launcher-card card card--glass card--hover card--glow animate-slide-up" style="animation-delay: 0.2s">
-                <div class="launcher-icon">👨‍⚕️</div>
-                <h3>Doctor 30-Sec Review Portal</h3>
-                <p>Live Triage Queue, Document OCR Traceability</p>
+              <a href="#doctor-triage" class="compact-circle-card card card--glass card--hover card--glow animate-slide-up" style="animation-delay: 0.2s">
+                <div class="circle-avatar">👨‍⚕️</div>
+                <div class="circle-info">
+                  <h4>Doctor Review</h4>
+                  <span>30-Sec ER Briefing Queue</span>
+                </div>
               </a>
-              <a href="#dashboard" class="launcher-card card card--glass card--hover card--glow animate-slide-up" style="animation-delay: 0.3s">
-                <div class="launcher-icon">🏥</div>
-                <h3>Hospital Admin Dashboard</h3>
-                <p>Live Bed Management & Registration</p>
+              <a href="#dashboard" class="compact-circle-card card card--glass card--hover card--glow animate-slide-up" style="animation-delay: 0.3s">
+                <div class="circle-avatar">🏥</div>
+                <div class="circle-info">
+                  <h4>Bed Dashboard</h4>
+                  <span>Live ICU & Ward Registry</span>
+                </div>
               </a>
             </div>
           </section>
@@ -93,7 +102,7 @@
               <div class="tabs__body p-3">
                 <div class="tab-content active" id="sim-tab-0">
                   <div class="flex gap-2 flex-center">
-                    <div class="simulator-icon badge badge--primary badge--glow" style="font-size: 3rem; padding: 2rem; border-radius: 50%;">🎤</div>
+                    <div class="simulator-icon badge badge--primary badge--glow" style="font-size: 2.5rem; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">🎤</div>
                     <div>
                       <h4>Multilingual Voice Intake</h4>
                       <p>"My father has severe chest pain and sweating..."</p>
@@ -103,7 +112,7 @@
                 </div>
                 <div class="tab-content" id="sim-tab-1" style="display: none;">
                   <div class="flex gap-2 flex-center">
-                    <div class="simulator-icon badge badge--primary badge--glow" style="font-size: 3rem; padding: 2rem; border-radius: 50%;">🗺️</div>
+                    <div class="simulator-icon badge badge--primary badge--glow" style="font-size: 2.5rem; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">🗺️</div>
                     <div>
                       <h4>Smart Routing & Scoring</h4>
                       <p>AI Score: 92/100 (Max Healthcare)</p>
@@ -113,7 +122,7 @@
                 </div>
                 <div class="tab-content" id="sim-tab-2" style="display: none;">
                    <div class="flex gap-2 flex-center">
-                    <div class="simulator-icon badge badge--primary badge--glow" style="font-size: 3rem; padding: 2rem; border-radius: 50%;">📋</div>
+                    <div class="simulator-icon badge badge--primary badge--glow" style="font-size: 2.5rem; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">📋</div>
                     <div>
                       <h4>Doctor Executive Summary</h4>
                       <p>Pre-arrival briefing delivered to ER dashboard.</p>
@@ -151,45 +160,57 @@
             </div>
           </section>
 
-          <!-- Features Section -->
+          <!-- Features Section (Sleek Compact Icon Pills) -->
           <section class="features-section container mt-4">
             <h2 class="section-title text-center mb-3">Core Capabilities</h2>
             
-            <div class="grid grid--3 gap-2">
-              <div class="feature-card card card--glass card--hover" data-animate="fade-in">
-                <div class="feature-card__icon text-gradient" style="font-size: 2.5rem; margin-bottom: 1rem;">🛏️</div>
-                <h3 class="feature-card__title">Real-Time Bed Intelligence</h3>
-                <p class="feature-card__desc">Live tracking of ICU, ward, and emergency beds across the network.</p>
+            <div class="compact-capabilities-grid">
+              <div class="capability-pill card card--glass card--hover">
+                <div class="pill-icon">🛏️</div>
+                <div class="pill-text">
+                  <strong>Real-Time Bed Intelligence</strong>
+                  <span>Live tracking of ICU & Ward beds</span>
+                </div>
               </div>
               
-              <div class="feature-card card card--glass card--hover" data-animate="fade-in" style="animation-delay: 0.1s">
-                <div class="feature-card__icon text-gradient" style="font-size: 2.5rem; margin-bottom: 1rem;">🧠</div>
-                <h3 class="feature-card__title">AI Multi-Parameter Scoring</h3>
-                <p class="feature-card__desc">Matches patients to hospitals based on severity, distance, and capability.</p>
+              <div class="capability-pill card card--glass card--hover">
+                <div class="pill-icon">🧠</div>
+                <div class="pill-text">
+                  <strong>AI Multi-Parameter Scoring</strong>
+                  <span>Severity & distance matching</span>
+                </div>
               </div>
               
-              <div class="feature-card card card--glass card--hover" data-animate="fade-in" style="animation-delay: 0.2s">
-                <div class="feature-card__icon text-gradient" style="font-size: 2.5rem; margin-bottom: 1rem;">🎤</div>
-                <h3 class="feature-card__title">Voice-Guided Multilingual Intake</h3>
-                <p class="feature-card__desc">Speak naturally in native languages for quick AI triage.</p>
+              <div class="capability-pill card card--glass card--hover">
+                <div class="pill-icon">🎤</div>
+                <div class="pill-text">
+                  <strong>Voice-Guided Intake</strong>
+                  <span>Speak naturally in 12+ languages</span>
+                </div>
               </div>
               
-              <div class="feature-card card card--glass card--hover" data-animate="fade-in" style="animation-delay: 0.3s">
-                <div class="feature-card__icon text-gradient" style="font-size: 2.5rem; margin-bottom: 1rem;">📄</div>
-                <h3 class="feature-card__title">Document OCR Traceability</h3>
-                <p class="feature-card__desc">Instant scanning of medical documents and lab reports.</p>
+              <div class="capability-pill card card--glass card--hover">
+                <div class="pill-icon">📄</div>
+                <div class="pill-text">
+                  <strong>Document OCR Traceability</strong>
+                  <span>Scan medical records instantly</span>
+                </div>
               </div>
               
-              <div class="feature-card card card--glass card--hover" data-animate="fade-in" style="animation-delay: 0.4s">
-                <div class="feature-card__icon text-gradient" style="font-size: 2.5rem; margin-bottom: 1rem;">🚑</div>
-                <h3 class="feature-card__title">Instant Ambulance Dispatch</h3>
-                <p class="feature-card__desc">One-click ambulance tracking with OSRM optimized routes.</p>
+              <div class="capability-pill card card--glass card--hover">
+                <div class="pill-icon">🚑</div>
+                <div class="pill-text">
+                  <strong>Ambulance Dispatch</strong>
+                  <span>OSRM optimized GPS routes</span>
+                </div>
               </div>
               
-              <div class="feature-card card card--glass card--hover" data-animate="fade-in" style="animation-delay: 0.5s">
-                <div class="feature-card__icon text-gradient" style="font-size: 2.5rem; margin-bottom: 1rem;">📱</div>
-                <h3 class="feature-card__title">ABDM Health Pass QR</h3>
-                <p class="feature-card__desc">Seamless government integration and digital health records.</p>
+              <div class="capability-pill card card--glass card--hover">
+                <div class="pill-icon">📱</div>
+                <div class="pill-text">
+                  <strong>ABDM Health Pass QR</strong>
+                  <span>Digital records integration</span>
+                </div>
               </div>
             </div>
           </section>
