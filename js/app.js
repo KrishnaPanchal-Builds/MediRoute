@@ -67,7 +67,7 @@
     }
 
     // Update active nav tabs
-    document.querySelectorAll('.top-nav-tab').forEach(item => {
+    document.querySelectorAll('.top-nav-icon-btn, .top-nav-tab').forEach(item => {
       const p = item.getAttribute('data-page');
       item.classList.toggle('active', p === pageName);
     });
