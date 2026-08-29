@@ -1294,14 +1294,45 @@
   color: #0f172a !important;
 }
 
+/* ---- 0-Scroll Dashboard Widescreen Viewport Layout ---- */
+.no-scroll-dashboard {
+  height: calc(100vh - 64px) !important;
+  max-height: calc(100vh - 64px) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0.35rem 0.75rem !important;
+  box-sizing: border-box !important;
+}
+
+.dashboard-3col-grid {
+  display: grid !important;
+  grid-template-columns: 35% 36% 27% !important;
+  gap: 1% !important;
+  flex: 1 !important;
+  height: calc(100vh - 145px) !important;
+  max-height: calc(100vh - 145px) !important;
+  overflow: hidden !important;
+}
+
+.dashboard-col {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.35rem !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+}
+
 @media (max-width: 992px) {
   .no-scroll-emergency,
-  .page--intake {
+  .page--intake,
+  .no-scroll-dashboard {
     height: auto !important;
     max-height: none !important;
     overflow: auto !important;
   }
-  .emergency-viewport-split {
+  .emergency-viewport-split,
+  .dashboard-3col-grid {
     grid-template-columns: 1fr !important;
     height: auto !important;
     max-height: none !important;

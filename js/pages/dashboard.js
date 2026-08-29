@@ -10,153 +10,167 @@
   window.MediRoute.pages.dashboard = {
     render() {
       return `
-        <div class="page page--dashboard">
-          <div class="page__header flex flex-between">
-            <div>
-              <h1 class="section-title">🏥 Hospital Dashboard</h1>
-              <p class="section-subtitle" id="dashboard-subtitle">Real-time resource management for ${currentHospital ? currentHospital.name : 'Hospital'}</p>
+        <div class="page page--dashboard animate-fade-in no-scroll-dashboard">
+          
+          <!-- Top Compact Header & Facility Selector -->
+          <div class="card card--glass p-1 mb-1">
+            <div class="flex-between align-center flex-wrap gap-1">
+              <div class="flex align-center gap-1">
+                <h2 class="m-0 text-gradient text-sm font-bold">🏥 Hospital Resource Command Center</h2>
+                <span class="badge badge--success text-xs" style="animation: pulse 2s infinite;">LIVE SYNCHRONIZED</span>
+              </div>
+              
+              <div class="flex align-center gap-1">
+                <select id="hospital-selector" class="form-select text-xs" style="min-width: 220px;">
+                  <!-- Options populated dynamically -->
+                </select>
+                <button id="btn-register-hospital" class="btn btn--primary btn--xs">➕ Register Hospital</button>
+              </div>
             </div>
-            <div class="form-group" style="min-width: 250px; display: flex; align-items: center;">
-              <select id="hospital-selector" class="form-select">
-                <!-- Options populated dynamically -->
-              </select>
-              <button id="btn-register-hospital" class="btn btn--primary btn--sm" style="margin-left:12px;">➕ Register Hospital</button>
+
+            <p class="text-xs text-muted m-0 mt-0.5" id="dashboard-subtitle">
+              Real-time resource management for ${currentHospital ? currentHospital.name : 'Hospital'}
+            </p>
+          </div>
+
+          <!-- 4 Stat Cards Row -->
+          <div class="grid grid--4 gap-1 mb-1">
+            <div class="stat-card stat-card--primary card--glass p-1">
+              <div class="stat-card__icon text-md">🛏️</div>
+              <div class="stat-card__content">
+                <div class="stat-card__label text-xs">Available Beds</div>
+                <div class="stat-card__value text-md font-bold" id="stat-beds" data-animate="counter">0</div>
+                <div class="stat-card__subtitle text-xs text-muted" id="stat-beds-total">Total: 0</div>
+              </div>
+            </div>
+
+            <div class="stat-card stat-card--success card--glass p-1">
+              <div class="stat-card__icon text-md">👨‍⚕️</div>
+              <div class="stat-card__content">
+                <div class="stat-card__label text-xs">Doctors On Duty</div>
+                <div class="stat-card__value text-md font-bold" id="stat-doctors" data-animate="counter">0</div>
+                <div class="stat-card__subtitle text-xs text-success">12 Ready &bull; 3 Surgery</div>
+              </div>
+            </div>
+
+            <div class="stat-card stat-card--warning card--glass p-1">
+              <div class="stat-card__icon text-md">🚑</div>
+              <div class="stat-card__content">
+                <div class="stat-card__label text-xs">Active Ambulances</div>
+                <div class="stat-card__value text-md font-bold" id="stat-ambulances" data-animate="counter">0</div>
+                <div class="stat-card__subtitle text-xs text-warning">5 En Route &bull; 2 Standby</div>
+              </div>
+            </div>
+
+            <div class="stat-card stat-card--emergency card--glass p-1">
+              <div class="stat-card__icon text-md">🚨</div>
+              <div class="stat-card__content">
+                <div class="stat-card__label text-xs">ER Triage Queue</div>
+                <div class="stat-card__value text-md font-bold" id="stat-queue" data-animate="counter">0</div>
+                <div class="stat-card__subtitle text-xs text-danger">~8 min avg wait time</div>
+              </div>
             </div>
           </div>
 
-          <div class="grid grid--4 mb-2">
-            <div class="stat-card stat-card--primary card--glass card--glow">
-              <div class="stat-card__icon">🛏️</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Available Beds</div>
-                <div class="stat-card__value" id="stat-beds" data-animate="counter">0</div>
-                <div class="stat-card__subtitle text-sm" id="stat-beds-total">Total: 0</div>
-              </div>
-            </div>
-            <div class="stat-card stat-card--success card--glass card--glow">
-              <div class="stat-card__icon">👨‍⚕️</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Doctors On Duty</div>
-                <div class="stat-card__value" id="stat-doctors" data-animate="counter">0</div>
-              </div>
-            </div>
-            <div class="stat-card stat-card--warning card--glass card--glow">
-              <div class="stat-card__icon">🚑</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Ambulances Active</div>
-                <div class="stat-card__value" id="stat-ambulances" data-animate="counter">0</div>
-              </div>
-            </div>
-            <div class="stat-card stat-card--emergency card--glass card--glow">
-              <div class="stat-card__icon">🚨</div>
-              <div class="stat-card__content">
-                <div class="stat-card__label">Emergency Queue</div>
-                <div class="stat-card__value" id="stat-queue" data-animate="counter">0</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid grid--2 mb-2">
-            <div class="dashboard-left-col">
-              <div class="card card--glass card--glow mb-2">
-                <div class="card__header flex flex-between align-center mb-1">
-                  <h2 class="card__title">Bed Occupancy Overview</h2>
-                  <button id="btn-toggle-bed" class="btn btn--sm btn--primary">Toggle Bed (Simulate)</button>
+          <!-- Main 3-Column Widescreen Grid (0-Scroll Fit) -->
+          <div class="dashboard-3col-grid">
+            
+            <!-- Column 1: Bed Occupancy, ICU Map & Live Adjusters (35% Width) -->
+            <div class="dashboard-col">
+              <div class="card card--glass p-1">
+                <div class="flex-between align-center mb-0.5">
+                  <strong class="text-xs text-primary">🛏️ Bed Occupancy Breakdown</strong>
+                  <button id="btn-toggle-bed" class="btn btn--xs btn--primary">Simulate Bed Toggle</button>
                 </div>
-                <div class="grid grid--2 gap-2" id="bed-charts-container">
+                <div class="grid grid--2 gap-1" id="bed-charts-container">
                   <div class="chart-wrapper text-center">
-                    <div id="chart-icu" class="chart-container" style="height: 150px;"></div>
-                    <div class="chart-label mt-1"><strong>ICU</strong></div>
-                    <div class="chart-sublabel text-sm text-gray" id="label-icu"></div>
+                    <div id="chart-icu" class="chart-container" style="height: 90px;"></div>
+                    <strong class="text-xs block mt-0.5">ICU</strong>
+                    <div class="text-xs text-muted" id="label-icu"></div>
                   </div>
                   <div class="chart-wrapper text-center">
-                    <div id="chart-general" class="chart-container" style="height: 150px;"></div>
-                    <div class="chart-label mt-1"><strong>General</strong></div>
-                    <div class="chart-sublabel text-sm text-gray" id="label-general"></div>
+                    <div id="chart-general" class="chart-container" style="height: 90px;"></div>
+                    <strong class="text-xs block mt-0.5">General</strong>
+                    <div class="text-xs text-muted" id="label-general"></div>
                   </div>
                   <div class="chart-wrapper text-center">
-                    <div id="chart-emergency" class="chart-container" style="height: 150px;"></div>
-                    <div class="chart-label mt-1"><strong>Emergency</strong></div>
-                    <div class="chart-sublabel text-sm text-gray" id="label-emergency"></div>
+                    <div id="chart-emergency" class="chart-container" style="height: 90px;"></div>
+                    <strong class="text-xs block mt-0.5">Emergency</strong>
+                    <div class="text-xs text-muted" id="label-emergency"></div>
                   </div>
                   <div class="chart-wrapper text-center">
-                    <div id="chart-pediatric" class="chart-container" style="height: 150px;"></div>
-                    <div class="chart-label mt-1"><strong>Pediatric</strong></div>
-                    <div class="chart-sublabel text-sm text-gray" id="label-pediatric"></div>
+                    <div id="chart-pediatric" class="chart-container" style="height: 90px;"></div>
+                    <strong class="text-xs block mt-0.5">Pediatric</strong>
+                    <div class="text-xs text-muted" id="label-pediatric"></div>
                   </div>
                 </div>
               </div>
 
-              <div class="card card--glass mb-2">
-                <h2 class="card__title mb-1">ICU Bed Map</h2>
-                <div class="bed-grid" id="icu-bed-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 8px; margin-bottom: 1rem;">
+              <div class="card card--glass p-1">
+                <strong class="text-xs text-primary block mb-0.5">🏥 ICU Bed Map (Interactive Dots)</strong>
+                <div class="bed-grid" id="icu-bed-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)); gap: 6px; margin-bottom: 0.5rem;">
                   <!-- Beds generated here -->
                 </div>
-                <div class="bed-legend flex gap-2 text-sm justify-center flex-wrap">
-                  <div class="flex align-center gap-1"><span class="status-dot" style="background: var(--color-success);"></span> Available</div>
-                  <div class="flex align-center gap-1"><span class="status-dot" style="background: var(--color-danger);"></span> Occupied</div>
-                  <div class="flex align-center gap-1"><span class="status-dot" style="background: var(--color-warning);"></span> Maintenance</div>
-                  <div class="flex align-center gap-1"><span class="status-dot" style="background: var(--color-info);"></span> Reserved</div>
+                <div class="bed-legend flex gap-1 text-xs justify-center flex-wrap">
+                  <div class="flex align-center gap-0.5"><span class="status-dot" style="background: var(--color-success);"></span> Available</div>
+                  <div class="flex align-center gap-0.5"><span class="status-dot" style="background: var(--color-danger);"></span> Occupied</div>
+                  <div class="flex align-center gap-0.5"><span class="status-dot" style="background: var(--color-warning);"></span> Maintenance</div>
                 </div>
               </div>
             </div>
 
-            <div class="dashboard-right-col">
-              <div class="card card--glass card--glow mb-2">
-                <div class="card__header flex flex-between align-center mb-1">
-                  <h2 class="card__title">Doctors On Duty <span class="badge badge--primary" id="doctors-count-badge">0</span></h2>
+            <!-- Column 2: Doctors On Duty Roster & Facilities (36% Width) -->
+            <div class="dashboard-col">
+              <div class="card card--glass p-1">
+                <div class="flex-between align-center mb-0.5">
+                  <strong class="text-xs text-primary">👨‍⚕️ Doctors On Duty Roster</strong>
+                  <span class="badge badge--primary text-xs" id="doctors-count-badge">0</span>
                 </div>
-                <div class="filter-tabs flex gap-1 mb-1 border-bottom pb-1" id="doctor-filters">
-                  <button class="btn btn--sm btn--ghost active" data-filter="All">All</button>
-                  <button class="btn btn--sm btn--ghost" data-filter="Available">Available</button>
-                  <button class="btn btn--sm btn--ghost" data-filter="In Surgery">In Surgery</button>
-                  <button class="btn btn--sm btn--ghost" data-filter="On Break">On Break</button>
+                
+                <div class="filter-tabs flex gap-0.5 mb-0.5 border-bottom pb-0.5" id="doctor-filters">
+                  <button class="btn btn--xs btn--ghost active" data-filter="All">All</button>
+                  <button class="btn btn--xs btn--ghost" data-filter="Available">Available</button>
+                  <button class="btn btn--xs btn--ghost" data-filter="In Surgery">In Surgery</button>
+                  <button class="btn btn--xs btn--ghost" data-filter="On Break">On Break</button>
                 </div>
-                <div class="doctors-list flex flex-col gap-1" id="doctors-list" style="max-height: 400px; overflow-y: auto;">
+
+                <div class="doctors-list flex flex-col gap-0.5" id="doctors-list" style="max-height: 180px; overflow-y: auto;">
                   <!-- Doctors generated here -->
                 </div>
-                <div class="text-center mt-1">
-                  <button id="btn-view-all-doctors" class="btn btn--ghost btn--sm w-100">View All Doctors</button>
-                </div>
+                <button id="btn-view-all-doctors" class="btn btn--ghost btn--xs w-full mt-0.5">View All Doctors Roster</button>
               </div>
 
-              <div class="card card--glass mb-2">
-                <h2 class="card__title mb-1">Facilities Status</h2>
-                <div class="facilities-grid grid grid--2 gap-1" id="facilities-list">
+              <div class="card card--glass p-1">
+                <strong class="text-xs text-primary block mb-0.5">⚡ Facilities & Equipment Operational Status</strong>
+                <div class="facilities-grid grid grid--2 gap-0.5 text-xs" id="facilities-list">
                   <!-- Facilities generated here -->
                 </div>
               </div>
-
-              <!-- Live Status Update Panel -->
-              <div class="card card--glass card--glow mb-2" style="border-left:4px solid var(--color-primary);">
-                <div class="card__header flex flex-between align-center mb-1">
-                  <h2 class="card__title">🔄 Live Status Update Panel</h2>
-                  <span class="badge badge--success" style="animation:pulse 2s infinite;">LIVE</span>
-                </div>
-                <p class="text-sm text-muted mb-2">Update your hospital's real-time availability. Changes are immediately visible to patients searching for hospitals.</p>
-
-                <h4 class="mb-1" style="color:var(--color-primary);">🛏️ Update Bed Availability</h4>
-                <div class="grid grid--2 gap-2 mb-2" id="live-bed-updaters">
-                  <!-- Generated dynamically -->
-                </div>
-
-                <h4 class="mb-1" style="color:var(--color-primary);">🚨 Emergency Department Status</h4>
-                <div class="mb-2" style="display:flex;gap:12px;flex-wrap:wrap;" id="dept-status-toggles">
-                  <!-- Generated dynamically -->
-                </div>
-
-                <h4 class="mb-1" style="color:var(--color-primary);">📝 Quick Announcements</h4>
-                <div class="form-group mb-1">
-                  <textarea class="form-input" id="hospital-announcement" rows="2" placeholder="e.g., Blood Bank shortage: O- blood needed urgently" style="resize:vertical;"></textarea>
-                </div>
-                <button id="btn-post-announcement" class="btn btn--warning btn--sm">📢 Post Announcement</button>
-              </div>
             </div>
-          </div>
 
-          <div class="card card--glass card--glow">
-             <h2 class="card__title mb-1">Weekly Admission Trend</h2>
-             <div id="chart-admissions" class="chart-container" style="height: 250px;"></div>
+            <!-- Column 3: Live Updaters, Announcements & Admission Trend (27% Width) -->
+            <div class="dashboard-col">
+              
+              <div class="card card--glass p-1" style="border-left: 3px solid var(--color-primary);">
+                <strong class="text-xs text-primary block mb-0.5">🔄 Live Bed Availability Updaters</strong>
+                <div class="grid grid--2 gap-0.5 text-xs mb-0.5" id="live-bed-updaters">
+                  <!-- Generated dynamically -->
+                </div>
+
+                <strong class="text-xs text-primary block mb-0.5">📢 Quick Announcements</strong>
+                <div class="form-group mb-0.5">
+                  <textarea class="form-input text-xs w-full" id="hospital-announcement" rows="1" placeholder="Post live shortage alert..."></textarea>
+                </div>
+                <button id="btn-post-announcement" class="btn btn--warning btn--xs w-full">📢 Post Announcement</button>
+              </div>
+
+              <div class="card card--glass p-1">
+                <strong class="text-xs text-primary block mb-0.5">📈 Weekly Admission Trend</strong>
+                <div id="chart-admissions" class="chart-container" style="height: 120px;"></div>
+              </div>
+
+            </div>
+
           </div>
         </div>
       `;
