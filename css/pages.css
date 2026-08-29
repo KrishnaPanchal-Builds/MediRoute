@@ -1199,39 +1199,59 @@
   color: var(--color-primary);
 }
 
-/* Emergency Page 2-Column Cards Grid & Compact Map Layout */
-.emergency-cards-grid {
+/* ---- 0-Scroll Emergency Page Widescreen Viewport Layout ---- */
+.no-scroll-emergency {
+  height: calc(100vh - 64px) !important;
+  max-height: calc(100vh - 64px) !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.emergency-viewport-split {
+  display: grid !important;
+  grid-template-columns: 48% 50% !important;
+  gap: 2% !important;
+  flex: 1 !important;
+  height: calc(100vh - 120px) !important;
+  max-height: calc(100vh - 120px) !important;
+  overflow: hidden !important;
+}
+
+.emergency-left-panel {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  height: 100% !important;
+  justify-content: space-between !important;
+}
+
+.emergency-inputs-grid {
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
-  gap: 1rem !important;
-  margin-top: 0.5rem !important;
+  gap: 0.5rem !important;
 }
 
-.emergency-lower-split {
+.emergency-right-panel {
   display: flex !important;
-  gap: 1.25rem !important;
-  align-items: start !important;
-  margin-top: 1rem !important;
-}
-
-.results-col {
-  flex: 1 !important;
-  min-width: 0 !important;
-}
-
-.compact-map-col {
-  width: 118px !important;
-  flex-shrink: 0 !important;
-  position: sticky !important;
-  top: 74px !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  height: 100% !important;
+  overflow: hidden !important;
 }
 
 @media (max-width: 992px) {
-  .emergency-cards-grid {
-    grid-template-columns: 1fr !important;
+  .no-scroll-emergency {
+    height: auto !important;
+    max-height: none !important;
+    overflow: auto !important;
   }
-  .emergency-lower-split {
+  .emergency-viewport-split {
     grid-template-columns: 1fr !important;
+    height: auto !important;
+    max-height: none !important;
   }
 }
 
