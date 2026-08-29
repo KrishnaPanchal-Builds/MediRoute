@@ -128,7 +128,7 @@
 
   // ---- Nav Click Handlers ----
   function initNav() {
-    document.querySelectorAll('.top-nav-tab').forEach(item => {
+    document.querySelectorAll('.top-nav-icon-btn').forEach(item => {
       item.addEventListener('click', () => {
         const page = item.getAttribute('data-page');
         if (page) {

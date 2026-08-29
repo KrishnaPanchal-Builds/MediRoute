@@ -36,9 +36,11 @@
     .header-brand { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 0.5rem !important; cursor: pointer !important; flex-shrink: 0 !important; }
     .brand-logo-text { font-family: 'Outfit', sans-serif !important; font-size: 1.25rem !important; font-weight: 900 !important; color: #f1f2f6 !important; }
     .brand-logo-text span { color: #00E6B8 !important; }
-    .top-nav-tabs { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 0.35rem !important; overflow-x: auto !important; flex: 1 !important; margin: 0 1rem !important; padding: 4px 0 !important; }
-    .top-nav-tab { display: inline-flex !important; flex-direction: row !important; flex-shrink: 0 !important; align-items: center !important; gap: 0.4rem !important; padding: 0.45rem 0.85rem !important; border-radius: 999px !important; font-size: 0.85rem !important; font-weight: 500 !important; color: #a4b0c3 !important; background: transparent !important; border: 1px solid transparent !important; cursor: pointer !important; white-space: nowrap !important; }
-    .top-nav-tab.active { color: #00E6B8 !important; background: rgba(0, 230, 184, 0.12) !important; border-color: rgba(0, 230, 184, 0.35) !important; font-weight: 600 !important; }
+    .top-nav-tabs { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 0.5rem !important; margin: 0 1rem !important; padding: 4px 0 !important; }
+    .top-nav-icon-btn { width: 38px !important; height: 38px !important; border-radius: 50% !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; font-size: 1.15rem !important; color: #a4b0c3 !important; background: rgba(255, 255, 255, 0.05) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; cursor: pointer !important; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important; user-select: none !important; position: relative !important; }
+    .top-nav-icon-btn:hover { color: #ffffff !important; background: rgba(0, 230, 184, 0.15) !important; border-color: rgba(0, 230, 184, 0.4) !important; transform: translateY(-2px) !important; box-shadow: 0 4px 12px rgba(0, 230, 184, 0.2) !important; }
+    .top-nav-icon-btn.active { color: #00E6B8 !important; background: rgba(0, 230, 184, 0.2) !important; border-color: #00E6B8 !important; font-weight: 700 !important; box-shadow: 0 0 16px rgba(0, 230, 184, 0.35) !important; }
+    .nav-divider { width: 1px !important; height: 22px !important; background: rgba(255, 255, 255, 0.15) !important; margin: 0 4px !important; }
     .header-tools { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 0.85rem !important; flex-shrink: 0 !important; }
     .app__main { flex: 1 !important; width: 100vw !important; margin-top: 64px !important; padding: 0 !important; box-sizing: border-box !important; overflow-x: hidden !important; display: flex !important; flex-direction: column !important; }
     .app__content { width: 100% !important; max-width: 1380px !important; margin: 0 auto !important; padding: 1.5rem 1.25rem !important; box-sizing: border-box !important; min-width: 0 !important; }
@@ -63,17 +65,18 @@
         <span class="brand-logo-text">Medi<span>Route</span></span>
       </div>
 
-      <!-- Visible Navigation Tabs with Icons -->
+      <!-- Sleek Compact Circular Navigation Icon Bar -->
       <nav class="top-nav-tabs">
-        <button class="top-nav-tab active" data-page="landing"><span class="tab-icon">🏠</span> Home</button>
-        <button class="top-nav-tab" data-page="emergency"><span class="tab-icon">🚨</span> Emergency</button>
-        <button class="top-nav-tab" data-page="intake"><span class="tab-icon">🤖</span> AI Intake</button>
-        <button class="top-nav-tab" data-page="doctor-triage"><span class="tab-icon">👨‍⚕️</span> Doctor Portal</button>
-        <button class="top-nav-tab" data-page="dashboard"><span class="tab-icon">🏥</span> Dashboard</button>
-        <button class="top-nav-tab" data-page="ambulance"><span class="tab-icon">🚑</span> Ambulances</button>
-        <button class="top-nav-tab" data-page="patient"><span class="tab-icon">👤</span> Patient Portal</button>
-        <button class="top-nav-tab" data-page="ayush"><span class="tab-icon">🌿</span> AYUSH</button>
-        <button class="top-nav-tab" data-page="admin"><span class="tab-icon">⚙️</span> Admin</button>
+        <button class="top-nav-icon-btn active" data-page="landing" title="🏠 Home Landing Dashboard">🏠</button>
+        <button class="top-nav-icon-btn" data-page="emergency" title="🚨 Emergency Hospital Finder">🚨</button>
+        <button class="top-nav-icon-btn" data-page="intake" title="🤖 AI Clinical Intake & Voice Triage">🤖</button>
+        <button class="top-nav-icon-btn" data-page="doctor-triage" title="👨‍⚕️ Doctor 30-Sec Triage Review">👨‍⚕️</button>
+        <button class="top-nav-icon-btn" data-page="dashboard" title="🏥 Hospital Bed & ICU Live Dashboard">🏥</button>
+        <button class="top-nav-icon-btn" data-page="ambulance" title="🚑 Ambulance Tracker & Dispatch">🚑</button>
+        <button class="top-nav-icon-btn" data-page="patient" title="👤 Patient Portal & ABDM Health Pass">👤</button>
+        <div class="nav-divider"></div>
+        <button class="top-nav-icon-btn" data-page="ayush" title="🌿 AYUSH Traditional Medicine Mode">🌿</button>
+        <button class="top-nav-icon-btn" data-page="admin" title="⚙️ System Admin & Analytics">⚙️</button>
       </nav>
 
       <div class="header-tools">
