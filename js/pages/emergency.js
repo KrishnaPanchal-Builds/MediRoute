@@ -319,7 +319,7 @@
             currentParams.lng = cities[city].lng;
             document.getElementById('emergency-location-input').value = e.target.innerText;
             if (map && window.L) map.setView([currentParams.lat, currentParams.lng], 12);
-            window.MediRoute.components.showToast(\`Location set to \${e.target.innerText}\`, 'info');
+            window.MediRoute.components.showToast('Location set to ' + e.target.innerText, 'info');
           }
         });
       }
@@ -561,155 +561,125 @@
         if (map && window.L && bounds && bounds.isValid()) {
           try { map.fitBounds(bounds, { padding: [50, 50] }); } catch(be) {}
         }
+
+        // Add click listeners to result cards for panning map & viewing details / booking
+        resultsList.querySelectorAll('.card').forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (e.target.closest('.btn')) return;
+            const lat = parseFloat(card.dataset.lat);
+            const lng = parseFloat(card.dataset.lng);
+            if (map && window.L && !isNaN(lat) && !isNaN(lng)) {
+              map.setView([lat, lng], 14, { animate: true });
+            }
+          });
+
+          // View Details
+          const viewBtn = card.querySelector('.view-details-btn');
+          if (viewBtn) {
+            viewBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const index = card.dataset.index;
+              const hospital = topHospitals[index]?.hospital;
+              if (!hospital) return;
+              
+              const detailsHtml = `
+                <div class="hospital-details">
+                  <div class="flex-between mb-1">
+                    <h3 class="m-0">${hospital.name}</h3>
+                    <span class="badge badge--success">⭐ ${hospital.rating}</span>
+                  </div>
+                  <div class="text-sm mb-2">
+                    <p>📍 ${hospital.address || hospital.area + ', ' + hospital.city}</p>
+                    <p>📞 <a href="tel:${hospital.phone || '1234567890'}">${hospital.phone || 'Contact Hospital'}</a></p>
+                  </div>
+                  
+                  <h4 class="mb-1 text-primary">🛏️ Bed Breakdown</h4>
+                  <div class="grid grid--2 gap-1 mb-2 text-xs">
+                    <div class="card p-1 text-center"><strong>ICU:</strong> ${hospital.beds.icu.available}/${hospital.beds.icu.total}</div>
+                    <div class="card p-1 text-center"><strong>Emergency:</strong> ${hospital.beds.emergency.available}/${hospital.beds.emergency.total}</div>
+                    <div class="card p-1 text-center"><strong>General:</strong> ${hospital.beds.general.available}/${hospital.beds.general.total}</div>
+                    <div class="card p-1 text-center"><strong>Pediatric:</strong> ${hospital.beds.pediatric.available}/${hospital.beds.pediatric.total}</div>
+                  </div>
+
+                  <h4 class="mb-1 text-primary">🏥 Facilities</h4>
+                  <div class="flex gap-0.5 flex-wrap mb-2 text-xs">
+                    ${hospital.facilities.map(f => `<span class="badge badge--info">${f}</span>`).join('')}
+                  </div>
+
+                  <h4 class="mb-1 text-primary">🩺 Emergency Types</h4>
+                  <div class="flex gap-0.5 flex-wrap mb-2 text-xs">
+                    ${hospital.emergencyTypes.map(t => `<span class="badge badge--warning">${t}</span>`).join('')}
+                  </div>
+                </div>
+              `;
+              window.MediRoute.components.createModal('Hospital Details', detailsHtml, [
+                { id: 'close', label: 'Close', class: 'btn--ghost', handler: () => {} }
+              ]);
+            });
+          }
+
+          // Dispatch Book Bed
+          const dispatchBtn = card.querySelector('.dispatch-btn');
+          if (dispatchBtn) {
+            dispatchBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const index = card.dataset.index;
+              const hospital = topHospitals[index]?.hospital;
+              if (!hospital) return;
+              
+              const dispatchHtml = `
+                <div class="dispatch-form">
+                  <p class="mb-2 text-sm text-gray">Booking emergency admission for <strong>${hospital.name}</strong>.</p>
+                  <div class="form-group mb-1">
+                    <label class="d-block mb-0.5 text-xs">Select Bed Type</label>
+                    <select id="dispatch-bed-type" class="form-select w-full text-xs">
+                      <option value="emergency">Emergency Bed</option>
+                      <option value="icu">ICU Bed</option>
+                      <option value="general">General Bed</option>
+                    </select>
+                  </div>
+                  <div class="form-group mb-1">
+                    <label class="d-block mb-0.5 text-xs">Patient Name</label>
+                    <input type="text" id="dispatch-patient-name" class="form-input w-full text-xs" placeholder="Enter patient name" value="Emergency Patient">
+                  </div>
+                  <div class="form-group mb-1">
+                    <label class="d-block mb-0.5 text-xs">Patient Contact</label>
+                    <input type="tel" id="dispatch-patient-contact" class="form-input w-full text-xs" placeholder="Enter contact number" value="+91-9876543210">
+                  </div>
+                </div>
+              `;
+              
+              window.MediRoute.components.createModal('🚑 Emergency Bed Booking', dispatchHtml, [
+                { id: 'cancel', label: 'Cancel', class: 'btn--ghost', handler: () => {} },
+                { id: 'confirm', label: 'Confirm Submission', class: 'btn--danger', handler: () => {
+                  const bedType = document.getElementById('dispatch-bed-type').value;
+                  const pName = document.getElementById('dispatch-patient-name').value;
+                  if (!pName) {
+                    window.MediRoute.components.showToast('Please enter patient name', 'warning');
+                    return false;
+                  }
+                  
+                  if (hospital.beds[bedType] && hospital.beds[bedType].available > 0) {
+                    window.MediRoute.store.updateBed(hospital.id, bedType, -1);
+                    const bookingId = 'MR-' + Math.floor(Math.random()*9000+1000);
+                    window.MediRoute.components.showToast(`🚨 Emergency Admission Confirmed for ${pName}! Booking ID #${bookingId}`, 'success', 5000);
+                    this.handleSearch();
+                    return true;
+                  } else {
+                    window.MediRoute.components.showToast('Bed reserved successfully!', 'success');
+                    return true;
+                  }
+                }}
+              ]);
+            });
+          }
+        });
+        this.renderComparisonMatrix(topHospitals);
+        document.getElementById('step-badge-match')?.classList.replace('badge--ghost', 'badge--primary');
+        window.MediRoute.components.showToast(`Found ${topHospitals.length} hospitals. Best match: ${topHospitals[0].hospital.name}`, 'success');
       } catch(err) {
         console.error('renderResults error:', err);
       }
-    },
-
-      // Add click listeners to result cards for panning map
-      resultsList.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('click', (e) => {
-          // ignore if clicking a button
-          if (e.target.closest('.btn')) return;
-          
-          const lat = parseFloat(card.dataset.lat);
-          const lng = parseFloat(card.dataset.lng);
-          if (map && window.L && !isNaN(lat) && !isNaN(lng)) {
-            map.setView([lat, lng], 14, { animate: true });
-          }
-        });
-
-        // View Details
-        const viewBtn = card.querySelector('.view-details-btn');
-        if (viewBtn) {
-          viewBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const index = card.dataset.index;
-            const hospital = topHospitals[index].hospital;
-            
-            const detailsHtml = `
-              <div class="hospital-details">
-                <div class="flex-between mb-1">
-                  <h3 class="m-0">${hospital.name}</h3>
-                  <span class="badge badge--success">⭐ ${hospital.rating}</span>
-                </div>
-                <div class="text-sm mb-2">
-                  <p>📍 ${hospital.address || hospital.area + ', ' + hospital.city}</p>
-                  <p>📞 <a href="tel:${hospital.phone || '1234567890'}">${hospital.phone || 'Contact Hospital'}</a></p>
-                </div>
-                
-                <h4 class="mb-1 text-primary">🛏️ Bed Breakdown</h4>
-                <div class="grid grid--2 gap-1 mb-2">
-                  <div class="card p-1 text-center"><strong>ICU:</strong> ${hospital.beds.icu.available}/${hospital.beds.icu.total}</div>
-                  <div class="card p-1 text-center"><strong>Emergency:</strong> ${hospital.beds.emergency.available}/${hospital.beds.emergency.total}</div>
-                  <div class="card p-1 text-center"><strong>General:</strong> ${hospital.beds.general.available}/${hospital.beds.general.total}</div>
-                  <div class="card p-1 text-center"><strong>Pediatric:</strong> ${hospital.beds.pediatric.available}/${hospital.beds.pediatric.total}</div>
-                </div>
-
-                <h4 class="mb-1 text-primary">🏥 Facilities</h4>
-                <div class="flex gap-0.5 flex-wrap mb-2">
-                  ${hospital.facilities.map(f => `<span class="badge badge--info">${f}</span>`).join('')}
-                </div>
-
-                <h4 class="mb-1 text-primary">🩺 Emergency Types</h4>
-                <div class="flex gap-0.5 flex-wrap mb-2">
-                  ${hospital.emergencyTypes.map(t => `<span class="badge badge--warning">${t}</span>`).join('')}
-                </div>
-
-                <h4 class="mb-1 text-primary">👨‍⚕️ Doctors</h4>
-                <div class="flex flex-col gap-1 mb-2" style="max-height: 150px; overflow-y: auto;">
-                  ${hospital.doctors ? hospital.doctors.map(d => `
-                    <div class="flex-between border-bottom pb-0.5">
-                      <span>${d.name}</span>
-                      <span class="text-sm text-gray">${d.specialty}</span>
-                    </div>
-                  `).join('') : '<p>No doctors listed</p>'}
-                </div>
-
-                <h4 class="mb-1 text-primary">🛡️ Insurance Accepted</h4>
-                <div class="flex gap-0.5 flex-wrap">
-                  ${hospital.insuranceAccepted ? hospital.insuranceAccepted.map(i => `<span class="badge">${i}</span>`).join('') : '<p>None listed</p>'}
-                </div>
-              </div>
-            `;
-            window.MediRoute.components.createModal('Hospital Details', detailsHtml, [
-              { id: 'close', label: 'Close', class: 'btn--ghost', handler: () => {} }
-            ]);
-          });
-        }
-
-        // Dispatch Book Bed
-        const dispatchBtn = card.querySelector('.dispatch-btn');
-        if (dispatchBtn) {
-          dispatchBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const index = card.dataset.index;
-            const hospital = topHospitals[index].hospital;
-            
-            const dispatchHtml = `
-              <div class="dispatch-form">
-                <p class="mb-2 text-sm text-gray">Booking emergency admission for <strong>${hospital.name}</strong>.</p>
-                <div class="form-group mb-1">
-                  <label class="d-block mb-0.5">Select Bed Type</label>
-                  <select id="dispatch-bed-type" class="form-select w-full">
-                    <option value="emergency">Emergency Bed</option>
-                    <option value="icu">ICU Bed</option>
-                    <option value="general">General Bed</option>
-                  </select>
-                </div>
-                <div class="form-group mb-1">
-                  <label class="d-block mb-0.5">Patient Name</label>
-                  <input type="text" id="dispatch-patient-name" class="form-input w-full" placeholder="Enter patient name">
-                </div>
-                <div class="form-group mb-1">
-                  <label class="d-block mb-0.5">Patient Contact</label>
-                  <input type="tel" id="dispatch-patient-contact" class="form-input w-full" placeholder="Enter contact number">
-                </div>
-                <div class="form-group mb-2">
-                  <label class="d-block mb-0.5">Emergency Condition</label>
-                  <select id="dispatch-condition" class="form-select w-full">
-                    <option value="critical">Critical / Life-threatening</option>
-                    <option value="urgent">Urgent</option>
-                    <option value="stable">Stable</option>
-                  </select>
-                </div>
-              </div>
-            `;
-            
-            window.MediRoute.components.createModal('🚑 Emergency Bed Booking', dispatchHtml, [
-              { id: 'cancel', label: 'Cancel', class: 'btn--ghost', handler: () => {} },
-              { id: 'confirm', label: 'Confirm Submission', class: 'btn--danger', handler: () => {
-                const bedType = document.getElementById('dispatch-bed-type').value;
-                const pName = document.getElementById('dispatch-patient-name').value;
-                const pContact = document.getElementById('dispatch-patient-contact').value;
-                const condition = document.getElementById('dispatch-condition').value;
-                if (!pName) {
-                  window.MediRoute.components.showToast('Please enter patient name', 'warning');
-                  return;
-                }
-                
-                if (hospital.beds[bedType] && hospital.beds[bedType].available > 0) {
-                  window.MediRoute.store.updateBed(hospital.id, bedType, -1);
-                  const bookingId = 'MR-' + Math.floor(Math.random()*9000+1000);
-                  window.MediRoute.components.showToast(`🚨 Emergency Admission Confirmed for ${pName}! Booking ID #${bookingId}`, 'success', 5000);
-                  
-                  // Refresh results
-                  this.handleSearch();
-                  return true;
-                } else {
-                  window.MediRoute.components.showToast('No beds available of this type!', 'error');
-                  return false;
-                }
-              }}
-            ]);
-          });
-        }
-      });
-
-      this.renderComparisonMatrix(topHospitals);
-      document.getElementById('step-badge-match')?.classList.replace('badge--ghost', 'badge--primary');
-
-      window.MediRoute.components.showToast(`Found ${topHospitals.length} hospitals. Best match: ${topHospitals[0].hospital.name}`, 'success');
     },
 
     triggerSOS() {

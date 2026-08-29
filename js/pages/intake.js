@@ -269,7 +269,7 @@
       content.innerHTML = renderStep(currentStep);
     }
     const prog = document.getElementById('intake-progress');
-    if (prog) prog.style.width = \`\${(currentStep / TOTAL_STEPS) * 100}%\`;
+    if (prog) prog.style.width = ((currentStep / TOTAL_STEPS) * 100) + '%';
     const stepDisp = document.getElementById('current-step-display');
     if (stepDisp) stepDisp.textContent = currentStep;
     

@@ -256,20 +256,20 @@
               <hr style="border:none;border-top:1px solid var(--glass-border);">
               <h4 style="color:var(--color-primary);margin:0;">🏥 Facilities & Specialties</h4>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-                ${['Emergency Room','Trauma Center','Cardiac Lab','Blood Bank','MRI','CT Scan','Pharmacy','Burn Unit','Neuro ICU','Dialysis','Operation Theater','Ventilators'].map(f =>
-                  \`<label style="display:flex;align-items:center;gap:6px;font-size:0.85rem;padding:8px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:8px;cursor:pointer;">
-                    <input type="checkbox" class="reg-facility" value="\${f}" style="accent-color:var(--color-primary);"> \${f}
-                  </label>\`
+                ${['Emergency Room','Trauma Center','Cardiac Lab','Blood Bank','MRI','CT Scan','Pharmacy','Burn Unit','Neuro ICU','Dialysis','Operation Theater','Ventilators'].map(f => `
+                  <label style="display:flex;align-items:center;gap:6px;font-size:0.85rem;padding:8px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:8px;cursor:pointer;">
+                    <input type="checkbox" class="reg-facility" value="${f}" style="accent-color:var(--color-primary);"> ${f}
+                  </label>`
                 ).join('')}
               </div>
 
               <hr style="border:none;border-top:1px solid var(--glass-border);">
               <h4 style="color:var(--color-primary);margin:0;">🩺 Emergency Types Handled</h4>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-                ${['Cardiac','Trauma','Burns','Stroke','Pediatric','General','Maternity','Orthopedic','Neuro'].map(t =>
-                  \`<label style="display:flex;align-items:center;gap:6px;font-size:0.85rem;padding:8px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:8px;cursor:pointer;">
-                    <input type="checkbox" class="reg-emergency-type" value="\${t}" style="accent-color:var(--color-primary);"> \${t}
-                  </label>\`
+                ${['Cardiac','Trauma','Burns','Stroke','Pediatric','General','Maternity','Orthopedic','Neuro'].map(t => `
+                  <label style="display:flex;align-items:center;gap:6px;font-size:0.85rem;padding:8px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:8px;cursor:pointer;">
+                    <input type="checkbox" class="reg-type" value="${t}" style="accent-color:var(--color-primary);"> ${t}
+                  </label>`
                 ).join('')}
               </div>
 
@@ -297,10 +297,10 @@
               <hr style="border:none;border-top:1px solid var(--glass-border);">
               <h4 style="color:var(--color-primary);margin:0;">🛡️ Insurance Accepted</h4>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                ${['Ayushman Bharat (PMJAY)','Star Health','ICICI Lombard','Max Bupa','HDFC ERGO','New India Assurance','National Insurance','United India'].map(ins =>
-                  \`<label style="display:flex;align-items:center;gap:6px;font-size:0.85rem;padding:8px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:8px;cursor:pointer;">
-                    <input type="checkbox" class="reg-insurance" value="\${ins}" style="accent-color:var(--color-primary);"> \${ins}
-                  </label>\`
+                ${['Ayushman Bharat (PMJAY)','Star Health','ICICI Lombard','Max Bupa','HDFC ERGO','New India Assurance','National Insurance','United India'].map(ins => `
+                  <label style="display:flex;align-items:center;gap:6px;font-size:0.85rem;padding:8px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:8px;cursor:pointer;">
+                    <input type="checkbox" class="reg-insurance" value="${ins}" style="accent-color:var(--color-primary);"> ${ins}
+                  </label>`
                 ).join('')}
               </div>
             </form>

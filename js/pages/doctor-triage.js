@@ -254,9 +254,10 @@
             </div>
             <p class="text-sm text-muted mb-1">Hover over extracted items to see them highlighted on the original scan.</p>
             <div class="grid grid--2 gap-1" style="align-items: start;">
-              <!-- Document Image Mock -->
-              <div style="position: relative; background: #eee; border-radius: 8px; overflow: hidden; height: 300px; display:flex; align-items:center; justify-content:center; color: #333;">
-                <div style="position: absolute; inset:0; background: url('data:image/svg+xml;utf8,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"400\\" height=\\"300\\"><rect width=\\"100%\\" height=\\"100%\\" fill=\\"%23f0f0f0\\"/><text x=\\"20\\" y=\\"40\\" font-family=\\"monospace\\" font-size=\\"14\\">Ramesh Kumar</text><text x=\\"20\\" y=\\"70\\" font-family=\\"monospace\\" font-size=\\"14\\">Amlodipine 5mg OD</text><text x=\\"20\\" y=\\"100\\" font-family=\\"monospace\\" font-size=\\"14\\">Metformin 500mg BD</text></svg>') center/cover no-repeat;"></div>
+                <div style="position: absolute; inset:0; background: rgba(255,255,255,0.05); border: 1px dashed var(--glass-border); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
+                  <strong style="color: var(--color-primary);">📄 Document OCR Scan (Ramesh Kumar)</strong>
+                  <span class="text-xs text-muted">Amlodipine 5mg OD • Metformin 500mg BD</span>
+                </div>
                 
                 <!-- Bounding boxes (hidden by default, shown on hover) -->
                 <div class="bbox" id="bbox-amlo" style="display:none; position:absolute; top: 55px; left: 15px; width: 180px; height: 20px; border: 2px solid var(--danger); background: rgba(239,68,68,0.2);"></div>
@@ -573,8 +574,7 @@
             transform: scale(1.02);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
           }
-        </style>
-      \`;
+        `;
     },
     mount() {
       // Subscribe to store updates
@@ -592,18 +592,10 @@
       const btnAddWalkin = document.getElementById('btn-add-walkin');
       if (btnAddWalkin && window.MediRoute.components) {
           btnAddWalkin.addEventListener('click', () => {
-              const content = `
-                <div class="form-group mb-1"><label>Name</label><input type="text" id="w-name" class="form-input"></div>
-                <div class="form-group mb-1"><label>Age</label><input type="number" id="w-age" class="form-input"></div>
-                <div class="form-group mb-1"><label>Gender</label><select id="w-gender" class="form-select"><option>Male</option><option>Female</option><option>Other</option></select></div>
-                <div class="form-group mb-1"><label>ABHA ID</label><input type="text" id="w-abha" class="form-input"></div>
-                <div class="form-group mb-1"><label>Chief Complaint</label><input type="text" id="w-cc" class="form-input"></div>
-                <div class="form-group mb-1"><label>Urgency</label><select id="w-urgency" class="form-select"><option value="red">Red Emergency</option><option value="yellow">Yellow Urgent</option><option value="green">Green Routine</option></select></div>
-                <div class="form-group mb-1"><label>Vitals (BP, Pulse, SpO2, Temp)</label><input type="text" id="w-vitals" class="form-input" placeholder="e.g. 120/80, 80, 98%, 98.6"></div>
-              `;
+              const content = '<div class="form-group mb-1"><label>Name</label><input type="text" id="w-name" class="form-input"></div><div class="form-group mb-1"><label>Age</label><input type="number" id="w-age" class="form-input"></div><div class="form-group mb-1"><label>Gender</label><select id="w-gender" class="form-select"><option>Male</option><option>Female</option><option>Other</option></select></div><div class="form-group mb-1"><label>ABHA ID</label><input type="text" id="w-abha" class="form-input"></div><div class="form-group mb-1"><label>Chief Complaint</label><input type="text" id="w-cc" class="form-input"></div><div class="form-group mb-1"><label>Urgency</label><select id="w-urgency" class="form-select"><option value="red">Red Emergency</option><option value="yellow">Yellow Urgent</option><option value="green">Green Routine</option></select></div><div class="form-group mb-1"><label>Vitals (BP, Pulse, SpO2, Temp)</label><input type="text" id="w-vitals" class="form-input" placeholder="e.g. 120/80, 80, 98%, 98.6"></div>';
               window.MediRoute.components.createModal('Add Walk-in Patient', content, [
-                  { label: 'Cancel', class: 'btn--ghost' },
-                  { label: 'Add Patient', class: 'btn--primary', handler: () => {
+                  { label: 'Cancel', 'class': 'btn--ghost' },
+                  { label: 'Add Patient', 'class': 'btn--primary', handler: () => {
                       if (window.MediRoute.store && window.MediRoute.store.addPatient) {
                           const vts = (document.getElementById('w-vitals').value || '120/80, 80, 98%, 98.6').split(',');
                           const newPt = {
