@@ -82,10 +82,30 @@
           <section class="workflow-simulator container mt-4">
             <h2 class="section-title text-center mb-3">Interactive Emergency Workflow</h2>
             <div class="tabs card card--glass p-0">
-              <div class="tabs__header flex">
-                <button class="tab-btn active" onclick="window.MediRoute.pages.landing.switchTab(0)">1. Voice & Touch AI Intake</button>
-                <button class="tab-btn" onclick="window.MediRoute.pages.landing.switchTab(1)">2. AI Recommendation & OSRM Routing</button>
-                <button class="tab-btn" onclick="window.MediRoute.pages.landing.switchTab(2)">3. Doctor 30-Sec Summary & EMR Sync</button>
+              <div class="tabs__header flex flex-center gap-3 p-3">
+                <button class="workflow-icon-step active" onclick="window.MediRoute.pages.landing.switchTab(0)" title="Step 1: Voice & Touch AI Intake">
+                  <div class="step-circle">
+                    <span class="step-num">1</span>
+                    <span class="step-icon">🎤</span>
+                  </div>
+                  <span class="step-label">Voice Intake</span>
+                </button>
+                <div class="step-connector"></div>
+                <button class="workflow-icon-step" onclick="window.MediRoute.pages.landing.switchTab(1)" title="Step 2: AI Recommendation & OSRM Routing">
+                  <div class="step-circle">
+                    <span class="step-num">2</span>
+                    <span class="step-icon">🗺️</span>
+                  </div>
+                  <span class="step-label">AI Routing</span>
+                </button>
+                <div class="step-connector"></div>
+                <button class="workflow-icon-step" onclick="window.MediRoute.pages.landing.switchTab(2)" title="Step 3: Doctor 30-Sec Summary & EMR Sync">
+                  <div class="step-circle">
+                    <span class="step-num">3</span>
+                    <span class="step-icon">📋</span>
+                  </div>
+                  <span class="step-label">Doctor Summary</span>
+                </button>
               </div>
               <div class="tabs__body p-3">
                 <div class="tab-content active" id="sim-tab-0">
@@ -341,7 +361,7 @@
     },
 
     switchTab(index) {
-      const btns = document.querySelectorAll('.tab-btn');
+      const btns = document.querySelectorAll('.workflow-icon-step, .tab-btn');
       const tabs = document.querySelectorAll('.tab-content');
       
       btns.forEach((btn, i) => {

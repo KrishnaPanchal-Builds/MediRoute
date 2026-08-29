@@ -941,11 +941,87 @@
   box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.3);
 }
 
-.capability-icon-badge .badge-caption {
-  font-size: 0.78rem;
-  font-weight: 500;
+/* Workflow Icon Step Tabs */
+.workflow-icon-step {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.step-num {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  font-size: 10px;
+  font-weight: 700;
   color: var(--text-secondary);
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-icon {
+  font-size: 1.4rem;
+}
+
+.step-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.workflow-icon-step:hover .step-circle {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+  background: rgba(var(--color-primary-rgb), 0.12);
+}
+
+.workflow-icon-step.active .step-circle {
+  border-color: var(--color-primary);
+  background: rgba(var(--color-primary-rgb), 0.2);
+  box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.4);
+}
+
+.workflow-icon-step.active .step-num {
+  background: var(--color-primary);
+  color: var(--text-inverse);
+  border-color: var(--color-primary);
+}
+
+.workflow-icon-step.active .step-label {
+  color: var(--color-primary);
+}
+
+.step-connector {
+  width: 40px;
+  height: 2px;
+  background: var(--glass-border);
+  margin-top: -15px;
 }
 
 .compact-circle-card {
