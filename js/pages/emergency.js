@@ -217,19 +217,21 @@
     },
 
     mount() {
-      // Map init
+      // Map init (safely wrapped in try/catch to prevent map initialization errors from breaking page interaction)
       const mapContainer = document.getElementById('emergency-map');
-      if (mapContainer && window.MediRoute.components.createMap) {
-        map = window.MediRoute.components.createMap('emergency-map', {
-          center: [currentParams.lat, currentParams.lng],
-          zoom: 12
-        });
-      }
-      if (mapContainer && window.MediRoute.components.createMap) {
-        map = window.MediRoute.components.createMap('emergency-map', {
-          center: [currentParams.lat, currentParams.lng],
-          zoom: 12
-        });
+      if (mapContainer && window.MediRoute.components?.createMap) {
+        try {
+          if (map) {
+            map.remove();
+            map = null;
+          }
+          map = window.MediRoute.components.createMap('emergency-map', {
+            center: [currentParams.lat, currentParams.lng],
+            zoom: 12
+          });
+        } catch(e) {
+          console.warn('Map initialization notice:', e);
+        }
       }
 
       // Location Input Manual Entry
@@ -373,8 +375,8 @@
       }
 
       // Check sessionStorage for pre-fill
-      const heroLoc = sessionStorage.getItem('hero_search_loc');
-      const heroType = sessionStorage.getItem('hero_search_type');
+      const heroLoc = sessionStorage.getItem('search_location') || sessionStorage.getItem('hero_search_loc');
+      const heroType = sessionStorage.getItem('search_type') || sessionStorage.getItem('hero_search_type');
       if (heroLoc || heroType) {
         if (heroLoc) {
           const locInput = document.getElementById('emergency-location-input');
@@ -390,6 +392,8 @@
             if (btn) btn.click();
           }
         }
+        sessionStorage.removeItem('search_location');
+        sessionStorage.removeItem('search_type');
         sessionStorage.removeItem('hero_search_loc');
         sessionStorage.removeItem('hero_search_type');
         setTimeout(() => this.handleSearch(), 500);
