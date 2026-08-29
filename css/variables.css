@@ -1,0 +1,166 @@
+/* ============================================
+   MEDIROUTE DESIGN SYSTEM — CSS Variables
+   ============================================ */
+
+:root {
+  /* ---- Color Palette ---- */
+  --color-primary: #00D4AA;
+  --color-primary-dark: #00B894;
+  --color-primary-light: #55EFC4;
+  --color-primary-rgb: 0, 212, 170;
+
+  --color-accent: #6C63FF;
+  --color-accent-dark: #5A52D5;
+  --color-accent-light: #A29BFE;
+  --color-accent-rgb: 108, 99, 255;
+
+  --color-emergency: #FF4757;
+  --color-emergency-dark: #E84118;
+  --color-emergency-light: #FF6B81;
+  --color-emergency-rgb: 255, 71, 87;
+
+  --color-warning: #FFA502;
+  --color-warning-dark: #E67E22;
+  --color-warning-light: #FECA57;
+  --color-warning-rgb: 255, 165, 2;
+
+  --color-success: #2ED573;
+  --color-success-dark: #27AE60;
+  --color-success-light: #7BED9F;
+  --color-success-rgb: 46, 213, 115;
+
+  --color-info: #1E90FF;
+  --color-info-dark: #0984E3;
+  --color-info-light: #74B9FF;
+  --color-info-rgb: 30, 144, 255;
+
+  /* ---- Background System ---- */
+  --bg-deep: #060a13;
+  --bg-primary: #0a0e17;
+  --bg-secondary: #0f1422;
+  --bg-tertiary: #151b2b;
+  --bg-elevated: #1a2138;
+  --bg-surface: #1e2744;
+
+  /* ---- Glass System ---- */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg-hover: rgba(255, 255, 255, 0.06);
+  --glass-bg-active: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-blur: 20px;
+  --glass-blur-heavy: 40px;
+
+  /* ---- Text Colors ---- */
+  --text-primary: #F1F2F6;
+  --text-secondary: #A4B0C3;
+  --text-muted: #6B7A99;
+  --text-disabled: #3D4F6F;
+  --text-inverse: #0a0e17;
+
+  /* ---- Spacing Scale ---- */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+
+  /* ---- Typography ---- */
+  --font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', 'Inter', system-ui, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-hero: clamp(2.5rem, 5vw, 4.5rem);
+
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+
+  /* ---- Border Radius ---- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-glow-primary: 0 0 20px rgba(var(--color-primary-rgb), 0.3), 0 0 60px rgba(var(--color-primary-rgb), 0.1);
+  --shadow-glow-accent: 0 0 20px rgba(var(--color-accent-rgb), 0.3), 0 0 60px rgba(var(--color-accent-rgb), 0.1);
+  --shadow-glow-emergency: 0 0 20px rgba(var(--color-emergency-rgb), 0.4), 0 0 60px rgba(var(--color-emergency-rgb), 0.15);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* ---- Transitions ---- */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ---- Z-Index Scale ---- */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal-backdrop: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-sos: 600;
+  --z-tooltip: 700;
+
+  /* ---- Layout ---- */
+  --sidebar-width: 280px;
+  --sidebar-collapsed: 72px;
+  --header-height: 70px;
+  --content-max-width: 1400px;
+}
+
+/* Light mode overrides */
+[data-theme="light"] {
+  --bg-deep: #f0f2f5;
+  --bg-primary: #f5f7fa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e8ecf1;
+  --bg-elevated: #ffffff;
+  --bg-surface: #f0f3f8;
+
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-bg-hover: rgba(255, 255, 255, 0.85);
+  --glass-bg-active: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-hover: rgba(0, 0, 0, 0.15);
+
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a5568;
+  --text-muted: #8896ab;
+  --text-disabled: #c4cdd9;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.15);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}

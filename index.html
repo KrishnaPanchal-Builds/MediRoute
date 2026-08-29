@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MediRoute — AI-Powered Emergency Healthcare Platform. Find the nearest hospital with available beds in seconds. Real-time bed tracking, ambulance dispatch, and AI-driven hospital recommendations.">
+  <meta name="keywords" content="emergency healthcare, hospital finder, bed availability, ambulance tracking, AI healthcare, India, PMJAY">
+  <meta name="author" content="MediRoute">
+  <meta name="theme-color" content="#00D4AA">
+
+  <title>MediRoute — AI-Powered Emergency Healthcare</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Outfit:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+  <!-- Leaflet.js for Maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+
+  <!-- Favicon (inline SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🏥</text></svg>">
+
+  <style>
+    /* Critical inline styles for immediate rendering */
+    .leaflet-container { background: var(--bg-secondary) !important; }
+    .leaflet-popup-content-wrapper { background: var(--bg-elevated) !important; color: var(--text-primary) !important; border: 1px solid var(--glass-border) !important; border-radius: var(--radius-md) !important; box-shadow: var(--shadow-lg) !important; }
+    .leaflet-popup-tip { background: var(--bg-elevated) !important; border: 1px solid var(--glass-border) !important; }
+    .leaflet-popup-close-button { color: var(--text-muted) !important; }
+    .leaflet-control-zoom a { background: var(--bg-elevated) !important; color: var(--text-primary) !important; border-color: var(--glass-border) !important; }
+    .leaflet-control-zoom a:hover { background: var(--bg-surface) !important; }
+    .custom-marker { background: none !important; border: none !important; }
+    .route-line { animation: pulse 2s infinite; }
+
+    /* App loading state */
+    .app-loading {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-deep);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out;
+    }
+    .app-loading.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .app-loading__logo {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+    .app-loading__text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #F1F2F6;
+      margin-bottom: 0.5rem;
+    }
+    .app-loading__text span { color: #00D4AA; }
+    .app-loading__sub {
+      color: #6B7A99;
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+    }
+    .app-loading__bar {
+      width: 200px;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .app-loading__bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00D4AA, #6C63FF);
+      border-radius: 999px;
+      animation: loadingBar 1.5s ease-in-out infinite;
+    }
+    @keyframes loadingBar {
+      0% { width: 0%; margin-left: 0%; }
+      50% { width: 60%; margin-left: 20%; }
+      100% { width: 0%; margin-left: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div class="app-loading" id="app-loading">
+    <div class="app-loading__logo">🏥</div>
+    <div class="app-loading__text">Medi<span>Route</span></div>
+    <div class="app-loading__sub">AI-Powered Emergency Healthcare</div>
+    <div class="app-loading__bar"><div class="app-loading__bar-fill"></div></div>
+  </div>
+
+  <!-- Mobile sidebar overlay -->
+  <div class="sidebar-overlay"></div>
+
+  <!-- App Shell -->
+  <div class="app">
+    <!-- Sidebar Navigation -->
+    <aside class="app__sidebar" id="sidebar">
+      <div class="sidebar__logo">
+        <div class="sidebar__logo-icon">🏥</div>
+        <div class="sidebar__logo-text">Medi<span>Route</span></div>
+      </div>
+
+      <nav class="sidebar__nav">
+        <div class="nav__group">
+          <div class="nav__group-title">Main</div>
+          <div class="nav__item active" data-page="landing">
+            <span class="nav__item-icon">🏠</span>
+            <span>Home</span>
+          </div>
+          <div class="nav__item" data-page="emergency">
+            <span class="nav__item-icon">🚨</span>
+            <span>Emergency Finder</span>
+            <span class="nav__item-badge">SOS</span>
+          </div>
+        </div>
+
+        <div class="nav__group">
+          <div class="nav__group-title">Hospital</div>
+          <div class="nav__item" data-page="dashboard">
+            <span class="nav__item-icon">🏥</span>
+            <span>Hospital Dashboard</span>
+          </div>
+          <div class="nav__item" data-page="ambulance">
+            <span class="nav__item-icon">🚑</span>
+            <span>Ambulance Tracker</span>
+          </div>
+        </div>
+
+        <div class="nav__group">
+          <div class="nav__group-title">Patient</div>
+          <div class="nav__item" data-page="patient">
+            <span class="nav__item-icon">👤</span>
+            <span>Patient Portal</span>
+          </div>
+        </div>
+
+        <div class="nav__group">
+          <div class="nav__group-title">AI Triage & AYUSH</div>
+          <div class="nav__item" data-page="intake">
+            <span class="nav__item-icon">🤖</span>
+            <span>AI Clinical Intake</span>
+          </div>
+          <div class="nav__item" data-page="doctor-triage">
+            <span class="nav__item-icon">👨‍⚕️</span>
+            <span>Doctor Triage View</span>
+          </div>
+          <div class="nav__item" data-page="ayush">
+            <span class="nav__item-icon">🌿</span>
+            <span>AYUSH Mode</span>
+          </div>
+        </div>
+
+        <div class="nav__group">
+          <div class="nav__group-title">System</div>
+          <div class="nav__item" data-page="admin">
+            <span class="nav__item-icon">⚙️</span>
+            <span>Admin Panel</span>
+          </div>
+        </div>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="nav__item" style="font-size: 0.75rem; color: var(--text-muted); padding: 8px 16px;">
+          <span class="nav__item-icon">💚</span>
+          <span>MediRoute v1.0</span>
+        </div>
+      </div>
+
+      <button class="sidebar__toggle" id="sidebar-toggle">◀</button>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app__main">
+      <!-- Header -->
+      <header class="app__header">
+        <div class="flex items-center gap-1">
+          <button class="btn btn--icon btn--ghost hide-desktop" id="mobile-menu">☰</button>
+          <h2 id="header-title" style="font-size: var(--text-lg); font-weight: var(--weight-semibold);">🏠 Home</h2>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Live indicator -->
+          <div class="flex items-center gap-sm" style="font-size: var(--text-xs); color: var(--text-muted);">
+            <span class="status-dot status-dot--online status-dot--pulse"></span>
+            <span>Live Data</span>
+          </div>
+
+          <!-- Clock -->
+          <span id="header-clock" style="font-size: var(--text-sm); color: var(--text-muted); font-family: var(--font-display);">--:--</span>
+
+          <!-- Notifications -->
+          <div style="position: relative;" id="notification-container">
+            <button class="btn btn--icon btn--ghost" style="position: relative;" id="notifications-btn">
+              🔔
+              <span class="notification-dot" id="notification-count" style="font-size:8px;width:auto;min-width:16px;height:16px;display:flex;align-items:center;justify-content:center;padding:0 4px;top:-4px;right:-4px;">4</span>
+            </button>
+            <div id="notification-dropdown" class="card card--glass" style="display: none; position: absolute; right: 0; top: 100%; margin-top: 8px; width: 320px; z-index: 1000; padding: 12px; flex-direction: column; gap: 8px;">
+              <div style="font-size: 13px; padding-bottom: 8px; border-bottom: 1px solid var(--glass-border);">🚨 Emergency Dispatch: AMB-102 assigned to Cardiac Case in Saket (2 mins ago)</div>
+              <div style="font-size: 13px; padding-bottom: 8px; border-bottom: 1px solid var(--glass-border);">🛏️ ICU Bed Update: Apollo Hospital added 3 ICU beds (10 mins ago)</div>
+              <div style="font-size: 13px; padding-bottom: 8px; border-bottom: 1px solid var(--glass-border);">⚠️ Blood Bank Alert: Max Healthcare requested O- Negative Blood (25 mins ago)</div>
+              <div style="font-size: 13px;">✅ System Alert: All 45 emergency centers online</div>
+            </div>
+          </div>
+
+          <!-- Theme toggle -->
+          <div class="theme-switch" id="theme-toggle" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 12px;border-radius:999px;background:var(--glass-bg);border:1px solid var(--glass-border);transition:all 0.3s ease;">
+            <span style="font-size:14px;">🌙</span>
+            <div style="width:36px;height:20px;border-radius:999px;background:var(--color-primary);position:relative;transition:background 0.3s ease;">
+              <div id="theme-toggle-knob" style="width:16px;height:16px;border-radius:50%;background:white;position:absolute;top:2px;left:2px;transition:transform 0.3s ease;box-shadow:0 1px 3px rgba(0,0,0,0.3);"></div>
+            </div>
+            <span style="font-size:14px;">☀️</span>
+          </div>
+
+          <!-- User avatar -->
+          <div class="avatar avatar--sm" style="background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); font-size: 0.7rem; cursor: pointer;" onclick="window.location.hash='patient'">AM</div>
+        </div>
+      </header>
+
+      <!-- Dynamic Content -->
+      <div class="app__content" id="app-content">
+        <!-- Pages are rendered here by the router -->
+        <div class="flex-center" style="height: 60vh;">
+          <div class="spinner spinner--lg"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- SOS Floating Action Button -->
+  <button class="sos-fab" id="sos-fab" title="Emergency SOS">
+    <span class="sos-fab__ring"></span>
+    SOS
+  </button>
+
+  <!-- Scripts (load order matters) -->
+  <script src="js/data.js"></script>
+  <script src="js/ai-engine.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/pages/landing.js"></script>
+  <script src="js/pages/emergency.js"></script>
+  <script src="js/pages/dashboard.js"></script>
+  <script src="js/pages/ambulance.js"></script>
+  <script src="js/pages/patient.js"></script>
+  <script src="js/pages/admin.js"></script>
+  <script src="js/pages/intake.js"></script>
+  <script src="js/pages/doctor-triage.js"></script>
+  <script src="js/pages/ayush.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // Remove loading screen after everything is ready
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loader = document.getElementById('app-loading');
+        if (loader) {
+          loader.classList.add('fade-out');
+          setTimeout(() => loader.remove(), 500);
+        }
+      }, 800);
+    });
+  </script>
+</body>
+</html>
