@@ -24,7 +24,13 @@
 
   // ---- Router ----
   function navigateTo(hash) {
-    window.location.hash = hash;
+    const target = (hash || '').replace('#', '').toLowerCase();
+    const pageName = routes[target] || 'landing';
+    
+    // Always force route update even if hash hasn't changed
+    currentPageName = null;
+    window.location.hash = target === 'landing' || target === '' ? '' : '#' + target;
+    handleRoute();
   }
 
   function handleRoute() {

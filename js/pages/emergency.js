@@ -158,7 +158,7 @@
                 </div>
 
                 <!-- Action Button: Calculate Best-Destination Scoring -->
-                <button id="btn-search-hospitals" class="btn btn--danger btn--xl btn--glow w-full mb-2 animate-pulse">
+                <button id="btn-search-hospitals" class="btn btn--danger btn--xl btn--glow w-full mb-2 animate-pulse" onclick="window.MediRoute.pages.emergency.handleSearch()">
                   ⚖️ Calculate Best-Destination Ranking
                 </button>
 

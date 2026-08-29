@@ -137,7 +137,11 @@
       sessionStorage.setItem('search_location', loc);
       sessionStorage.setItem('search_type', type);
       
-      window.location.hash = '#emergency';
+      if (window.MediRoute.app && window.MediRoute.app.navigateTo) {
+        window.MediRoute.app.navigateTo('emergency');
+      } else {
+        window.location.hash = '#emergency';
+      }
     },
 
     mount() {

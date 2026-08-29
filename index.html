@@ -20,10 +20,10 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
   <!-- Stylesheets with Cache Busting -->
-  <link rel="stylesheet" href="css/variables.css?v=80">
-  <link rel="stylesheet" href="css/base.css?v=80">
-  <link rel="stylesheet" href="css/components.css?v=80">
-  <link rel="stylesheet" href="css/pages.css?v=80">
+  <link rel="stylesheet" href="css/variables.css?v=90">
+  <link rel="stylesheet" href="css/base.css?v=90">
+  <link rel="stylesheet" href="css/components.css?v=90">
+  <link rel="stylesheet" href="css/pages.css?v=90">
 
   <!-- Favicon (inline SVG) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🏥</text></svg>">
@@ -67,16 +67,16 @@
 
       <!-- Sleek Compact Circular Navigation Icon Bar -->
       <nav class="top-nav-tabs">
-        <button class="top-nav-icon-btn active" data-page="landing" title="🏠 Home Landing Dashboard">🏠</button>
-        <button class="top-nav-icon-btn" data-page="emergency" title="🚨 Emergency Hospital Finder">🚨</button>
-        <button class="top-nav-icon-btn" data-page="intake" title="🤖 AI Clinical Intake & Voice Triage">🤖</button>
-        <button class="top-nav-icon-btn" data-page="doctor-triage" title="👨‍⚕️ Doctor 30-Sec Triage Review">👨‍⚕️</button>
-        <button class="top-nav-icon-btn" data-page="dashboard" title="🏥 Hospital Bed & ICU Live Dashboard">🏥</button>
-        <button class="top-nav-icon-btn" data-page="ambulance" title="🚑 Ambulance Tracker & Dispatch">🚑</button>
-        <button class="top-nav-icon-btn" data-page="patient" title="👤 Patient Portal & ABDM Health Pass">👤</button>
+        <button class="top-nav-icon-btn active" data-page="landing" onclick="window.MediRoute.app.navigateTo('landing')" title="🏠 Home Landing Dashboard">🏠</button>
+        <button class="top-nav-icon-btn" data-page="emergency" onclick="window.MediRoute.app.navigateTo('emergency')" title="🚨 Emergency Hospital Finder">🚨</button>
+        <button class="top-nav-icon-btn" data-page="intake" onclick="window.MediRoute.app.navigateTo('intake')" title="🤖 AI Clinical Intake & Voice Triage">🤖</button>
+        <button class="top-nav-icon-btn" data-page="doctor-triage" onclick="window.MediRoute.app.navigateTo('doctor-triage')" title="👨‍⚕️ Doctor 30-Sec Triage Review">👨‍⚕️</button>
+        <button class="top-nav-icon-btn" data-page="dashboard" onclick="window.MediRoute.app.navigateTo('dashboard')" title="🏥 Hospital Bed & ICU Live Dashboard">🏥</button>
+        <button class="top-nav-icon-btn" data-page="ambulance" onclick="window.MediRoute.app.navigateTo('ambulance')" title="🚑 Ambulance Tracker & Dispatch">🚑</button>
+        <button class="top-nav-icon-btn" data-page="patient" onclick="window.MediRoute.app.navigateTo('patient')" title="👤 Patient Portal & ABDM Health Pass">👤</button>
         <div class="nav-divider"></div>
-        <button class="top-nav-icon-btn" data-page="ayush" title="🌿 AYUSH Traditional Medicine Mode">🌿</button>
-        <button class="top-nav-icon-btn" data-page="admin" title="⚙️ System Admin & Analytics">⚙️</button>
+        <button class="top-nav-icon-btn" data-page="ayush" onclick="window.MediRoute.app.navigateTo('ayush')" title="🌿 AYUSH Traditional Medicine Mode">🌿</button>
+        <button class="top-nav-icon-btn" data-page="admin" onclick="window.MediRoute.app.navigateTo('admin')" title="⚙️ System Admin & Analytics">⚙️</button>
       </nav>
 
       <div class="header-tools">
