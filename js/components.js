@@ -259,19 +259,35 @@
   function createMap(containerId, options = {}) {
     const container = typeof containerId === 'string' ? document.getElementById(containerId) : containerId;
     if (!container || typeof L === 'undefined') {
-      // Fallback if Leaflet not loaded
-      container.innerHTML = `<div class="flex-center h-full" style="height:100%;background:var(--bg-secondary);border-radius:var(--radius-lg);"><span style="color:var(--text-muted);font-size:14px;">🗺️ Map loading...</span></div>`;
+      if (container) {
+        container.innerHTML = `<div class="flex-center h-full" style="height:100%;background:var(--bg-secondary);border-radius:var(--radius-lg);"><span style="color:var(--text-muted);font-size:14px;">🗺️ Map loading...</span></div>`;
+      }
       return null;
+    }
+
+    let lat = 28.6139;
+    let lng = 77.2090;
+    let zoom = 12;
+
+    if (typeof options === 'number') {
+      lat = options;
+      lng = arguments[2] || 77.2090;
+      zoom = arguments[3] || 12;
+    } else if (typeof options === 'object' && options !== null) {
+      lat = options.lat || options.center?.[0] || 28.6139;
+      lng = options.lng || options.center?.[1] || 77.2090;
+      zoom = options.zoom || 12;
     }
 
     const map = L.map(container, {
       zoomControl: false,
       attributionControl: false,
-    }).setView([options.lat || 28.6139, options.lng || 77.2090], options.zoom || 11);
+    }).setView([lat, lng], zoom);
 
-    // Dark tile layer
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    // Clean OpenStreetMap Tile Layer (Free, 100% Watermark-free)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
+      subdomains: ['a', 'b', 'c'],
     }).addTo(map);
 
     // Add zoom control to top-right

@@ -1207,7 +1207,12 @@
   box-sizing: border-box !important;
   display: flex !important;
   flex-direction: column !important;
-  padding: 0.5rem 1rem !important;
+  padding: 0.35rem 0.75rem !important;
+}
+
+.emergency-compact-header {
+  margin-bottom: 0.35rem !important;
+  padding: 0.35rem 0.75rem !important;
 }
 
 .emergency-viewport-split {
@@ -1215,29 +1220,33 @@
   grid-template-columns: 48% 50% !important;
   gap: 2% !important;
   flex: 1 !important;
-  height: calc(100vh - 120px) !important;
-  max-height: calc(100vh - 120px) !important;
+  height: calc(100vh - 125px) !important;
+  max-height: calc(100vh - 125px) !important;
   overflow: hidden !important;
 }
 
 .emergency-left-panel {
   display: flex !important;
   flex-direction: column !important;
-  gap: 0.5rem !important;
+  gap: 0.35rem !important;
   height: 100% !important;
-  justify-content: space-between !important;
+  justify-content: flex-start !important;
 }
 
 .emergency-inputs-grid {
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
-  gap: 0.5rem !important;
+  gap: 0.35rem !important;
+}
+
+.emergency-inputs-grid .card {
+  padding: 0.4rem 0.6rem !important;
 }
 
 .emergency-right-panel {
   display: flex !important;
   flex-direction: column !important;
-  gap: 0.5rem !important;
+  gap: 0.35rem !important;
   height: 100% !important;
   overflow: hidden !important;
 }

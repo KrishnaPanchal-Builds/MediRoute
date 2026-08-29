@@ -152,17 +152,17 @@
             <!-- RIGHT COLUMN: Map & Results Hub (52% Width) -->
             <div class="emergency-right-panel flex flex-col gap-1">
               
-              <!-- Top Half: Compact Map Container -->
-              <div class="card card--glass p-1" style="flex-shrink: 0;">
+              <!-- Top Half: Compact Map Container (Clean 1px border) -->
+              <div style="flex-shrink: 0;">
                 <div class="flex-between align-center mb-0.5">
                   <span class="text-xs font-semibold">🗺️ Live Routing Map (OSRM Active)</span>
                   <span class="badge badge--info text-xs" id="map-status-badge">Live GPS</span>
                 </div>
-                <div id="emergency-map" style="width: 100%; height: 210px; border-radius: var(--radius-md); overflow: hidden;"></div>
+                <div id="emergency-map" style="width: 100%; height: 220px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 4px 16px rgba(0,0,0,0.2);"></div>
               </div>
 
               <!-- Bottom Half: Results Panel & Facility Matrix -->
-              <div class="emergency-results-scroll card card--glass p-1" style="flex: 1; overflow-y: auto; max-height: calc(100vh - 350px);">
+              <div class="emergency-results-scroll card card--glass p-1" style="flex: 1; overflow-y: auto; max-height: calc(100vh - 360px);">
                 
                 <!-- AI Thinking Engine -->
                 <div id="ai-thinking" class="ai-thinking hidden text-center py-1">
@@ -171,8 +171,8 @@
                 </div>
 
                 <!-- Results List -->
-                <div id="search-results" class="hidden">
-                  <div class="flex-between align-center mb-1">
+                <div id="search-results">
+                  <div class="flex-between align-center mb-0.5">
                     <strong class="text-xs font-semibold">Top Matched Hospitals</strong>
                     <span class="badge badge--success text-xs" id="result-count">0</span>
                   </div>
@@ -222,24 +222,17 @@
             map = null;
           }
           map = window.MediRoute.components.createMap('emergency-map', currentParams.lat, currentParams.lng, 12);
-          
-          if (map && window.L) {
-            patientMarker = L.marker([currentParams.lat, currentParams.lng], {
-              icon: L.divIcon({
-                className: 'custom-marker patient-marker',
-                html: '<div style="background: var(--color-primary); width:18px; height:18px; border-radius:50%; border:2px solid white; box-shadow:0 0 10px var(--color-primary);"></div>',
-                iconSize: [18, 18],
-                iconAnchor: [9, 9]
-              })
-            }).addTo(map);
-            patientMarker.bindPopup('<b>Your Location</b><br>Emergency Origin').openPopup();
-          }
         } catch(e) {
           console.warn('Map creation warning:', e);
         }
       }
 
       this.bindEvents();
+
+      // Automatically populate hospital pins & routes on initial page load!
+      setTimeout(() => {
+        this.renderResults();
+      }, 200);
     },
 
     bindEvents() {
