@@ -19,17 +19,29 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/pages.css">
+  <!-- Stylesheets with Cache Busting -->
+  <link rel="stylesheet" href="css/variables.css?v=10">
+  <link rel="stylesheet" href="css/base.css?v=10">
+  <link rel="stylesheet" href="css/components.css?v=10">
+  <link rel="stylesheet" href="css/pages.css?v=10">
 
   <!-- Favicon (inline SVG) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🏥</text></svg>">
 
   <style>
-    /* Critical inline map overrides */
+    /* Critical Header Flex & Canvas Rules */
+    body { margin: 0; padding: 0; background: #070a12; color: #f1f2f6; font-family: 'Inter', sans-serif; overflow-x: hidden; width: 100vw; }
+    .app { display: flex; flex-direction: column; width: 100vw; min-height: 100vh; overflow-x: hidden; }
+    .app-header { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; z-index: 9999 !important; height: 64px !important; width: 100vw !important; display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: space-between !important; padding: 0 1.25rem !important; background: rgba(7, 10, 18, 0.98) !important; border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important; box-sizing: border-box !important; backdrop-filter: blur(25px) !important; }
+    .header-brand { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 0.5rem !important; cursor: pointer !important; flex-shrink: 0 !important; }
+    .brand-logo-text { font-family: 'Outfit', sans-serif !important; font-size: 1.25rem !important; font-weight: 900 !important; color: #f1f2f6 !important; }
+    .brand-logo-text span { color: #00E6B8 !important; }
+    .top-nav-tabs { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 0.35rem !important; overflow-x: auto !important; flex: 1 !important; margin: 0 1rem !important; padding: 4px 0 !important; }
+    .top-nav-tab { display: inline-flex !important; flex-direction: row !important; flex-shrink: 0 !important; align-items: center !important; gap: 0.4rem !important; padding: 0.45rem 0.85rem !important; border-radius: 999px !important; font-size: 0.85rem !important; font-weight: 500 !important; color: #a4b0c3 !important; background: transparent !important; border: 1px solid transparent !important; cursor: pointer !important; white-space: nowrap !important; }
+    .top-nav-tab.active { color: #00E6B8 !important; background: rgba(0, 230, 184, 0.12) !important; border-color: rgba(0, 230, 184, 0.35) !important; font-weight: 600 !important; }
+    .header-tools { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 0.85rem !important; flex-shrink: 0 !important; }
+    .app__main { flex: 1 !important; width: 100vw !important; margin-top: 64px !important; padding: 0 !important; box-sizing: border-box !important; overflow-x: hidden !important; display: flex !important; flex-direction: column !important; }
+    .app__content { width: 100% !important; max-width: 1380px !important; margin: 0 auto !important; padding: 1.5rem 1.25rem !important; box-sizing: border-box !important; min-width: 0 !important; }
     .leaflet-container { background: var(--bg-secondary) !important; }
     .leaflet-popup-content-wrapper { background: var(--bg-elevated) !important; color: var(--text-primary) !important; border: 1px solid var(--glass-border) !important; border-radius: var(--radius-md) !important; box-shadow: var(--shadow-lg) !important; }
     .leaflet-popup-tip { background: var(--bg-elevated) !important; border: 1px solid var(--glass-border) !important; }
