@@ -5,7 +5,7 @@
   window.MediRoute.pages.landing = {
     render() {
       return `
-        <div class="page page--landing animate-fade-in">
+        <div class="page page--landing animate-fade-in no-scroll-home">
           
           <!-- Live Emergency Alert Ticker -->
           <div class="alert-ticker">
@@ -14,26 +14,23 @@
             </div>
           </div>
 
-          <!-- Hero Section -->
-          <section class="hero-section">
-            <div class="hero-section__bg">
-              <div class="gradient-orb orb-1"></div>
-              <div class="gradient-orb orb-2"></div>
-            </div>
+          <!-- Single Screen Widescreen Split Layout (Left: Hero Text & Search | Right: Icon Portal Hub) -->
+          <div class="home-split-grid container">
             
-            <div class="hero-content flex flex-col flex-center text-center gap-2">
+            <!-- Left Column: Headline & Bed Search Bar -->
+            <div class="home-left-col">
               <h1 class="hero-title animate-slide-up">
-                AI-POWERED EMERGENCY HEALTHCARE PLATFORM
+                AI-POWERED EMERGENCY<br><span class="text-gradient">HEALTHCARE PLATFORM</span>
               </h1>
               
-              <p class="hero-subtitle animate-slide-up" style="animation-delay: 0.1s">
+              <p class="hero-subtitle animate-slide-up">
                 Minimizing the critical delay between a medical emergency and hospital admission with real-time bed tracking, voice AI intake, and OSRM road navigation.
               </p>
 
               <!-- Live Emergency Bed Quick Search Bar -->
-              <div class="quick-search-bar card card--glass animate-slide-up flex flex-wrap gap-1" style="animation-delay: 0.2s">
-                <input type="text" id="hero-location-input" class="form-control" placeholder="City / Locality (e.g. Delhi)" style="flex: 1; min-width: 200px;">
-                <select id="hero-emergency-type" class="form-control" style="flex: 1; min-width: 200px;">
+              <div class="quick-search-bar card card--glass animate-slide-up flex flex-wrap gap-1">
+                <input type="text" id="hero-location-input" class="form-control" placeholder="City / Locality (e.g. Delhi)" style="flex: 1; min-width: 160px;">
+                <select id="hero-emergency-type" class="form-control" style="flex: 1; min-width: 140px;">
                   <option value="Cardiac">Cardiac</option>
                   <option value="Trauma">Trauma</option>
                   <option value="Burns">Burns</option>
@@ -42,337 +39,105 @@
                   <option value="General">General</option>
                 </select>
                 <button class="btn btn--danger btn--glow" onclick="window.MediRoute.pages.landing.findNearestBed()">
-                  ⚡ Find Nearest Bed Now
+                  ⚡ Find Bed Now
                 </button>
               </div>
-            </div>
 
-            <!-- Animated ECG Line -->
-            <div class="hero-ecg">
-              <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
-                <path class="ecg-line" d="M 0,50 L 200,50 L 220,10 L 240,90 L 260,30 L 270,70 L 290,50 L 1000,50" />
-              </svg>
-            </div>
-          </section>
-
-          <!-- Quick Action Command Center (Pure Circular Icon Buttons) -->
-          <section class="command-center container mt-4 text-center">
-            <h3 class="section-title mb-3">Quick Emergency Access</h3>
-            <div class="pure-icon-bar flex flex-center gap-3 flex-wrap">
-              <a href="#emergency" class="pure-icon-circle btn-glow-red" title="🚨 Emergency Hospital Finder — Instant AI scoring, OSRM routes, GPS">
-                <span class="icon-emoji">🚨</span>
-                <span class="icon-label">Emergency Finder</span>
-              </a>
-              <a href="#intake" class="pure-icon-circle btn-glow-blue" title="🤖 AI Clinical Intake — Voice & Touch Multilingual Triage, Body Map, QR">
-                <span class="icon-emoji">🤖</span>
-                <span class="icon-label">AI Intake</span>
-              </a>
-              <a href="#doctor-triage" class="pure-icon-circle btn-glow-purple" title="👨‍⚕️ Doctor 30-Sec Review Portal — Live Triage Queue, Document OCR">
-                <span class="icon-emoji">👨‍⚕️</span>
-                <span class="icon-label">Doctor Review</span>
-              </a>
-              <a href="#dashboard" class="pure-icon-circle btn-glow-green" title="🏥 Hospital Admin Dashboard — Live Bed Management & Registration">
-                <span class="icon-emoji">🏥</span>
-                <span class="icon-label">Bed Dashboard</span>
-              </a>
-            </div>
-          </section>
-
-          <!-- Interactive 3-Step Emergency Workflow Simulator -->
-          <section class="workflow-simulator container mt-4">
-            <h2 class="section-title text-center mb-3">Interactive Emergency Workflow</h2>
-            <div class="tabs card card--glass p-0">
-              <div class="tabs__header flex flex-center gap-3 p-3">
-                <button class="workflow-icon-step active" onclick="window.MediRoute.pages.landing.switchTab(0)" title="Step 1: Voice & Touch AI Intake">
-                  <div class="step-circle">
-                    <span class="step-num">1</span>
-                    <span class="step-icon">🎤</span>
-                  </div>
-                  <span class="step-label">Voice Intake</span>
-                </button>
-                <div class="step-connector"></div>
-                <button class="workflow-icon-step" onclick="window.MediRoute.pages.landing.switchTab(1)" title="Step 2: AI Recommendation & OSRM Routing">
-                  <div class="step-circle">
-                    <span class="step-num">2</span>
-                    <span class="step-icon">🗺️</span>
-                  </div>
-                  <span class="step-label">AI Routing</span>
-                </button>
-                <div class="step-connector"></div>
-                <button class="workflow-icon-step" onclick="window.MediRoute.pages.landing.switchTab(2)" title="Step 3: Doctor 30-Sec Summary & EMR Sync">
-                  <div class="step-circle">
-                    <span class="step-num">3</span>
-                    <span class="step-icon">📋</span>
-                  </div>
-                  <span class="step-label">Doctor Summary</span>
-                </button>
-              </div>
-              <div class="tabs__body p-3">
-                <div class="tab-content active" id="sim-tab-0">
-                  <div class="flex gap-2 flex-center">
-                    <div class="simulator-icon badge badge--primary badge--glow" style="font-size: 2.5rem; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">🎤</div>
-                    <div>
-                      <h4>Multilingual Voice Intake</h4>
-                      <p>"My father has severe chest pain and sweating..."</p>
-                      <p class="text-muted">AI instantly translates, transcribes, and extracts key clinical entities.</p>
-                    </div>
+              <!-- Compact Live Stats Row -->
+              <div class="compact-stats-row flex gap-2">
+                <div class="compact-stat-item">
+                  <span class="stat-icon">🏥</span>
+                  <div>
+                    <strong id="stat-hospitals">48</strong>
+                    <small>Centers</small>
                   </div>
                 </div>
-                <div class="tab-content" id="sim-tab-1" style="display: none;">
-                  <div class="flex gap-2 flex-center">
-                    <div class="simulator-icon badge badge--primary badge--glow" style="font-size: 2.5rem; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">🗺️</div>
-                    <div>
-                      <h4>Smart Routing & Scoring</h4>
-                      <p>AI Score: 92/100 (Max Healthcare)</p>
-                      <p class="text-muted">Routing via OSRM avoids traffic. ETA: 8 mins.</p>
-                    </div>
+                <div class="compact-stat-item">
+                  <span class="stat-icon">🛏️</span>
+                  <div>
+                    <strong id="stat-beds">1,250</strong>
+                    <small>ICU Beds</small>
                   </div>
                 </div>
-                <div class="tab-content" id="sim-tab-2" style="display: none;">
-                   <div class="flex gap-2 flex-center">
-                    <div class="simulator-icon badge badge--primary badge--glow" style="font-size: 2.5rem; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">📋</div>
-                    <div>
-                      <h4>Doctor Executive Summary</h4>
-                      <p>Pre-arrival briefing delivered to ER dashboard.</p>
-                      <p class="text-muted">Patient vitals, PMH, and generated impression ready in 30s.</p>
-                    </div>
+                <div class="compact-stat-item">
+                  <span class="stat-icon">❤️</span>
+                  <div>
+                    <strong id="stat-lives">15.4K</strong>
+                    <small>Lives Saved</small>
+                  </div>
+                </div>
+                <div class="compact-stat-item">
+                  <span class="stat-icon">⏱️</span>
+                  <div>
+                    <strong><span id="stat-response">7.5</span>m</strong>
+                    <small>Avg ETA</small>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
 
-          <!-- Stats Bar -->
-          <section class="stats-bar mt-4">
-            <div class="grid grid--4 container">
-              <div class="stat-card card card--glass" data-animate="slide-up">
-                <div class="stat-card__icon">🏥</div>
-                <div class="stat-card__value" id="stat-hospitals">0</div>
-                <div class="stat-card__label">Connected Hospitals</div>
+            <!-- Right Column: Compact Circular Icon Portals Hub -->
+            <div class="home-right-col card card--glass">
+              <h3 class="hub-title text-center mb-2">⚡ Emergency Portals & Modules</h3>
+              
+              <div class="icon-portal-grid">
+                <a href="#emergency" class="icon-hub-btn btn-glow-red" title="🚨 Emergency Hospital Finder — Instant AI scoring, OSRM routes, GPS">
+                  <div class="hub-circle">🚨</div>
+                  <span class="hub-label">Emergency</span>
+                </a>
+                <a href="#intake" class="icon-hub-btn btn-glow-blue" title="🤖 AI Clinical Intake — Voice & Touch Multilingual Triage, Body Map, QR">
+                  <div class="hub-circle">🤖</div>
+                  <span class="hub-label">AI Intake</span>
+                </a>
+                <a href="#doctor-triage" class="icon-hub-btn btn-glow-purple" title="👨‍⚕️ Doctor 30-Sec Review Portal — Live Triage Queue, Document OCR">
+                  <div class="hub-circle">👨‍⚕️</div>
+                  <span class="hub-label">Doctor Review</span>
+                </a>
+                <a href="#dashboard" class="icon-hub-btn btn-glow-green" title="🏥 Hospital Admin Dashboard — Live Bed Management & Registration">
+                  <div class="hub-circle">🏥</div>
+                  <span class="hub-label">Bed Dashboard</span>
+                </a>
+                <a href="#ambulance" class="icon-hub-btn btn-glow-warning" title="🚑 Ambulance Tracker & Dispatch — OSRM GPS Navigation">
+                  <div class="hub-circle">🚑</div>
+                  <span class="hub-label">Ambulances</span>
+                </a>
+                <a href="#patient" class="icon-hub-btn btn-glow-info" title="👤 Patient Portal & ABDM Health Pass QR">
+                  <div class="hub-circle">👤</div>
+                  <span class="hub-label">Patient Pass</span>
+                </a>
+                <a href="#ayush" class="icon-hub-btn btn-glow-ayush" title="🌿 AYUSH Traditional Medicine Mode">
+                  <div class="hub-circle">🌿</div>
+                  <span class="hub-label">AYUSH</span>
+                </a>
+                <a href="#admin" class="icon-hub-btn btn-glow-admin" title="⚙️ System Admin & Platform Analytics">
+                  <div class="hub-circle">⚙️</div>
+                  <span class="hub-label">Admin</span>
+                </a>
               </div>
-              <div class="stat-card card card--glass" data-animate="slide-up" style="animation-delay: 0.1s">
-                <div class="stat-card__icon">🛏️</div>
-                <div class="stat-card__value" id="stat-beds">0</div>
-                <div class="stat-card__label">Available ICU Beds</div>
-              </div>
-              <div class="stat-card card card--glass" data-animate="slide-up" style="animation-delay: 0.2s">
-                <div class="stat-card__icon">❤️</div>
-                <div class="stat-card__value" id="stat-lives">0</div>
-                <div class="stat-card__label">Lives Saved</div>
-              </div>
-              <div class="stat-card card card--glass" data-animate="slide-up" style="animation-delay: 0.3s">
-                <div class="stat-card__icon">⏱️</div>
-                <div class="stat-card__value"><span id="stat-response">0</span> <span style="font-size: 1rem; color: var(--text-muted)">min</span></div>
-                <div class="stat-card__label">Avg Emergency Response</div>
+
+              <!-- Compact Capabilities Bar -->
+              <div class="capability-tags-row flex flex-center gap-1 flex-wrap mt-2">
+                <span class="cap-tag" title="Real-Time ICU Bed Intelligence">🛏️ Bed Intelligence</span>
+                <span class="cap-tag" title="AI Multi-Parameter Scoring">🧠 AI Multi-Scoring</span>
+                <span class="cap-tag" title="Voice-Guided Intake">🎤 Voice Intake</span>
+                <span class="cap-tag" title="Document OCR Traceability">📄 Document OCR</span>
+                <span class="cap-tag" title="Instant Ambulance GPS Dispatch">🚑 OSRM Dispatch</span>
+                <span class="cap-tag" title="ABDM Health Pass QR">📱 ABDM Pass</span>
               </div>
             </div>
-          </section>
-
-          <!-- Features Section (Pure Icon Badges) -->
-          <section class="features-section container mt-4 text-center">
-            <h3 class="section-title mb-3">Core Capabilities</h3>
-            <div class="pure-capability-row flex flex-center gap-2 flex-wrap">
-              <div class="capability-icon-badge" title="🛏️ Real-Time Bed Intelligence — Live tracking of ICU, ward, and emergency beds">
-                <span class="badge-emoji">🛏️</span>
-                <span class="badge-caption">Bed Intelligence</span>
-              </div>
-              <div class="capability-icon-badge" title="🧠 AI Multi-Parameter Scoring — Matches patients to hospitals based on severity & distance">
-                <span class="badge-emoji">🧠</span>
-                <span class="badge-caption">AI Multi-Scoring</span>
-              </div>
-              <div class="capability-icon-badge" title="🎤 Voice-Guided Intake — Speak naturally in 12+ native languages">
-                <span class="badge-emoji">🎤</span>
-                <span class="badge-caption">Voice Intake</span>
-              </div>
-              <div class="capability-icon-badge" title="📄 Document OCR Traceability — Instant scanning of medical documents & lab reports">
-                <span class="badge-emoji">📄</span>
-                <span class="badge-caption">OCR Traceability</span>
-              </div>
-              <div class="capability-icon-badge" title="🚑 Instant Ambulance Dispatch — One-click tracking with OSRM routes">
-                <span class="badge-emoji">🚑</span>
-                <span class="badge-caption">Ambulance Dispatch</span>
-              </div>
-              <div class="capability-icon-badge" title="📱 ABDM Health Pass QR — Digital health records integration">
-                <span class="badge-emoji">📱</span>
-                <span class="badge-caption">ABDM Health QR</span>
-              </div>
-            </div>
-          </section>
-
-          <!-- Accredited Partner Hospitals Grid -->
-          <section class="trusted-by-section container mt-4 mb-4 text-center">
-            <h3 class="section-title mb-2">Accredited Partner Hospitals</h3>
-            <div class="flex flex-center gap-1" style="flex-wrap: wrap;">
-              <div class="badge badge--glass badge--xl p-2">🏥 AIIMS New Delhi</div>
-              <div class="badge badge--glass badge--xl p-2">🏥 Fortis Escorts</div>
-              <div class="badge badge--glass badge--xl p-2">🏥 Max Healthcare</div>
-              <div class="badge badge--glass badge--xl p-2">🏥 Apollo Hospitals</div>
-              <div class="badge badge--glass badge--xl p-2">🏥 Medanta The Medicity</div>
-              <div class="badge badge--glass badge--xl p-2">🏥 Manipal Hospitals</div>
-            </div>
-          </section>
-
-          <style>
-            .alert-ticker {
-              background: rgba(var(--color-danger-rgb), 0.2);
-              border-bottom: 1px solid rgba(var(--color-danger-rgb), 0.3);
-              color: var(--color-danger);
-              padding: 0.5rem;
-              font-weight: bold;
-              overflow: hidden;
-              white-space: nowrap;
-            }
-            .alert-ticker__content {
-              display: inline-block;
-              animation: ticker 20s linear infinite;
-            }
-            @keyframes ticker {
-              0% { transform: translateX(100%); }
-              100% { transform: translateX(-100%); }
-            }
-            .hero-section {
-              position: relative;
-              padding: 4rem 1rem 8rem 1rem;
-              overflow: hidden;
-            }
-            .hero-section__bg {
-              position: absolute;
-              top: 0; left: 0; width: 100%; height: 100%;
-              z-index: -1;
-              overflow: hidden;
-            }
-            .gradient-orb {
-              position: absolute;
-              border-radius: 50%;
-              filter: blur(80px);
-              opacity: 0.5;
-            }
-            .orb-1 {
-              top: -10%; left: -10%;
-              width: 50vw; height: 50vw;
-              background: rgba(var(--color-primary-rgb), 0.4);
-            }
-            .orb-2 {
-              bottom: -20%; right: -10%;
-              width: 60vw; height: 60vw;
-              background: rgba(var(--color-danger-rgb), 0.3);
-            }
-            .hero-title {
-              font-size: clamp(2rem, 5vw, 3.5rem);
-              line-height: 1.2;
-              max-width: 900px;
-              font-weight: 800;
-              letter-spacing: -1px;
-            }
-            .hero-subtitle {
-              font-size: 1.25rem;
-              color: var(--text-muted);
-              max-width: 700px;
-            }
-            .quick-search-bar {
-              margin-top: 2rem;
-              padding: 1.5rem;
-              border-radius: var(--radius-lg);
-              max-width: 800px;
-              width: 100%;
-              align-items: center;
-              justify-content: center;
-            }
-            .hero-ecg {
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              width: 100%;
-              height: 120px;
-              opacity: 0.4;
-            }
-            .hero-ecg svg {
-              width: 100%;
-              height: 100%;
-            }
-            .ecg-line {
-              fill: none;
-              stroke: var(--color-danger);
-              stroke-width: 3;
-              stroke-linecap: round;
-              stroke-linejoin: round;
-              stroke-dasharray: 1000;
-              stroke-dashoffset: 1000;
-              animation: drawLine 2.5s ease-out infinite;
-            }
-            @keyframes drawLine {
-              to {
-                stroke-dashoffset: 0;
-              }
-            }
-            .launcher-card {
-              text-align: center;
-              padding: 2rem;
-              text-decoration: none;
-              color: inherit;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              gap: 0.5rem;
-            }
-            .launcher-icon {
-              font-size: 3.5rem;
-              margin-bottom: 1rem;
-              filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
-            }
-            .tabs__header {
-              border-bottom: 1px solid var(--border-color);
-              overflow-x: auto;
-            }
-            .tab-btn {
-              background: transparent;
-              border: none;
-              color: var(--text-muted);
-              padding: 1rem 1.5rem;
-              cursor: pointer;
-              font-weight: 600;
-              white-space: nowrap;
-              border-bottom: 2px solid transparent;
-              transition: all 0.2s;
-            }
-            .tab-btn:hover {
-              color: var(--text-light);
-            }
-            .tab-btn.active {
-              color: var(--color-primary);
-              border-bottom-color: var(--color-primary);
-            }
-            .badge--xl {
-              font-size: 1.2rem;
-            }
-          </style>
+          </div>
         </div>
       `;
     },
     
     findNearestBed() {
-      const loc = document.getElementById('hero-location-input').value;
-      const type = document.getElementById('hero-emergency-type').value;
+      const loc = document.getElementById('hero-location-input')?.value || '';
+      const type = document.getElementById('hero-emergency-type')?.value || '';
       
       sessionStorage.setItem('search_location', loc);
       sessionStorage.setItem('search_type', type);
       
       window.location.hash = '#emergency';
-    },
-
-    switchTab(index) {
-      const btns = document.querySelectorAll('.workflow-icon-step, .tab-btn');
-      const tabs = document.querySelectorAll('.tab-content');
-      
-      btns.forEach((btn, i) => {
-        if (i === index) btn.classList.add('active');
-        else btn.classList.remove('active');
-      });
-      
-      tabs.forEach((tab, i) => {
-        if (i === index) tab.style.display = 'block';
-        else tab.style.display = 'none';
-      });
     },
 
     mount() {
@@ -389,34 +154,11 @@
         const livesEl = document.getElementById('stat-lives');
         const responseEl = document.getElementById('stat-response');
         
-        if (hospitalsEl) window.MediRoute.components.animateCounter(hospitalsEl, stats.hospitals, 2000);
-        if (bedsEl) window.MediRoute.components.animateCounter(bedsEl, stats.beds, 2000);
-        if (livesEl) window.MediRoute.components.animateCounter(livesEl, stats.lives, 2000);
-        if (responseEl) window.MediRoute.components.animateCounter(responseEl, stats.response, 2000);
-
-        if (typeof window.MediRoute.components.animateOnScroll === 'function') {
-          window.MediRoute.components.animateOnScroll();
-        } else {
-          const animateEls = document.querySelectorAll('[data-animate]');
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                const animationClass = 'animate-' + entry.target.dataset.animate;
-                entry.target.classList.add(animationClass);
-                entry.target.style.opacity = 1;
-                observer.unobserve(entry.target);
-              }
-            });
-          }, { threshold: 0.1 });
-          
-          animateEls.forEach(el => {
-            el.style.opacity = 0;
-            observer.observe(el);
-          });
-        }
+        if (hospitalsEl) window.MediRoute.components.animateCounter(hospitalsEl, stats.hospitals, 1500);
+        if (bedsEl) window.MediRoute.components.animateCounter(bedsEl, stats.beds, 1500);
+        if (livesEl) window.MediRoute.components.animateCounter(livesEl, stats.lives, 1500);
+        if (responseEl) window.MediRoute.components.animateCounter(responseEl, stats.response, 1500);
       }
-    },
-    unmount() {
     }
   };
 })();
