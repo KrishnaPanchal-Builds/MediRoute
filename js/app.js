@@ -91,40 +91,6 @@
     currentPageName = pageName;
   }
 
-  // ---- Sidebar Toggle ----
-  function initSidebar() {
-    const sidebar = document.querySelector('.app__sidebar');
-    const toggle = document.getElementById('sidebar-toggle');
-    const overlay = document.querySelector('.sidebar-overlay');
-
-    if (toggle) {
-      toggle.addEventListener('click', () => {
-        if (window.innerWidth <= 768) {
-          sidebar.classList.toggle('open');
-          overlay?.classList.toggle('active');
-        } else {
-          sidebar.classList.toggle('collapsed');
-        }
-      });
-    }
-
-    if (overlay) {
-      overlay.addEventListener('click', () => {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('active');
-      });
-    }
-
-    // Mobile hamburger
-    const hamburger = document.getElementById('mobile-menu');
-    if (hamburger) {
-      hamburger.addEventListener('click', () => {
-        sidebar.classList.toggle('open');
-        overlay?.classList.toggle('active');
-      });
-    }
-  }
-
   // ---- Theme Toggle ----
   function initTheme() {
     const toggle = document.getElementById('theme-toggle');
@@ -216,7 +182,13 @@
 
   // ---- App Initialization ----
   function init() {
-    initSidebar();
+    // Hide Loading Screen
+    const loader = document.getElementById('app-loading');
+    if (loader) {
+      loader.classList.add('fade-out');
+      setTimeout(() => loader.remove(), 400);
+    }
+
     initTheme();
     initSOS();
     initNav();
