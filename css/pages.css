@@ -1519,83 +1519,235 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-[data-theme="light"] .app__sidebar {
-  background: linear-gradient(180deg, #f8fafc, #f0f3f8);
-  border-right-color: rgba(0, 0, 0, 0.08);
+/* ============================================================
+   MASTER LIGHT THEME COMPREHENSIVE OVERRIDES
+   ============================================================ */
+[data-theme="light"] {
+  --bg-deep: #f1f5f9;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #e2e8f0;
+  --bg-elevated: #ffffff;
+  --bg-surface: #f1f5f9;
+
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-bg-hover: rgba(255, 255, 255, 0.95);
+  --glass-bg-active: #ffffff;
+  --glass-border: rgba(0, 0, 0, 0.12);
+  --glass-border-hover: rgba(0, 0, 0, 0.2);
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-disabled: #94a3b8;
 }
 
-[data-theme="light"] .nav__item:hover,
-[data-theme="light"] .nav__item.active {
-  background: rgba(0, 212, 170, 0.1);
+[data-theme="light"] body {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
 }
 
-[data-theme="light"] .app__header {
-  background: rgba(255, 255, 255, 0.9);
-  border-bottom-color: rgba(0, 0, 0, 0.06);
+[data-theme="light"] body::before {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0, 212, 170, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(108, 99, 255, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(255, 71, 87, 0.04) 0%, transparent 40%) !important;
 }
 
-[data-theme="light"] .stat-card {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(0, 0, 0, 0.08);
+/* Header & Nav */
+[data-theme="light"] .app-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06) !important;
 }
 
+[data-theme="light"] .brand-logo-text {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .top-nav-icon-btn {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+[data-theme="light"] .top-nav-icon-btn:hover {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 12px rgba(0, 212, 170, 0.2) !important;
+}
+
+[data-theme="light"] .top-nav-icon-btn.active {
+  background: rgba(0, 212, 170, 0.15) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+
+[data-theme="light"] .icon-btn {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+[data-theme="light"] .avatar-pill {
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+}
+
+/* Cards & Glass Containers */
+[data-theme="light"] .card,
+[data-theme="light"] .card--glass,
+[data-theme="light"] .card--glow,
+[data-theme="light"] .home-right-col,
+[data-theme="light"] .quick-search-bar,
+[data-theme="light"] .emergency-compact-header,
+[data-theme="light"] .emergency-results-scroll,
+[data-theme="light"] .triage-sidebar,
+[data-theme="light"] .triage-main,
+[data-theme="light"] .triage-card,
+[data-theme="light"] .patient-card,
+[data-theme="light"] .ambulance-card,
+[data-theme="light"] .ayush-card,
+[data-theme="light"] .admin-card,
+[data-theme="light"] .dashboard-card {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Text Overrides */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6,
+[data-theme="light"] strong,
+[data-theme="light"] .hero-title,
+[data-theme="light"] .section-title,
+[data-theme="light"] .hub-title {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] p,
+[data-theme="light"] span,
+[data-theme="light"] label,
+[data-theme="light"] .hero-subtitle,
+[data-theme="light"] .section-subtitle,
+[data-theme="light"] .text-secondary {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .text-muted,
+[data-theme="light"] small {
+  color: #64748b !important;
+}
+
+/* Inputs, Selects & Buttons */
 [data-theme="light"] .form-input,
-[data-theme="light"] .form-select {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.15);
-  color: var(--text-primary);
+[data-theme="light"] .form-select,
+[data-theme="light"] .form-control,
+[data-theme="light"] input[type="text"],
+[data-theme="light"] input[type="number"],
+[data-theme="light"] input[type="search"],
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
 }
 
-[data-theme="light"] .form-input:focus,
-[data-theme="light"] .form-select:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.15);
-}
-
-[data-theme="light"] .badge {
-  border-color: rgba(0, 0, 0, 0.1);
+[data-theme="light"] .form-input::placeholder,
+[data-theme="light"] .form-control::placeholder {
+  color: #94a3b8 !important;
 }
 
 [data-theme="light"] .btn--ghost {
-  color: var(--text-secondary);
-  border-color: rgba(0, 0, 0, 0.12);
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
 }
 
 [data-theme="light"] .btn--ghost:hover {
-  background: rgba(0, 0, 0, 0.04);
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
 }
 
-[data-theme="light"] .data-table__row:hover {
-  background: rgba(0, 212, 170, 0.06);
+/* Badges & Pills */
+[data-theme="light"] .badge--info,
+[data-theme="light"] .badge--ghost,
+[data-theme="light"] .filter-pill {
+  background: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
 }
 
-[data-theme="light"] .sos-fab {
-  box-shadow: 0 4px 20px rgba(255, 71, 87, 0.35);
+[data-theme="light"] .badge--info:hover,
+[data-theme="light"] .filter-pill:hover {
+  background: #cbd5e1 !important;
+  color: #0f172a !important;
 }
 
-[data-theme="light"] .toast {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(0, 0, 0, 0.1);
-  color: var(--text-primary);
+/* Circular Portal Hub Buttons on Landing Page */
+[data-theme="light"] .hub-circle {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
 }
 
-[data-theme="light"] .modal {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.1);
+[data-theme="light"] .hub-label {
+  color: #1e293b !important;
 }
 
-[data-theme="light"] .hero {
-  background: linear-gradient(135deg, #f0faf7, #f0f0ff);
+/* Ticker */
+[data-theme="light"] .alert-ticker {
+  background: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
 }
 
-[data-theme="light"] .doctor-card,
-[data-theme="light"] .facility-item {
-  background: rgba(0, 0, 0, 0.02) !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
+/* Modals & Dropdowns */
+[data-theme="light"] .modal-overlay {
+  background: rgba(15, 23, 42, 0.4) !important;
 }
 
-[data-theme="light"] .bed-cell {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+[data-theme="light"] .modal,
+[data-theme="light"] .modal-content,
+[data-theme="light"] #notification-dropdown {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Tables */
+[data-theme="light"] table,
+[data-theme="light"] th,
+[data-theme="light"] td {
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] tr:hover {
+  background: #f8fafc !important;
+}
+
+/* Special Banners */
+[data-theme="light"] #red-flag-banner {
+  background: #fff5f5 !important;
+  border-color: #feb2b2 !important;
+}
+
+[data-theme="light"] #digital-handoff-card {
+  background: #f0fdf4 !important;
+  border-color: #bbf7d0 !important;
+}
+
+[data-theme="light"] code {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
 }
 
 /* ---- Live Status Update Panel ---- */
