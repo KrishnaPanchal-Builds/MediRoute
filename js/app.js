@@ -66,9 +66,10 @@
       } catch (e) { console.error('Mount error:', e); }
     }
 
-    // Update active nav
-    document.querySelectorAll('.nav__item').forEach(item => {
-      item.classList.toggle('active', item.dataset.page === pageName);
+    // Update active nav tabs
+    document.querySelectorAll('.top-nav-tab').forEach(item => {
+      const p = item.getAttribute('data-page');
+      item.classList.toggle('active', p === pageName);
     });
 
     // Update header title
@@ -161,14 +162,11 @@
 
   // ---- Nav Click Handlers ----
   function initNav() {
-    document.querySelectorAll('.nav__item').forEach(item => {
+    document.querySelectorAll('.top-nav-tab').forEach(item => {
       item.addEventListener('click', () => {
-        const page = item.dataset.page;
+        const page = item.getAttribute('data-page');
         if (page) {
           navigateTo(page === 'landing' ? '' : page);
-          // Close mobile sidebar
-          document.querySelector('.app__sidebar')?.classList.remove('open');
-          document.querySelector('.sidebar-overlay')?.classList.remove('active');
         }
       });
     });

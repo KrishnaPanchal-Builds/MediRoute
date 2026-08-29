@@ -102,137 +102,60 @@
     <div class="app-loading__bar"><div class="app-loading__bar-fill"></div></div>
   </div>
 
-  <!-- Mobile sidebar overlay -->
-  <div class="sidebar-overlay"></div>
-
   <!-- App Shell -->
   <div class="app">
-    <!-- Sidebar Navigation -->
-    <aside class="app__sidebar" id="sidebar">
-      <div class="sidebar__logo">
-        <div class="sidebar__logo-icon">🏥</div>
-        <div class="sidebar__logo-text">Medi<span>Route</span></div>
+    <!-- Top Widescreen Navbar -->
+    <header class="app-header">
+      <div class="header-brand" onclick="window.location.hash='landing'">
+        <span class="brand-logo-icon">🏥</span>
+        <span class="brand-logo-text">Medi<span>Route</span></span>
       </div>
 
-      <nav class="sidebar__nav">
-        <div class="nav__group">
-          <div class="nav__group-title">Main</div>
-          <div class="nav__item active" data-page="landing">
-            <span class="nav__item-icon">🏠</span>
-            <span>Home</span>
-          </div>
-          <div class="nav__item" data-page="emergency">
-            <span class="nav__item-icon">🚨</span>
-            <span>Emergency Finder</span>
-            <span class="nav__item-badge">SOS</span>
-          </div>
-        </div>
-
-        <div class="nav__group">
-          <div class="nav__group-title">Hospital</div>
-          <div class="nav__item" data-page="dashboard">
-            <span class="nav__item-icon">🏥</span>
-            <span>Hospital Dashboard</span>
-          </div>
-          <div class="nav__item" data-page="ambulance">
-            <span class="nav__item-icon">🚑</span>
-            <span>Ambulance Tracker</span>
-          </div>
-        </div>
-
-        <div class="nav__group">
-          <div class="nav__group-title">Patient</div>
-          <div class="nav__item" data-page="patient">
-            <span class="nav__item-icon">👤</span>
-            <span>Patient Portal</span>
-          </div>
-        </div>
-
-        <div class="nav__group">
-          <div class="nav__group-title">AI Triage & AYUSH</div>
-          <div class="nav__item" data-page="intake">
-            <span class="nav__item-icon">🤖</span>
-            <span>AI Clinical Intake</span>
-          </div>
-          <div class="nav__item" data-page="doctor-triage">
-            <span class="nav__item-icon">👨‍⚕️</span>
-            <span>Doctor Triage View</span>
-          </div>
-          <div class="nav__item" data-page="ayush">
-            <span class="nav__item-icon">🌿</span>
-            <span>AYUSH Mode</span>
-          </div>
-        </div>
-
-        <div class="nav__group">
-          <div class="nav__group-title">System</div>
-          <div class="nav__item" data-page="admin">
-            <span class="nav__item-icon">⚙️</span>
-            <span>Admin Panel</span>
-          </div>
-        </div>
+      <!-- Navigation Tabs with Icons -->
+      <nav class="top-nav-tabs">
+        <button class="top-nav-tab active" data-page="landing"><span class="tab-icon">🏠</span> Home</button>
+        <button class="top-nav-tab" data-page="emergency"><span class="tab-icon">🚨</span> Emergency</button>
+        <button class="top-nav-tab" data-page="intake"><span class="tab-icon">🤖</span> AI Intake</button>
+        <button class="top-nav-tab" data-page="doctor-triage"><span class="tab-icon">👨‍⚕️</span> Doctor Portal</button>
+        <button class="top-nav-tab" data-page="dashboard"><span class="tab-icon">🏥</span> Dashboard</button>
+        <button class="top-nav-tab" data-page="ambulance"><span class="tab-icon">🚑</span> Ambulances</button>
+        <button class="top-nav-tab" data-page="patient"><span class="tab-icon">👤</span> Patient Portal</button>
+        <button class="top-nav-tab" data-page="ayush"><span class="tab-icon">🌿</span> AYUSH</button>
+        <button class="top-nav-tab" data-page="admin"><span class="tab-icon">⚙️</span> Admin</button>
       </nav>
 
-      <div class="sidebar__footer">
-        <div class="nav__item" style="font-size: 0.75rem; color: var(--text-muted); padding: 8px 16px;">
-          <span class="nav__item-icon">💚</span>
-          <span>MediRoute v1.0</span>
+      <div class="header-tools">
+        <div class="live-pill hide-mobile">
+          <span class="pulse-dot"></span>
+          <span>Live</span>
         </div>
+        <span id="header-clock" class="header-time hide-mobile">--:--</span>
+        <div style="position: relative;" id="notification-container">
+          <button class="icon-btn" id="notifications-btn" title="Notifications">
+            🔔
+            <span class="badge-dot" id="notification-count">4</span>
+          </button>
+          <div id="notification-dropdown" class="card card--glass" style="display: none; position: absolute; right: 0; top: 100%; margin-top: 8px; width: 320px; z-index: 1000; padding: 12px; flex-direction: column; gap: 8px;">
+            <div style="font-size: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--glass-border);">🚨 Emergency Dispatch: AMB-102 assigned to Saket (2 mins ago)</div>
+            <div style="font-size: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--glass-border);">🛏️ ICU Bed Update: AIIMS added 5 ICU beds (8 mins ago)</div>
+            <div style="font-size: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--glass-border);">⚠️ Blood Bank Alert: Max Healthcare requested O- Blood (20 mins ago)</div>
+            <div style="font-size: 12px;">✅ System Alert: All 48 emergency centers online</div>
+          </div>
+        </div>
+        <div class="theme-switch" id="theme-toggle" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 12px;border-radius:999px;background:var(--glass-bg);border:1px solid var(--glass-border);transition:all 0.3s ease;">
+          <span style="font-size:14px;">🌙</span>
+          <div style="width:36px;height:20px;border-radius:999px;background:var(--color-primary);position:relative;transition:background 0.3s ease;">
+            <div id="theme-toggle-knob" style="width:16px;height:16px;border-radius:50%;background:white;position:absolute;top:2px;left:2px;transition:transform 0.3s ease;box-shadow:0 1px 3px rgba(0,0,0,0.3);"></div>
+          </div>
+          <span style="font-size:14px;">☀️</span>
+        </div>
+        <div class="avatar-pill" onclick="window.location.hash='patient'" title="Patient Profile">AM</div>
       </div>
+    </header>
 
-      <button class="sidebar__toggle" id="sidebar-toggle">◀</button>
-    </aside>
-
-    <!-- Main Content Area -->
+    <!-- Main Application Canvas Area (100% Width Below Top Navbar) -->
     <main class="app__main">
-      <!-- Header -->
-      <header class="app__header">
-        <div class="flex items-center gap-1">
-          <button class="btn btn--icon btn--ghost hide-desktop" id="mobile-menu">☰</button>
-          <h2 id="header-title" style="font-size: var(--text-lg); font-weight: var(--weight-semibold);">🏠 Home</h2>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <!-- Live indicator -->
-          <div class="flex items-center gap-sm" style="font-size: var(--text-xs); color: var(--text-muted);">
-            <span class="status-dot status-dot--online status-dot--pulse"></span>
-            <span>Live Data</span>
-          </div>
-
-          <!-- Clock -->
-          <span id="header-clock" style="font-size: var(--text-sm); color: var(--text-muted); font-family: var(--font-display);">--:--</span>
-
-          <!-- Notifications -->
-          <div style="position: relative;" id="notification-container">
-            <button class="btn btn--icon btn--ghost" style="position: relative;" id="notifications-btn">
-              🔔
-              <span class="notification-dot" id="notification-count" style="font-size:8px;width:auto;min-width:16px;height:16px;display:flex;align-items:center;justify-content:center;padding:0 4px;top:-4px;right:-4px;">4</span>
-            </button>
-            <div id="notification-dropdown" class="card card--glass" style="display: none; position: absolute; right: 0; top: 100%; margin-top: 8px; width: 320px; z-index: 1000; padding: 12px; flex-direction: column; gap: 8px;">
-              <div style="font-size: 13px; padding-bottom: 8px; border-bottom: 1px solid var(--glass-border);">🚨 Emergency Dispatch: AMB-102 assigned to Cardiac Case in Saket (2 mins ago)</div>
-              <div style="font-size: 13px; padding-bottom: 8px; border-bottom: 1px solid var(--glass-border);">🛏️ ICU Bed Update: Apollo Hospital added 3 ICU beds (10 mins ago)</div>
-              <div style="font-size: 13px; padding-bottom: 8px; border-bottom: 1px solid var(--glass-border);">⚠️ Blood Bank Alert: Max Healthcare requested O- Negative Blood (25 mins ago)</div>
-              <div style="font-size: 13px;">✅ System Alert: All 45 emergency centers online</div>
-            </div>
-          </div>
-
-          <!-- Theme toggle -->
-          <div class="theme-switch" id="theme-toggle" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:6px 12px;border-radius:999px;background:var(--glass-bg);border:1px solid var(--glass-border);transition:all 0.3s ease;">
-            <span style="font-size:14px;">🌙</span>
-            <div style="width:36px;height:20px;border-radius:999px;background:var(--color-primary);position:relative;transition:background 0.3s ease;">
-              <div id="theme-toggle-knob" style="width:16px;height:16px;border-radius:50%;background:white;position:absolute;top:2px;left:2px;transition:transform 0.3s ease;box-shadow:0 1px 3px rgba(0,0,0,0.3);"></div>
-            </div>
-            <span style="font-size:14px;">☀️</span>
-          </div>
-
-          <!-- User avatar -->
-          <div class="avatar avatar--sm" style="background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); font-size: 0.7rem; cursor: pointer;" onclick="window.location.hash='patient'">AM</div>
-        </div>
-      </header>
-
-      <!-- Dynamic Content -->
       <div class="app__content" id="app-content">
-        <!-- Pages are rendered here by the router -->
         <div class="flex-center" style="height: 60vh;">
           <div class="spinner spinner--lg"></div>
         </div>
