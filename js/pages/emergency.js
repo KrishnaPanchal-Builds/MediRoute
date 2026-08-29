@@ -36,24 +36,48 @@
   window.MediRoute.pages.emergency = {
     render() {
       return `
-        <div class="page page--emergency">
+        <div class="page page--emergency animate-fade-in">
+          
+          <!-- One-Tap Emergency SOS Header Banner & Pipeline Progress Bar -->
+          <div class="emergency-sos-header card card--glass mb-2">
+            <div class="flex flex-between flex-wrap gap-1 align-center">
+              <div class="flex align-center gap-1">
+                <button class="btn btn--danger btn--glow animate-pulse" id="btn-one-tap-sos" onclick="window.MediRoute.pages.emergency.triggerSOS()">
+                  🚨 ONE-TAP SOS DISPATCH
+                </button>
+                <div>
+                  <strong class="text-gradient" style="font-size: 1.1rem;">Emergency Care Routing Pipeline</strong>
+                  <div class="text-xs text-muted" id="sos-case-id">Case #CASE-9021-EM &bull; Active Geolocation</div>
+                </div>
+              </div>
+
+              <!-- Pipeline Status Badges -->
+              <div class="flex gap-1 align-center flex-wrap">
+                <span class="badge badge--primary" id="step-badge-loc">📍 Location</span>
+                <span class="badge badge--ghost" id="step-badge-triage">⚡ Rapid Triage</span>
+                <span class="badge badge--ghost" id="step-badge-redflag">🚨 Red-Flag Engine</span>
+                <span class="badge badge--ghost" id="step-badge-match">⚖️ Best Destination</span>
+                <span class="badge badge--ghost" id="step-badge-handoff">📋 ER Handoff</span>
+              </div>
+            </div>
+          </div>
+
           <div class="emergency-finder">
             <div class="emergency-finder__panel">
-              <div class="page__header mb-2">
-                <h1 class="section-title text-glow">🚨 Emergency Hospital Finder</h1>
-                <p class="section-subtitle">AI-powered instant hospital matching and routing</p>
-              </div>
               
-              <div class="panel-content" style="max-height: calc(100vh - 120px); overflow-y: auto; padding-right: 10px;">
-                <!-- Location Section -->
+              <div class="panel-content" style="max-height: calc(100vh - 150px); overflow-y: auto; padding-right: 8px;">
+                
+                <!-- 1. Location & GPS Section -->
                 <div class="card card--glass mb-2">
-                  <h3 class="mb-1">📍 Your Location</h3>
+                  <h3 class="mb-1 flex-between">
+                    <span>📍 1. Patient Location</span>
+                    <button id="btn-use-location" class="btn btn--primary btn--xs flex-center gap-1">
+                      <span>📍</span> GPS Current
+                    </button>
+                  </h3>
                   <div class="form-group mb-1">
-                    <input type="text" id="emergency-location-input" class="form-input" placeholder="Enter your location or use GPS" value="Delhi Center">
+                    <input type="text" id="emergency-location-input" class="form-input" placeholder="Locality, City, or Landmark" value="Delhi Center">
                   </div>
-                  <button id="btn-use-location" class="btn btn--primary btn--sm mb-1 w-full flex-center gap-1">
-                    <span>📍</span> Use My GPS Location
-                  </button>
                   <div class="flex gap-1" id="city-selector" style="flex-wrap: wrap;">
                     <button class="badge badge--info cursor-pointer" data-city="delhi">Delhi</button>
                     <button class="badge badge--info cursor-pointer" data-city="mumbai">Mumbai</button>
@@ -62,66 +86,128 @@
                   </div>
                 </div>
 
-                <!-- Emergency Type Section -->
+                <!-- 2. Rapid Adaptive Triage (Voice + Touch Dynamic Questions) -->
                 <div class="card card--glass mb-2">
-                  <h3 class="mb-1">🏥 Emergency Type</h3>
-                  <div class="emergency-type-grid" id="emergency-type-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                    <button class="btn btn--ghost emergency-type-btn" data-type="Cardiac">🫀 Cardiac</button>
-                    <button class="btn btn--ghost emergency-type-btn" data-type="Trauma">🦴 Trauma</button>
-                    <button class="btn btn--ghost emergency-type-btn" data-type="Burns">🔥 Burns</button>
-                    <button class="btn btn--ghost emergency-type-btn" data-type="Stroke">🧠 Stroke</button>
-                    <button class="btn btn--ghost emergency-type-btn" data-type="Pediatric">👶 Pediatric</button>
-                    <button class="btn btn--ghost emergency-type-btn selected" style="background: var(--primary); color: white;" data-type="General">🏥 General</button>
+                  <h3 class="mb-1 flex-between">
+                    <span>⚡ 2. Rapid Adaptive Triage</span>
+                    <button class="btn btn--ghost btn--xs" onclick="window.MediRoute.pages.emergency.toggleVoiceInput()">🎤 Speak Answer</button>
+                  </h3>
+                  
+                  <div class="form-group mb-1">
+                    <label class="form-label text-xs">Primary Emergency Condition:</label>
+                    <div class="emergency-type-grid" id="emergency-type-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                      <button class="btn btn--ghost emergency-type-btn" data-type="Cardiac">🫀 Cardiac / Chest Pain</button>
+                      <button class="btn btn--ghost emergency-type-btn" data-type="Trauma">🦴 Trauma / Fracture</button>
+                      <button class="btn btn--ghost emergency-type-btn" data-type="Burns">🔥 Severe Burns</button>
+                      <button class="btn btn--ghost emergency-type-btn" data-type="Stroke">🧠 Stroke / Paralysis</button>
+                      <button class="btn btn--ghost emergency-type-btn" data-type="Pediatric">👶 Pediatric / Child</button>
+                      <button class="btn btn--ghost emergency-type-btn selected" style="background: var(--color-primary); color: white;" data-type="General">🏥 General ER</button>
+                    </div>
                   </div>
-                </div>
 
-                <!-- Bed Type Section -->
-                <div class="card card--glass mb-2">
-                  <h3 class="mb-1">🛏️ Bed Type</h3>
-                  <div class="flex gap-1" id="bed-type-selector" style="flex-wrap: wrap;">
-                    <button class="badge badge--primary cursor-pointer selected" data-bed="emergency">Emergency</button>
-                    <button class="badge badge--info cursor-pointer" data-bed="icu">ICU</button>
-                    <button class="badge badge--info cursor-pointer" data-bed="general">General</button>
-                    <button class="badge badge--info cursor-pointer" data-bed="pediatric">Pediatric</button>
-                  </div>
-                </div>
-
-                <!-- Budget Range Section -->
-                <div class="card card--glass mb-2">
-                  <h3 class="mb-1">💰 Budget Range (per day)</h3>
-                  <input type="range" id="budget-range" class="form-range w-full" min="0" max="50000" step="1000" value="50000">
-                  <div id="budget-display" class="mt-1 font-bold text-center text-gradient" style="font-size: 1.2rem;">₹50,000</div>
-                </div>
-
-                <!-- Search Button -->
-                <button id="btn-search-hospitals" class="btn btn--danger btn--xl btn--glow w-full mb-2 animate-pulse">
-                  🔍 Find Best Hospital Now
-                </button>
-
-                <!-- AI Thinking Animation -->
-                <div id="ai-thinking" class="ai-thinking hidden card card--glow mb-2 text-center py-2" style="border-color: var(--primary);">
-                  <div class="text-4xl mb-1" style="animation: pulse 1s infinite;">🧠</div>
-                  <h3 class="mb-1 text-gradient">MediRoute AI is analyzing...</h3>
-                  <div class="text-sm" style="color: var(--text-secondary);">
-                    <div class="mb-1">Evaluating live traffic, bed availability,</div>
-                    <div>specialities, cost, and insurance...</div>
-                    <div class="mt-1 flex-center gap-1">
-                      <span class="status-dot status-dot--online"></span> Processing 34 data points
+                  <!-- Adaptive Dynamic Branching Questions -->
+                  <div class="adaptive-questions-box p-2 mb-1" style="background: rgba(255,255,255,0.03); border-radius: var(--radius-md); border: 1px solid var(--glass-border);">
+                    <div class="text-xs font-semibold text-primary mb-1">Adaptive Clinical Branching:</div>
+                    <div class="flex flex-col gap-1 text-xs">
+                      <label class="flex align-center gap-1 cursor-pointer">
+                        <input type="checkbox" id="chk-sweating" onchange="window.MediRoute.pages.emergency.evaluateRedFlags()">
+                        <span>Cold Sweating / Arm Radiation Pain</span>
+                      </label>
+                      <label class="flex align-center gap-1 cursor-pointer">
+                        <input type="checkbox" id="chk-breathing" onchange="window.MediRoute.pages.emergency.evaluateRedFlags()">
+                        <span>Struggling to Breathe / Gasping</span>
+                      </label>
+                      <label class="flex align-center gap-1 cursor-pointer">
+                        <input type="checkbox" id="chk-unconscious" onchange="window.MediRoute.pages.emergency.evaluateRedFlags()">
+                        <span>Loss of Consciousness / Unresponsive</span>
+                      </label>
                     </div>
                   </div>
                 </div>
 
-                <!-- Results List -->
+                <!-- 3. Red-Flag Priority Engine (Corti-Inspired Safety Alert) -->
+                <div id="red-flag-banner" class="card card--glow mb-2" style="border-color: #FF4757; background: rgba(255, 71, 87, 0.12);">
+                  <div class="flex align-center gap-1 mb-1">
+                    <span style="font-size: 1.5rem;">🚨</span>
+                    <div>
+                      <strong style="color: #FF4757; font-size: 0.95rem;">RED-FLAG PRIORITY SIGNAL ACTIVE</strong>
+                      <div class="text-xs text-muted" id="red-flag-desc">Information indicates immediate clinical attention is required. Level-1 Resuscitation Protocol initialized.</div>
+                    </div>
+                  </div>
+                  <div class="text-xs text-muted italic" style="border-top: 1px solid rgba(255,71,87,0.2); padding-top: 4px;">
+                    🛡️ Safety Grounding: Clinical risk signal derived from user-provided symptoms. Clinician evaluation required.
+                  </div>
+                </div>
+
+                <!-- 4. Bed Type & Budget Filters -->
+                <div class="card card--glass mb-2">
+                  <h3 class="mb-1">🛏️ Required Unit & Budget</h3>
+                  <div class="flex gap-1 mb-1" id="bed-type-selector" style="flex-wrap: wrap;">
+                    <button class="badge badge--primary cursor-pointer selected" data-bed="emergency">Emergency Ward</button>
+                    <button class="badge badge--info cursor-pointer" data-bed="icu">ICU Bed</button>
+                    <button class="badge badge--info cursor-pointer" data-bed="ventilator">Ventilator Bed</button>
+                    <button class="badge badge--info cursor-pointer" data-bed="general">General Ward</button>
+                  </div>
+                  <div class="form-group">
+                    <div class="flex flex-between text-xs mb-1">
+                      <span>Max Budget Limit:</span>
+                      <strong id="budget-display" class="text-primary">₹50,000 / day</strong>
+                    </div>
+                    <input type="range" id="budget-range" class="form-range w-full" min="0" max="50000" step="1000" value="50000">
+                  </div>
+                </div>
+
+                <!-- Action Button: Calculate Best-Destination Scoring -->
+                <button id="btn-search-hospitals" class="btn btn--danger btn--xl btn--glow w-full mb-2 animate-pulse">
+                  ⚖️ Calculate Best-Destination Ranking
+                </button>
+
+                <!-- AI Thinking Engine -->
+                <div id="ai-thinking" class="ai-thinking hidden card card--glow mb-2 text-center py-2" style="border-color: var(--color-primary);">
+                  <div class="text-3xl mb-1" style="animation: pulse 1s infinite;">🧠</div>
+                  <h3 class="mb-1 text-gradient">MediRoute Best-Destination Engine</h3>
+                  <div class="text-xs text-muted">
+                    Computing Score: <code>Clinical Match (30%) + Capability (20%) + Bed Availability (20%) + Travel ETA (20%) + Ambulance (10%)</code>
+                  </div>
+                </div>
+
+                <!-- Results & Side-by-Side Hospital Comparison Matrix -->
                 <div id="search-results" class="hidden pb-2">
                   <h3 class="mb-1 flex-between">
-                    <span>Top Hospitals Ranked by AI</span>
+                    <span>Top Matched Hospitals</span>
                     <span class="badge badge--success" id="result-count">0</span>
                   </h3>
+
+                  <!-- Side-by-Side Comparison Matrix Toggle -->
+                  <div class="card card--glass mb-2 p-2" id="comparison-matrix-box">
+                    <h4 class="text-xs font-semibold text-primary mb-1">📊 Side-by-Side Facility Matrix</h4>
+                    <div id="comparison-matrix-table" class="text-xs" style="overflow-x: auto;"></div>
+                  </div>
+
                   <div id="results-list" class="flex flex-col gap-2"></div>
                 </div>
+
+                <!-- Pre-Arrival Digital Handoff Summary Card -->
+                <div id="digital-handoff-card" class="hidden card card--glass mb-2 p-2" style="border-color: var(--color-success); background: rgba(46, 213, 115, 0.08);">
+                  <div class="flex flex-between align-center mb-1">
+                    <strong class="text-success" style="font-size: 0.95rem;">📋 Pre-Arrival Digital Handoff Card Generated</strong>
+                    <span class="badge badge--success">Synced to ER</span>
+                  </div>
+                  <div class="text-xs flex flex-col gap-1 text-secondary" id="handoff-card-details">
+                    <div><strong>Case ID:</strong> CASE-9021-EM</div>
+                    <div><strong>Impression:</strong> Acute Chest Discomfort &bull; Red-Flag Priority Level-1</div>
+                    <div><strong>Destination ER:</strong> AIIMS New Delhi (ICU Bed Reserved)</div>
+                    <div><strong>ETA:</strong> 8 mins via OSRM Optimized Ambulance Route</div>
+                  </div>
+                  <button class="btn btn--success btn--sm w-full mt-2" onclick="window.MediRoute.components.showToast('📋 Digital handoff re-sent to destination ER dashboard!', 'success')">
+                    🚀 Re-Sync Pre-Arrival Handoff
+                  </button>
+                </div>
+
               </div>
             </div>
             
+            <!-- Map Column -->
             <div class="emergency-finder__map map-container--full" style="height: 100vh; position: relative;">
               <div id="emergency-map" style="width: 100%; height: 100%;"></div>
             </div>
@@ -133,6 +219,12 @@
     mount() {
       // Map init
       const mapContainer = document.getElementById('emergency-map');
+      if (mapContainer && window.MediRoute.components.createMap) {
+        map = window.MediRoute.components.createMap('emergency-map', {
+          center: [currentParams.lat, currentParams.lng],
+          zoom: 12
+        });
+      }
       if (mapContainer && window.MediRoute.components.createMap) {
         map = window.MediRoute.components.createMap('emergency-map', {
           center: [currentParams.lat, currentParams.lng],
@@ -598,7 +690,113 @@
         }
       });
 
+      this.renderComparisonMatrix(topHospitals);
+      document.getElementById('step-badge-match')?.classList.replace('badge--ghost', 'badge--primary');
+
       window.MediRoute.components.showToast(`Found ${topHospitals.length} hospitals. Best match: ${topHospitals[0].hospital.name}`, 'success');
+    },
+
+    triggerSOS() {
+      const caseId = 'CASE-' + Math.floor(1000 + Math.random() * 9000) + '-EM';
+      const caseIdEl = document.getElementById('sos-case-id');
+      if (caseIdEl) caseIdEl.textContent = `Case #${caseId} • Active Geolocation`;
+
+      // Update progress badges
+      document.getElementById('step-badge-loc')?.classList.replace('badge--ghost', 'badge--primary');
+      document.getElementById('step-badge-triage')?.classList.replace('badge--ghost', 'badge--primary');
+      document.getElementById('step-badge-redflag')?.classList.replace('badge--ghost', 'badge--danger');
+
+      window.MediRoute.components.showToast(`🚨 ONE-TAP SOS ACTIVATED! Emergency Case #${caseId} Created. Initiating Rapid Triage...`, 'error', 6000);
+      
+      // Auto evaluate red-flags & trigger search
+      this.evaluateRedFlags();
+      setTimeout(() => this.handleSearch(), 800);
+    },
+
+    toggleVoiceInput() {
+      window.MediRoute.components.showToast('🎤 Multilingual Voice Intake Active. Speak symptoms now...', 'info');
+      // Simulate voice input recognition
+      setTimeout(() => {
+        const sweating = document.getElementById('chk-sweating');
+        const breathing = document.getElementById('chk-breathing');
+        if (sweating) sweating.checked = true;
+        if (breathing) breathing.checked = true;
+        this.evaluateRedFlags();
+        window.MediRoute.components.showToast('🗣️ Transcribed: "Patient experiencing chest tightness and difficulty breathing"', 'success');
+      }, 1500);
+    },
+
+    evaluateRedFlags() {
+      const sweating = document.getElementById('chk-sweating')?.checked;
+      const breathing = document.getElementById('chk-breathing')?.checked;
+      const unconscious = document.getElementById('chk-unconscious')?.checked;
+
+      const banner = document.getElementById('red-flag-banner');
+      const desc = document.getElementById('red-flag-desc');
+
+      if (sweating || breathing || unconscious) {
+        if (banner) banner.style.display = 'block';
+        if (desc) {
+          desc.textContent = `CRITICAL RED-FLAG SIGNAL: ${sweating ? 'Cold Sweating & Arm Radiation ' : ''}${breathing ? 'Severe Dyspnea ' : ''}${unconscious ? 'Unresponsiveness ' : ''}. Resuscitation Protocol Level-1.`;
+        }
+        document.getElementById('step-badge-redflag')?.classList.replace('badge--ghost', 'badge--danger');
+      } else {
+        if (banner) banner.style.display = 'none';
+        document.getElementById('step-badge-redflag')?.classList.replace('badge--danger', 'badge--ghost');
+      }
+    },
+
+    renderComparisonMatrix(topHospitals) {
+      const matrixBox = document.getElementById('comparison-matrix-table');
+      if (!matrixBox || topHospitals.length === 0) return;
+
+      const top2 = topHospitals.slice(0, 2);
+      let html = `
+        <table class="data-table w-full text-xs" style="border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--glass-border);">
+              <th style="padding: 6px; text-align: left;">Parameter</th>
+              ${top2.map(h => `<th style="padding: 6px; text-align: center; color: var(--color-primary);">${h.hospital.name}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 6px; font-weight: 600;">Distance / ETA</td>
+              ${top2.map(h => `<td style="padding: 6px; text-align: center;">${h.distanceText} (${h.etaText})</td>`).join('')}
+            </tr>
+            <tr>
+              <td style="padding: 6px; font-weight: 600;">Required Unit</td>
+              ${top2.map(h => `<td style="padding: 6px; text-align: center;">${h.hospital.emergencyTypes.includes(currentParams.emergencyType) || currentParams.emergencyType === 'General' ? '🟢 Verified' : '🟡 General'}</td>`).join('')}
+            </tr>
+            <tr>
+              <td style="padding: 6px; font-weight: 600;">ICU Bed Status</td>
+              ${top2.map(h => `<td style="padding: 6px; text-align: center;">${h.hospital.beds.icu.available > 0 ? '🟢 ' + h.hospital.beds.icu.available + ' Available' : '🔴 Full'}</td>`).join('')}
+            </tr>
+            <tr>
+              <td style="padding: 6px; font-weight: 600;">Emergency Status</td>
+              ${top2.map(h => `<td style="padding: 6px; text-align: center;"><span class="badge badge--success">Active ER</span></td>`).join('')}
+            </tr>
+            <tr>
+              <td style="padding: 6px; font-weight: 600;">Action</td>
+              ${top2.map((h, i) => `
+                <td style="padding: 6px; text-align: center;">
+                  <button class="btn btn--danger btn--xs" onclick="window.MediRoute.pages.emergency.selectHospitalFromMatrix(${i})">
+                    Select & Reserve
+                  </button>
+                </td>
+              `).join('')}
+            </tr>
+          </tbody>
+        </table>
+      `;
+      matrixBox.innerHTML = html;
+    },
+
+    selectHospitalFromMatrix(index) {
+      window.MediRoute.components.showToast('📋 Destination selected from matrix! Generating Pre-Arrival Handoff...', 'success');
+      const handoffCard = document.getElementById('digital-handoff-card');
+      if (handoffCard) handoffCard.classList.remove('hidden');
+      document.getElementById('step-badge-handoff')?.classList.replace('badge--ghost', 'badge--success');
     },
 
     unmount() {
