@@ -207,14 +207,14 @@
                 </div>
               </div>
 
-              <!-- Right Column: Smaller Compact Map (200px width, 250px height) -->
-              <div class="compact-map-col" style="width: 200px; flex-shrink: 0;">
+              <!-- Right Column: Smaller Compact Map (100px width, 100px height) -->
+              <div class="compact-map-col" style="width: 100px; flex-shrink: 0;">
                 <div class="card card--glass p-1">
                   <h4 class="text-xs font-semibold mb-1 flex-between">
                     <span>🗺️ Map</span>
                     <span class="badge badge--info text-xs">OSRM</span>
                   </h4>
-                  <div id="emergency-map" style="width: 200px; height: 250px; border-radius: var(--radius-lg); overflow: hidden;"></div>
+                  <div id="emergency-map" style="width: 100px; height: 100px; border-radius: var(--radius-md); overflow: hidden;"></div>
                 </div>
               </div>
 
