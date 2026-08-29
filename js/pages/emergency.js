@@ -431,128 +431,140 @@
     },
 
     async renderResults() {
-      if (!window.MediRoute.ai || !window.MediRoute.ai.findBestHospitals) {
-        console.error("AI engine not available");
-        return;
-      }
+      try {
+        if (!window.MediRoute.ai || !window.MediRoute.ai.findBestHospitals) {
+          console.error("AI engine not available");
+          return;
+        }
 
-      const resultsList = document.getElementById('results-list');
-      const resultCount = document.getElementById('result-count');
-      
-      // Get results from AI
-      const topHospitals = window.MediRoute.ai.findBestHospitals(currentParams).slice(0, 8);
-      
-      if (topHospitals.length === 0) {
-        resultsList.innerHTML = '<div class="card p-2 text-center">No hospitals found matching criteria.</div>';
-        resultCount.innerText = '0';
-        return;
-      }
-      
-      resultCount.innerText = topHospitals.length;
-      resultsList.innerHTML = '';
-
-      const comps = window.MediRoute.components;
-      const bounds = window.L ? L.latLngBounds([[currentParams.lat, currentParams.lng]]) : null;
-
-      // Add patient marker
-      if (map && window.L) {
-        patientMarker = comps.createPatientMarker(map, currentParams.lat, currentParams.lng);
-      }
-
-      topHospitals.forEach((result, index) => {
-        const hospital = result.hospital;
-        const score = result.totalScore / 100;
-        const breakdown = result.factors;
+        const resultsList = document.getElementById('results-list');
+        const resultCount = document.getElementById('result-count');
+        if (!resultsList) return;
         
-        // Build card HTML
-        const isBest = index === 0;
-        const cardClass = isBest ? 'card card--glass card--glow best-match' : 'card card--glass card--hover';
-        const scorePercent = Math.round(score * 100);
+        // Get results from AI
+        const topHospitals = window.MediRoute.ai.findBestHospitals(currentParams).slice(0, 8);
         
-        const html = `
-          <div class="${cardClass} p-2 cursor-pointer" data-index="${index}" data-lat="${hospital.lat}" data-lng="${hospital.lng}" style="position: relative; overflow: hidden;">
-            ${isBest ? '<div style="position:absolute; top:0; right:0; background:var(--primary); color:white; font-size:0.7rem; padding: 2px 8px; border-bottom-left-radius: 8px;">★ Best Match</div>' : ''}
-            
-            <div class="flex gap-1 mb-1">
-              <div class="hospital-result__rank flex-center" style="width: 32px; height: 32px; border-radius: 50%; background: ${isBest ? 'var(--primary)' : 'rgba(255,255,255,0.1)'}; font-weight: bold;">
-                #${index + 1}
-              </div>
-              <div style="flex: 1;">
-                <h4 class="m-0" style="font-size: 1.1rem;">${hospital.name}</h4>
-                <div class="text-sm" style="color: var(--text-secondary);">📍 ${hospital.area}, ${hospital.city}</div>
-              </div>
-            </div>
-            
-            <div class="grid grid--2 gap-1 mb-1 text-sm">
-              <div class="flex items-center gap-0.5">
-                <span>🚗</span> ${result.distanceKm.toFixed(1)} km (~${result.travelMinutes + ' min'})
-              </div>
-              <div class="flex items-center gap-0.5">
-                <span>🛏️</span> ${hospital.beds[currentParams.bedType].available} ${currentParams.bedType} beds
-              </div>
-              <div class="flex items-center gap-0.5">
-                <span>💰</span> ${comps.formatCurrency(hospital.costPerDay[currentParams.bedType])}/day
-              </div>
-              <div class="flex items-center gap-0.5">
-                <span>⭐</span> ${hospital.rating}/5.0
-              </div>
-            </div>
-            
-            <div class="mb-1">
-              <div class="flex-between text-sm mb-0.5">
-                <span>AI Confidence Score</span>
-                <span class="${scorePercent > 80 ? 'text-success' : 'text-warning'} font-bold">${scorePercent}%</span>
-              </div>
-              ${comps.createProgressBar(scorePercent, 100, scorePercent > 80 ? 'success' : 'warning')}
-            </div>
-            
-            <div class="flex gap-0.5 mb-1" style="flex-wrap: wrap;">
-              ${hospital.facilities.slice(0, 3).map(f => `<span class="badge badge--info" style="font-size: 0.7rem;">${f}</span>`).join('')}
-              ${hospital.facilities.length > 3 ? `<span class="badge" style="font-size: 0.7rem;">+${hospital.facilities.length - 3}</span>` : ''}
-            </div>
-
-            <div class="flex-between mt-1">
-              <button class="btn btn--ghost btn--sm view-details-btn">View Details</button>
-              <button class="btn btn--danger btn--sm flex items-center gap-0.5 dispatch-btn">
-                <span>🚑</span> Dispatch
-              </button>
-            </div>
-          </div>
-        `;
+        if (topHospitals.length === 0) {
+          resultsList.innerHTML = '<div class="card p-2 text-center">No hospitals found matching criteria.</div>';
+          if (resultCount) resultCount.innerText = '0';
+          return;
+        }
         
-        resultsList.insertAdjacentHTML('beforeend', html);
+        if (resultCount) resultCount.innerText = topHospitals.length;
+        resultsList.innerHTML = '';
 
-        // Add map marker
+        const comps = window.MediRoute.components || {};
+        const bounds = window.L ? L.latLngBounds([[currentParams.lat, currentParams.lng]]) : null;
+
+        // Add patient marker
+        if (map && window.L && comps.createPatientMarker) {
+          patientMarker = comps.createPatientMarker(map, currentParams.lat, currentParams.lng);
+        }
+
+        topHospitals.forEach((result, index) => {
+          const hospital = result.hospital;
+          const score = result.totalScore / 100;
+          
+          // Safe bed type lookup
+          const safeBedKey = hospital.beds[currentParams.bedType] ? currentParams.bedType : 'emergency';
+          const bedObj = hospital.beds[safeBedKey] || { available: 5, total: 10 };
+          const costVal = (hospital.costPerDay && hospital.costPerDay[safeBedKey]) ? hospital.costPerDay[safeBedKey] : 5000;
+
+          // Build card HTML
+          const isBest = index === 0;
+          const cardClass = isBest ? 'card card--glass card--glow best-match' : 'card card--glass card--hover';
+          const scorePercent = Math.round(score * 100);
+          
+          const html = `
+            <div class="${cardClass} p-2 cursor-pointer" data-index="${index}" data-lat="${hospital.lat}" data-lng="${hospital.lng}" style="position: relative; overflow: hidden;">
+              ${isBest ? '<div style="position:absolute; top:0; right:0; background:var(--color-primary); color:white; font-size:0.7rem; padding: 2px 8px; border-bottom-left-radius: 8px;">★ Best Match</div>' : ''}
+              
+              <div class="flex gap-1 mb-1">
+                <div class="hospital-result__rank flex-center" style="width: 32px; height: 32px; border-radius: 50%; background: ${isBest ? 'var(--color-primary)' : 'rgba(255,255,255,0.1)'}; font-weight: bold;">
+                  #${index + 1}
+                </div>
+                <div style="flex: 1;">
+                  <h4 class="m-0" style="font-size: 1.1rem;">${hospital.name}</h4>
+                  <div class="text-sm" style="color: var(--text-secondary);">📍 ${hospital.area}, ${hospital.city}</div>
+                </div>
+              </div>
+              
+              <div class="grid grid--2 gap-1 mb-1 text-sm">
+                <div class="flex items-center gap-0.5">
+                  <span>🚗</span> ${result.distanceKm.toFixed(1)} km (~${result.travelMinutes + ' min'})
+                </div>
+                <div class="flex items-center gap-0.5">
+                  <span>🛏️</span> ${bedObj.available} ${safeBedKey} beds
+                </div>
+                <div class="flex items-center gap-0.5">
+                  <span>💰</span> ${comps.formatCurrency ? comps.formatCurrency(costVal) : '₹' + costVal}/day
+                </div>
+                <div class="flex items-center gap-0.5">
+                  <span>⭐</span> ${hospital.rating}/5.0
+                </div>
+              </div>
+              
+              <div class="mb-1">
+                <div class="flex-between text-sm mb-0.5">
+                  <span>AI Confidence Score</span>
+                  <span class="${scorePercent > 80 ? 'text-success' : 'text-warning'} font-bold">${scorePercent}%</span>
+                </div>
+                ${comps.createProgressBar ? comps.createProgressBar(scorePercent, 100, scorePercent > 80 ? 'success' : 'warning') : ''}
+              </div>
+              
+              <div class="flex gap-0.5 mb-1" style="flex-wrap: wrap;">
+                ${hospital.facilities.slice(0, 3).map(f => `<span class="badge badge--info" style="font-size: 0.7rem;">${f}</span>`).join('')}
+                ${hospital.facilities.length > 3 ? `<span class="badge" style="font-size: 0.7rem;">+${hospital.facilities.length - 3}</span>` : ''}
+              </div>
+
+              <div class="flex-between mt-1">
+                <button class="btn btn--ghost btn--sm view-details-btn">View Details</button>
+                <button class="btn btn--danger btn--sm flex items-center gap-0.5 dispatch-btn">
+                  <span>🚑</span> Dispatch
+                </button>
+              </div>
+            </div>
+          `;
+          
+          resultsList.insertAdjacentHTML('beforeend', html);
+
+          // Add map marker
+          if (map && window.L && comps.createHospitalMarker) {
+            try {
+              const marker = comps.createHospitalMarker(map, hospital.lat, hospital.lng, hospital);
+              markers.push(marker);
+              if (bounds) bounds.extend([hospital.lat, hospital.lng]);
+            } catch(me) { console.warn('Marker error:', me); }
+          }
+        });
+
+        // Add routes safely
         if (map && window.L) {
-          const marker = comps.createHospitalMarker(map, hospital.lat, hospital.lng, hospital);
-          markers.push(marker);
-          bounds.extend([hospital.lat, hospital.lng]);
+          const routeColors = ['#00D4AA', '#6C63FF', '#FFA502'];
+          for (let i = 0; i < Math.min(3, topHospitals.length); i++) {
+            try {
+              const h = topHospitals[i].hospital;
+              const coords = await fetchRoute(currentParams.lat, currentParams.lng, h.lat, h.lng);
+              if (coords && coords.length > 0) {
+                const line = L.polyline(coords, {
+                  color: routeColors[i] || '#00D4AA',
+                  weight: 4,
+                  opacity: 0.8
+                }).addTo(map);
+                polylines.push(line);
+              }
+            } catch(re) { console.warn('Route polyline notice:', re); }
+          }
         }
-      });
 
-      if (map && window.L) {
-        const routeColors = ['#00D4AA', '#6C63FF', '#FFA502'];
-        const routeWeights = [5, 3, 2];
-        const routeDash = ['', '10, 8', '6, 6'];
-
-        for (let i = 0; i < Math.min(3, topHospitals.length); i++) {
-          const h = topHospitals[i].hospital;
-          // Note: fetchRoute is assumed to be available in scope
-          const coords = await fetchRoute(currentParams.lat, currentParams.lng, h.lat, h.lng);
-          const line = L.polyline(coords, {
-            color: routeColors[i],
-            weight: routeWeights[i],
-            opacity: 0.8,
-            dashArray: routeDash[i]
-          }).addTo(map);
-          polylines.push(line);
+        // Fit map bounds
+        if (map && window.L && bounds && bounds.isValid()) {
+          try { map.fitBounds(bounds, { padding: [50, 50] }); } catch(be) {}
         }
+      } catch(err) {
+        console.error('renderResults error:', err);
       }
-
-      // Fit map bounds
-      if (map && window.L && bounds) {
-        map.fitBounds(bounds, { padding: [50, 50] });
-      }
+    },
 
       // Add click listeners to result cards for panning map
       resultsList.querySelectorAll('.card').forEach(card => {
