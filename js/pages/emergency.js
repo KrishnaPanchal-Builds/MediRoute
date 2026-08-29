@@ -214,7 +214,7 @@
                     <span>🗺️ Live Routing Map</span>
                     <span class="badge badge--info text-xs">OSRM Active</span>
                   </h4>
-                  <div id="emergency-map" style="width: 100%; height: 380px; border-radius: var(--radius-lg); overflow: hidden;"></div>
+                  <div id="emergency-map" style="width: 100%; height: 280px; border-radius: var(--radius-lg); overflow: hidden;"></div>
                 </div>
               </div>
 
