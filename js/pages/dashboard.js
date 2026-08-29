@@ -321,7 +321,7 @@
               }
 
               const facilities = [...document.querySelectorAll('.reg-facility:checked')].map(cb => cb.value);
-              const emergencyTypes = [...document.querySelectorAll('.reg-emergency-type:checked')].map(cb => cb.value);
+              const emergencyTypes = [...document.querySelectorAll('.reg-type:checked')].map(cb => cb.value);
               const insurance = [...document.querySelectorAll('.reg-insurance:checked')].map(cb => cb.value);
 
               const newHospital = {
