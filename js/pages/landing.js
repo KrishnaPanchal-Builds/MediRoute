@@ -55,37 +55,25 @@
             </div>
           </section>
 
-          <!-- Quick Action Command Center (Sleek Compact Circular Launcher Pills) -->
-          <section class="command-center container mt-4">
-            <h2 class="section-title text-center mb-3">Quick Emergency Access</h2>
-            <div class="quick-launcher-bar flex flex-center flex-wrap gap-2">
-              <a href="#emergency" class="compact-circle-card card card--glass card--hover card--glow animate-slide-up">
-                <div class="circle-avatar">🚨</div>
-                <div class="circle-info">
-                  <h4>Emergency Finder</h4>
-                  <span>Instant Bed Match & Routing</span>
-                </div>
+          <!-- Quick Action Command Center (Pure Circular Icon Buttons) -->
+          <section class="command-center container mt-4 text-center">
+            <h3 class="section-title mb-3">Quick Emergency Access</h3>
+            <div class="pure-icon-bar flex flex-center gap-3 flex-wrap">
+              <a href="#emergency" class="pure-icon-circle btn-glow-red" title="🚨 Emergency Hospital Finder — Instant AI scoring, OSRM routes, GPS">
+                <span class="icon-emoji">🚨</span>
+                <span class="icon-label">Emergency Finder</span>
               </a>
-              <a href="#intake" class="compact-circle-card card card--glass card--hover card--glow animate-slide-up" style="animation-delay: 0.1s">
-                <div class="circle-avatar">🤖</div>
-                <div class="circle-info">
-                  <h4>AI Intake Triage</h4>
-                  <span>Voice & Touch Scanner</span>
-                </div>
+              <a href="#intake" class="pure-icon-circle btn-glow-blue" title="🤖 AI Clinical Intake — Voice & Touch Multilingual Triage, Body Map, QR">
+                <span class="icon-emoji">🤖</span>
+                <span class="icon-label">AI Intake</span>
               </a>
-              <a href="#doctor-triage" class="compact-circle-card card card--glass card--hover card--glow animate-slide-up" style="animation-delay: 0.2s">
-                <div class="circle-avatar">👨‍⚕️</div>
-                <div class="circle-info">
-                  <h4>Doctor Review</h4>
-                  <span>30-Sec ER Briefing Queue</span>
-                </div>
+              <a href="#doctor-triage" class="pure-icon-circle btn-glow-purple" title="👨‍⚕️ Doctor 30-Sec Review Portal — Live Triage Queue, Document OCR">
+                <span class="icon-emoji">👨‍⚕️</span>
+                <span class="icon-label">Doctor Review</span>
               </a>
-              <a href="#dashboard" class="compact-circle-card card card--glass card--hover card--glow animate-slide-up" style="animation-delay: 0.3s">
-                <div class="circle-avatar">🏥</div>
-                <div class="circle-info">
-                  <h4>Bed Dashboard</h4>
-                  <span>Live ICU & Ward Registry</span>
-                </div>
+              <a href="#dashboard" class="pure-icon-circle btn-glow-green" title="🏥 Hospital Admin Dashboard — Live Bed Management & Registration">
+                <span class="icon-emoji">🏥</span>
+                <span class="icon-label">Bed Dashboard</span>
               </a>
             </div>
           </section>
@@ -160,57 +148,33 @@
             </div>
           </section>
 
-          <!-- Features Section (Sleek Compact Icon Pills) -->
-          <section class="features-section container mt-4">
-            <h2 class="section-title text-center mb-3">Core Capabilities</h2>
-            
-            <div class="compact-capabilities-grid">
-              <div class="capability-pill card card--glass card--hover">
-                <div class="pill-icon">🛏️</div>
-                <div class="pill-text">
-                  <strong>Real-Time Bed Intelligence</strong>
-                  <span>Live tracking of ICU & Ward beds</span>
-                </div>
+          <!-- Features Section (Pure Icon Badges) -->
+          <section class="features-section container mt-4 text-center">
+            <h3 class="section-title mb-3">Core Capabilities</h3>
+            <div class="pure-capability-row flex flex-center gap-2 flex-wrap">
+              <div class="capability-icon-badge" title="🛏️ Real-Time Bed Intelligence — Live tracking of ICU, ward, and emergency beds">
+                <span class="badge-emoji">🛏️</span>
+                <span class="badge-caption">Bed Intelligence</span>
               </div>
-              
-              <div class="capability-pill card card--glass card--hover">
-                <div class="pill-icon">🧠</div>
-                <div class="pill-text">
-                  <strong>AI Multi-Parameter Scoring</strong>
-                  <span>Severity & distance matching</span>
-                </div>
+              <div class="capability-icon-badge" title="🧠 AI Multi-Parameter Scoring — Matches patients to hospitals based on severity & distance">
+                <span class="badge-emoji">🧠</span>
+                <span class="badge-caption">AI Multi-Scoring</span>
               </div>
-              
-              <div class="capability-pill card card--glass card--hover">
-                <div class="pill-icon">🎤</div>
-                <div class="pill-text">
-                  <strong>Voice-Guided Intake</strong>
-                  <span>Speak naturally in 12+ languages</span>
-                </div>
+              <div class="capability-icon-badge" title="🎤 Voice-Guided Intake — Speak naturally in 12+ native languages">
+                <span class="badge-emoji">🎤</span>
+                <span class="badge-caption">Voice Intake</span>
               </div>
-              
-              <div class="capability-pill card card--glass card--hover">
-                <div class="pill-icon">📄</div>
-                <div class="pill-text">
-                  <strong>Document OCR Traceability</strong>
-                  <span>Scan medical records instantly</span>
-                </div>
+              <div class="capability-icon-badge" title="📄 Document OCR Traceability — Instant scanning of medical documents & lab reports">
+                <span class="badge-emoji">📄</span>
+                <span class="badge-caption">OCR Traceability</span>
               </div>
-              
-              <div class="capability-pill card card--glass card--hover">
-                <div class="pill-icon">🚑</div>
-                <div class="pill-text">
-                  <strong>Ambulance Dispatch</strong>
-                  <span>OSRM optimized GPS routes</span>
-                </div>
+              <div class="capability-icon-badge" title="🚑 Instant Ambulance Dispatch — One-click tracking with OSRM routes">
+                <span class="badge-emoji">🚑</span>
+                <span class="badge-caption">Ambulance Dispatch</span>
               </div>
-              
-              <div class="capability-pill card card--glass card--hover">
-                <div class="pill-icon">📱</div>
-                <div class="pill-text">
-                  <strong>ABDM Health Pass QR</strong>
-                  <span>Digital records integration</span>
-                </div>
+              <div class="capability-icon-badge" title="📱 ABDM Health Pass QR — Digital health records integration">
+                <span class="badge-emoji">📱</span>
+                <span class="badge-caption">ABDM Health QR</span>
               </div>
             </div>
           </section>

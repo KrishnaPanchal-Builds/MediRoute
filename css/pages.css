@@ -832,13 +832,120 @@
   background: rgba(var(--color-accent-rgb), 0.15);
 }
 
-/* Compact Circular Launcher Cards */
-.quick-launcher-bar {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.25rem;
-  width: 100%;
+/* Pure Circular Icon Buttons & Badges */
+.pure-icon-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
   margin-top: 1rem;
+}
+
+.pure-icon-circle {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  text-decoration: none !important;
+  color: var(--text-primary) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer !important;
+}
+
+.pure-icon-circle .icon-emoji {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.pure-icon-circle:hover .icon-emoji {
+  transform: scale(1.12) translateY(-4px);
+}
+
+.btn-glow-red:hover .icon-emoji {
+  border-color: #FF4757;
+  background: rgba(255, 71, 87, 0.2);
+  box-shadow: 0 0 25px rgba(255, 71, 87, 0.5);
+}
+
+.btn-glow-blue:hover .icon-emoji {
+  border-color: #1E90FF;
+  background: rgba(30, 144, 255, 0.2);
+  box-shadow: 0 0 25px rgba(30, 144, 255, 0.5);
+}
+
+.btn-glow-purple:hover .icon-emoji {
+  border-color: #6C63FF;
+  background: rgba(108, 99, 255, 0.2);
+  box-shadow: 0 0 25px rgba(108, 99, 255, 0.5);
+}
+
+.btn-glow-green:hover .icon-emoji {
+  border-color: #00D4AA;
+  background: rgba(0, 212, 170, 0.2);
+  box-shadow: 0 0 25px rgba(0, 212, 170, 0.5);
+}
+
+.pure-icon-circle .icon-label {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* Pure Capability Icon Badges */
+.pure-capability-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.capability-icon-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.capability-icon-badge .badge-emoji {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.capability-icon-badge:hover .badge-emoji {
+  transform: scale(1.12) translateY(-3px);
+  border-color: var(--color-primary);
+  background: rgba(var(--color-primary-rgb), 0.15);
+  box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.3);
+}
+
+.capability-icon-badge .badge-caption {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
 }
 
 .compact-circle-card {
