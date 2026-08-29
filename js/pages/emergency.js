@@ -62,123 +62,125 @@
             </div>
           </div>
 
-          <div class="emergency-finder">
-            <div class="emergency-finder__panel">
+          <div class="emergency-finder container">
+            
+            <!-- 2-Column Cards Grid (2 cards per row) -->
+            <div class="emergency-cards-grid mb-2">
               
-              <div class="panel-content" style="max-height: calc(100vh - 150px); overflow-y: auto; padding-right: 8px;">
+              <!-- Row 1 Left: 1. Patient Location -->
+              <div class="card card--glass">
+                <h3 class="mb-1 flex-between">
+                  <span>📍 1. Patient Location</span>
+                  <button id="btn-use-location" class="btn btn--primary btn--xs flex-center gap-1">
+                    <span>📍</span> GPS
+                  </button>
+                </h3>
+                <div class="form-group mb-1">
+                  <input type="text" id="emergency-location-input" class="form-input text-xs" placeholder="Locality, City, or Landmark" value="Delhi Center">
+                </div>
+                <div class="flex gap-1" id="city-selector" style="flex-wrap: wrap;">
+                  <button class="badge badge--info cursor-pointer text-xs" data-city="delhi">Delhi</button>
+                  <button class="badge badge--info cursor-pointer text-xs" data-city="mumbai">Mumbai</button>
+                  <button class="badge badge--info cursor-pointer text-xs" data-city="bangalore">Bangalore</button>
+                  <button class="badge badge--info cursor-pointer text-xs" data-city="chennai">Chennai</button>
+                </div>
+              </div>
+
+              <!-- Row 1 Right: 2. Rapid Adaptive Triage -->
+              <div class="card card--glass">
+                <h3 class="mb-1 flex-between">
+                  <span>⚡ 2. Rapid Adaptive Triage</span>
+                  <button class="btn btn--ghost btn--xs" onclick="window.MediRoute.pages.emergency.toggleVoiceInput()">🎤 Voice</button>
+                </h3>
                 
-                <!-- 1. Location & GPS Section -->
-                <div class="card card--glass mb-2">
-                  <h3 class="mb-1 flex-between">
-                    <span>📍 1. Patient Location</span>
-                    <button id="btn-use-location" class="btn btn--primary btn--xs flex-center gap-1">
-                      <span>📍</span> GPS Current
-                    </button>
-                  </h3>
-                  <div class="form-group mb-1">
-                    <input type="text" id="emergency-location-input" class="form-input" placeholder="Locality, City, or Landmark" value="Delhi Center">
-                  </div>
-                  <div class="flex gap-1" id="city-selector" style="flex-wrap: wrap;">
-                    <button class="badge badge--info cursor-pointer" data-city="delhi">Delhi</button>
-                    <button class="badge badge--info cursor-pointer" data-city="mumbai">Mumbai</button>
-                    <button class="badge badge--info cursor-pointer" data-city="bangalore">Bangalore</button>
-                    <button class="badge badge--info cursor-pointer" data-city="chennai">Chennai</button>
+                <div class="form-group mb-1">
+                  <label class="form-label text-xs">Emergency Condition:</label>
+                  <div class="emergency-type-grid" id="emergency-type-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                    <button class="btn btn--ghost emergency-type-btn text-xs" data-type="Cardiac">🫀 Cardiac</button>
+                    <button class="btn btn--ghost emergency-type-btn text-xs" data-type="Trauma">🦴 Trauma</button>
+                    <button class="btn btn--ghost emergency-type-btn text-xs" data-type="Burns">🔥 Burns</button>
+                    <button class="btn btn--ghost emergency-type-btn text-xs" data-type="Stroke">🧠 Stroke</button>
+                    <button class="btn btn--ghost emergency-type-btn text-xs" data-type="Pediatric">👶 Pediatric</button>
+                    <button class="btn btn--ghost emergency-type-btn selected text-xs" style="background: var(--color-primary); color: white;" data-type="General">🏥 General ER</button>
                   </div>
                 </div>
 
-                <!-- 2. Rapid Adaptive Triage (Voice + Touch Dynamic Questions) -->
-                <div class="card card--glass mb-2">
-                  <h3 class="mb-1 flex-between">
-                    <span>⚡ 2. Rapid Adaptive Triage</span>
-                    <button class="btn btn--ghost btn--xs" onclick="window.MediRoute.pages.emergency.toggleVoiceInput()">🎤 Speak Answer</button>
-                  </h3>
-                  
-                  <div class="form-group mb-1">
-                    <label class="form-label text-xs">Primary Emergency Condition:</label>
-                    <div class="emergency-type-grid" id="emergency-type-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
-                      <button class="btn btn--ghost emergency-type-btn" data-type="Cardiac">🫀 Cardiac / Chest Pain</button>
-                      <button class="btn btn--ghost emergency-type-btn" data-type="Trauma">🦴 Trauma / Fracture</button>
-                      <button class="btn btn--ghost emergency-type-btn" data-type="Burns">🔥 Severe Burns</button>
-                      <button class="btn btn--ghost emergency-type-btn" data-type="Stroke">🧠 Stroke / Paralysis</button>
-                      <button class="btn btn--ghost emergency-type-btn" data-type="Pediatric">👶 Pediatric / Child</button>
-                      <button class="btn btn--ghost emergency-type-btn selected" style="background: var(--color-primary); color: white;" data-type="General">🏥 General ER</button>
-                    </div>
-                  </div>
-
-                  <!-- Adaptive Dynamic Branching Questions -->
-                  <div class="adaptive-questions-box p-2 mb-1" style="background: rgba(255,255,255,0.03); border-radius: var(--radius-md); border: 1px solid var(--glass-border);">
-                    <div class="text-xs font-semibold text-primary mb-1">Adaptive Clinical Branching:</div>
-                    <div class="flex flex-col gap-1 text-xs">
-                      <label class="flex align-center gap-1 cursor-pointer">
-                        <input type="checkbox" id="chk-sweating" onchange="window.MediRoute.pages.emergency.evaluateRedFlags()">
-                        <span>Cold Sweating / Arm Radiation Pain</span>
-                      </label>
-                      <label class="flex align-center gap-1 cursor-pointer">
-                        <input type="checkbox" id="chk-breathing" onchange="window.MediRoute.pages.emergency.evaluateRedFlags()">
-                        <span>Struggling to Breathe / Gasping</span>
-                      </label>
-                      <label class="flex align-center gap-1 cursor-pointer">
-                        <input type="checkbox" id="chk-unconscious" onchange="window.MediRoute.pages.emergency.evaluateRedFlags()">
-                        <span>Loss of Consciousness / Unresponsive</span>
-                      </label>
-                    </div>
+                <!-- Adaptive Dynamic Branching Questions -->
+                <div class="adaptive-questions-box p-1 text-xs" style="background: rgba(255,255,255,0.03); border-radius: var(--radius-md); border: 1px solid var(--glass-border);">
+                  <div class="font-semibold text-primary mb-1">Clinical Risk Check:</div>
+                  <div class="flex flex-col gap-1">
+                    <label class="flex align-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="chk-sweating" onchange="window.MediRoute.pages.emergency.evaluateRedFlags()">
+                      <span>Cold Sweating / Arm Pain</span>
+                    </label>
+                    <label class="flex align-center gap-1 cursor-pointer">
+                      <input type="checkbox" id="chk-breathing" onchange="window.MediRoute.pages.emergency.evaluateRedFlags()">
+                      <span>Dyspnea / Gasping</span>
+                    </label>
                   </div>
                 </div>
+              </div>
 
-                <!-- 3. Red-Flag Priority Engine (Corti-Inspired Safety Alert) -->
-                <div id="red-flag-banner" class="card card--glow mb-2" style="border-color: #FF4757; background: rgba(255, 71, 87, 0.12);">
-                  <div class="flex align-center gap-1 mb-1">
-                    <span style="font-size: 1.5rem;">🚨</span>
-                    <div>
-                      <strong style="color: #FF4757; font-size: 0.95rem;">RED-FLAG PRIORITY SIGNAL ACTIVE</strong>
-                      <div class="text-xs text-muted" id="red-flag-desc">Information indicates immediate clinical attention is required. Level-1 Resuscitation Protocol initialized.</div>
-                    </div>
-                  </div>
-                  <div class="text-xs text-muted italic" style="border-top: 1px solid rgba(255,71,87,0.2); padding-top: 4px;">
-                    🛡️ Safety Grounding: Clinical risk signal derived from user-provided symptoms. Clinician evaluation required.
+              <!-- Row 2 Left: 3. Red-Flag Priority Signal Engine -->
+              <div id="red-flag-banner" class="card card--glow" style="border-color: #FF4757; background: rgba(255, 71, 87, 0.12);">
+                <div class="flex align-center gap-1 mb-1">
+                  <span style="font-size: 1.5rem;">🚨</span>
+                  <div>
+                    <strong style="color: #FF4757; font-size: 0.9rem;">RED-FLAG PRIORITY ACTIVE</strong>
+                    <div class="text-xs text-muted" id="red-flag-desc">Level-1 Resuscitation Protocol initialized.</div>
                   </div>
                 </div>
-
-                <!-- 4. Bed Type & Budget Filters -->
-                <div class="card card--glass mb-2">
-                  <h3 class="mb-1">🛏️ Required Unit & Budget</h3>
-                  <div class="flex gap-1 mb-1" id="bed-type-selector" style="flex-wrap: wrap;">
-                    <button class="badge badge--primary cursor-pointer selected" data-bed="emergency">Emergency Ward</button>
-                    <button class="badge badge--info cursor-pointer" data-bed="icu">ICU Bed</button>
-                    <button class="badge badge--info cursor-pointer" data-bed="ventilator">Ventilator Bed</button>
-                    <button class="badge badge--info cursor-pointer" data-bed="general">General Ward</button>
-                  </div>
-                  <div class="form-group">
-                    <div class="flex flex-between text-xs mb-1">
-                      <span>Max Budget Limit:</span>
-                      <strong id="budget-display" class="text-primary">₹50,000 / day</strong>
-                    </div>
-                    <input type="range" id="budget-range" class="form-range w-full" min="0" max="50000" step="1000" value="50000">
-                  </div>
+                <div class="text-xs text-muted italic" style="border-top: 1px solid rgba(255,71,87,0.2); padding-top: 4px;">
+                  🛡️ Safety Grounding: Clinical risk signal derived from user symptoms.
                 </div>
+              </div>
 
-                <!-- Action Button: Calculate Best-Destination Scoring -->
-                <button id="btn-search-hospitals" class="btn btn--danger btn--xl btn--glow w-full mb-2 animate-pulse" onclick="window.MediRoute.pages.emergency.handleSearch()">
-                  ⚖️ Calculate Best-Destination Ranking
-                </button>
+              <!-- Row 2 Right: 4. Bed Unit & Budget Filters -->
+              <div class="card card--glass">
+                <h3 class="mb-1 text-xs font-semibold">🛏️ Required Unit & Budget</h3>
+                <div class="flex gap-1 mb-1" id="bed-type-selector" style="flex-wrap: wrap;">
+                  <button class="badge badge--primary cursor-pointer selected text-xs" data-bed="emergency">Emergency</button>
+                  <button class="badge badge--info cursor-pointer text-xs" data-bed="icu">ICU Bed</button>
+                  <button class="badge badge--info cursor-pointer text-xs" data-bed="ventilator">Ventilator</button>
+                  <button class="badge badge--info cursor-pointer text-xs" data-bed="general">General</button>
+                </div>
+                <div class="form-group">
+                  <div class="flex flex-between text-xs mb-1">
+                    <span>Budget Limit:</span>
+                    <strong id="budget-display" class="text-primary">₹50,000 / day</strong>
+                  </div>
+                  <input type="range" id="budget-range" class="form-range w-full" min="0" max="50000" step="1000" value="50000">
+                </div>
+              </div>
 
+            </div>
+
+            <!-- Full-Width Calculate Action Button -->
+            <button id="btn-search-hospitals" class="btn btn--danger btn--xl btn--glow w-full mb-2 animate-pulse" onclick="window.MediRoute.pages.emergency.handleSearch()">
+              ⚖️ Calculate Best-Destination Ranking
+            </button>
+
+            <!-- Lower Split Layout: Search Results (Left) + Smaller Map Container (Right) -->
+            <div class="emergency-lower-split">
+              
+              <div class="results-col">
                 <!-- AI Thinking Engine -->
                 <div id="ai-thinking" class="ai-thinking hidden card card--glow mb-2 text-center py-2" style="border-color: var(--color-primary);">
                   <div class="text-3xl mb-1" style="animation: pulse 1s infinite;">🧠</div>
-                  <h3 class="mb-1 text-gradient">MediRoute Best-Destination Engine</h3>
+                  <h3 class="mb-1 text-gradient text-sm">MediRoute Best-Destination Engine</h3>
                   <div class="text-xs text-muted">
-                    Computing Score: <code>Clinical Match (30%) + Capability (20%) + Bed Availability (20%) + Travel ETA (20%) + Ambulance (10%)</code>
+                    Score: <code>Clinical Match (30%) + Bed (20%) + ETA (20%) + Capability (20%)</code>
                   </div>
                 </div>
 
                 <!-- Results & Side-by-Side Hospital Comparison Matrix -->
                 <div id="search-results" class="hidden pb-2">
-                  <h3 class="mb-1 flex-between">
+                  <h3 class="mb-1 flex-between text-sm">
                     <span>Top Matched Hospitals</span>
                     <span class="badge badge--success" id="result-count">0</span>
                   </h3>
 
-                  <!-- Side-by-Side Comparison Matrix Toggle -->
+                  <!-- Side-by-Side Comparison Matrix -->
                   <div class="card card--glass mb-2 p-2" id="comparison-matrix-box">
                     <h4 class="text-xs font-semibold text-primary mb-1">📊 Side-by-Side Facility Matrix</h4>
                     <div id="comparison-matrix-table" class="text-xs" style="overflow-x: auto;"></div>
@@ -197,22 +199,28 @@
                     <div><strong>Case ID:</strong> CASE-9021-EM</div>
                     <div><strong>Impression:</strong> Acute Chest Discomfort &bull; Red-Flag Priority Level-1</div>
                     <div><strong>Destination ER:</strong> AIIMS New Delhi (ICU Bed Reserved)</div>
-                    <div><strong>ETA:</strong> 8 mins via OSRM Optimized Ambulance Route</div>
+                    <div><strong>ETA:</strong> 8 mins via OSRM Optimized Route</div>
                   </div>
                   <button class="btn btn--success btn--sm w-full mt-2" onclick="window.MediRoute.components.showToast('📋 Digital handoff re-sent to destination ER dashboard!', 'success')">
                     🚀 Re-Sync Pre-Arrival Handoff
                   </button>
                 </div>
-
               </div>
+
+              <!-- Right Column: Smaller Compact Map -->
+              <div class="compact-map-col">
+                <div class="card card--glass p-1">
+                  <h4 class="text-xs font-semibold mb-1 flex-between">
+                    <span>🗺️ Live Routing Map</span>
+                    <span class="badge badge--info text-xs">OSRM Active</span>
+                  </h4>
+                  <div id="emergency-map" style="width: 100%; height: 380px; border-radius: var(--radius-lg); overflow: hidden;"></div>
+                </div>
+              </div>
+
             </div>
-            
-            <!-- Map Column -->
-            <div class="emergency-finder__map map-container--full" style="height: 100vh; position: relative;">
-              <div id="emergency-map" style="width: 100%; height: 100%;"></div>
-            </div>
+
           </div>
-        </div>
       `;
     },
 
