@@ -1208,14 +1208,20 @@
 }
 
 .emergency-lower-split {
-  display: grid !important;
-  grid-template-columns: 1.25fr 0.75fr !important;
+  display: flex !important;
   gap: 1.25rem !important;
   align-items: start !important;
   margin-top: 1rem !important;
 }
 
+.results-col {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
 .compact-map-col {
+  width: 218px !important;
+  flex-shrink: 0 !important;
   position: sticky !important;
   top: 74px !important;
 }
