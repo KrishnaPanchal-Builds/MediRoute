@@ -1251,8 +1251,52 @@
   overflow: hidden !important;
 }
 
+/* ---- 0-Scroll Intake Viewport & Glowing Choice Card Hover System ---- */
+.page--intake {
+  height: calc(100vh - 64px) !important;
+  max-height: calc(100vh - 64px) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  padding: 0.5rem 1rem !important;
+  box-sizing: border-box !important;
+}
+
+.intake-choice-card {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer !important;
+  position: relative !important;
+  user-select: none !important;
+}
+
+.intake-choice-card:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 16px rgba(0, 212, 170, 0.35) !important;
+}
+
+.intake-choice-card.selected {
+  background: rgba(0, 212, 170, 0.18) !important;
+  border: 2px solid var(--color-primary) !important;
+  box-shadow: 0 0 20px rgba(0, 212, 170, 0.5) !important;
+}
+
+[data-theme="light"] .intake-choice-card:hover {
+  background: #ffffff !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 4px 16px rgba(0, 212, 170, 0.25) !important;
+}
+
+[data-theme="light"] .intake-choice-card.selected {
+  background: #e6fffa !important;
+  border-color: var(--color-primary) !important;
+  color: #0f172a !important;
+}
+
 @media (max-width: 992px) {
-  .no-scroll-emergency {
+  .no-scroll-emergency,
+  .page--intake {
     height: auto !important;
     max-height: none !important;
     overflow: auto !important;

@@ -1,6 +1,6 @@
 /* ============================================
-   MEDIROUTE — Thrilling & Relaxing AI Patient Intake Companion
-   Zero Tedious Forms • 1-Tap Smart Cards • Ambient Vernacular Voice AI
+   MEDIROUTE — 0-Scroll AI Patient Intake Companion
+   1-Tap Interactive Cards • Bulletproof Direct Handlers • Glowing Hover States
    ============================================ */
 (function () {
   window.MediRoute = window.MediRoute || {};
@@ -23,7 +23,7 @@
   ];
 
   const STEP_SUBTITLES = [
-    "Select your native language for voice dictation",
+    "Select native language for voice dictation",
     "Audio-guided consent & encrypted data policy",
     "Instant 1-tap ABDM Health Account link",
     "Tap the body region where you feel discomfort",
@@ -62,18 +62,18 @@
     const percent = Math.round((currentStep / TOTAL_STEPS) * 100);
 
     return `
-      <div class="page page--intake animate-fade-in container py-2" style="max-width: 850px;">
+      <div class="page page--intake animate-fade-in container">
         
         <!-- Relaxing Ambient AI Header -->
-        <div class="card card--glass p-2 mb-2" style="border-color: rgba(0, 212, 170, 0.3); background: linear-gradient(135deg, rgba(0, 212, 170, 0.06), rgba(108, 99, 255, 0.06));">
+        <div class="card card--glass p-1 mb-1" style="border-color: rgba(0, 212, 170, 0.3); background: linear-gradient(135deg, rgba(0, 212, 170, 0.06), rgba(108, 99, 255, 0.06)); flex-shrink: 0;">
           <div class="flex-between align-center flex-wrap gap-1">
             
             <div class="flex align-center gap-1">
-              <div class="flex-center" style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); box-shadow: 0 0 16px rgba(0, 212, 170, 0.4); animation: pulse 2s infinite; font-size: 1.4rem;">
+              <div class="flex-center" style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); box-shadow: 0 0 16px rgba(0, 212, 170, 0.4); animation: pulse 2s infinite; font-size: 1.2rem;">
                 🤖
               </div>
               <div>
-                <h3 class="m-0 text-gradient text-md font-bold">MediRoute AI Care Companion</h3>
+                <h3 class="m-0 text-gradient text-xs font-bold">MediRoute AI Care Companion</h3>
                 <p class="text-xs text-muted m-0">Step ${currentStep} of ${TOTAL_STEPS}: <strong class="text-primary">${STEP_TITLES[currentStep - 1]}</strong> &bull; ${percent}% Complete</p>
               </div>
             </div>
@@ -89,19 +89,19 @@
           </div>
 
           <!-- Smooth Progress Bar -->
-          <div class="progress-bar-bg mt-1" style="width: 100%; height: 6px; background: var(--glass-border); border-radius: 3px; overflow: hidden;">
+          <div class="progress-bar-bg mt-0.5" style="width: 100%; height: 5px; background: var(--glass-border); border-radius: 3px; overflow: hidden;">
             <div id="intake-progress" style="width: ${percent}%; height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);"></div>
           </div>
         </div>
 
-        <!-- Dynamic Relaxing Card Body -->
-        <div class="card card--glass p-2 mb-2" id="step-content-box" style="min-height: 380px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+        <!-- Dynamic 0-Scroll Step Content Body -->
+        <div class="card card--glass p-1.5 mb-1 flex-1 flex flex-col justify-center" id="step-content-box" style="overflow-y: auto;">
           ${renderStep(currentStep)}
         </div>
 
         <!-- Navigation Buttons -->
-        <div class="flex-between align-center">
-          <button id="btn-prev" class="btn btn--ghost btn--md" ${currentStep === 1 ? 'disabled' : ''}>
+        <div class="flex-between align-center" style="flex-shrink: 0;">
+          <button id="btn-prev" class="btn btn--ghost btn--sm" onclick="window.MediRoute.pages.intake.prevStep()" ${currentStep === 1 ? 'disabled' : ''}>
             ⬅️ Back
           </button>
 
@@ -109,7 +109,7 @@
             <button class="btn btn--ghost btn--xs" onclick="window.MediRoute.pages.intake.gotoStep(9)">
               ⚡ Quick Review Pass
             </button>
-            <button id="btn-next" class="btn btn--primary btn--md btn--glow">
+            <button id="btn-next" class="btn btn--primary btn--md btn--glow" onclick="window.MediRoute.pages.intake.nextStep()">
               ${currentStep === TOTAL_STEPS ? '🚀 Hand Off to ER Doctor' : 'Continue ➡️'}
             </button>
           </div>
@@ -123,12 +123,12 @@
     switch (step) {
       case 1:
         return `
-          <div class="text-center py-1">
-            <span class="badge badge--info text-xs mb-1">🌐 Step 1: Vernacular Dictation</span>
-            <h2 class="text-lg font-bold mb-0.5">Which language do you speak?</h2>
-            <p class="text-xs text-muted mb-2">${STEP_SUBTITLES[0]}</p>
+          <div class="text-center py-0.5">
+            <span class="badge badge--info text-xs mb-0.5">🌐 Step 1: Vernacular Dictation</span>
+            <h3 class="text-md font-bold mb-0.5">Which language do you speak?</h3>
+            <p class="text-xs text-muted mb-1">${STEP_SUBTITLES[0]}</p>
             
-            <div class="grid grid--4 gap-1 mb-2" style="max-width: 680px; margin: 0 auto;">
+            <div class="grid grid--4 gap-0.5 mb-1" style="max-width: 680px; margin: 0 auto;">
               ${[
                 { id: 'English', label: '🇺🇸 English' },
                 { id: 'Hindi', label: '🇮🇳 Hindi (हिंदी)' },
@@ -139,41 +139,43 @@
                 { id: 'Gujarati', label: '🇮🇳 Gujarati (ગુજરાતી)' },
                 { id: 'Kannada', label: '🇮🇳 Kannada (கன்னட)' }
               ].map(item => `
-                <div class="card card--glass p-1 cursor-pointer lang-card flex-center text-center ${intakeData.language === item.id ? 'border-primary' : ''}" 
-                     data-lang="${item.id}"
-                     style="transition: all 0.2s; border: ${intakeData.language === item.id ? '2px solid var(--color-primary)' : '1px solid var(--glass-border)'}; background: ${intakeData.language === item.id ? 'rgba(0,212,170,0.12)' : 'var(--bg-secondary)'};">
+                <div class="card card--glass p-1 cursor-pointer intake-choice-card flex-center text-center ${intakeData.language === item.id ? 'selected' : ''}" 
+                     onclick="window.MediRoute.pages.intake.selectLanguage('${item.id}')">
                   <strong class="text-xs">${item.label}</strong>
+                  ${intakeData.language === item.id ? '<span class="text-xs text-success ml-0.5">✓</span>' : ''}
                 </div>
               `).join('')}
             </div>
 
-            <p class="text-xs text-secondary m-0">💡 <em>Tip: Tapping any language automatically saves your choice and advances!</em></p>
+            <p class="text-xs text-secondary m-0">💡 <em>Tap any language to select and instantly proceed!</em></p>
           </div>
         `;
 
       case 2:
         return `
-          <div class="text-center py-1">
-            <span class="badge badge--info text-xs mb-1">🔒 Step 2: ABDM Data Privacy</span>
-            <h2 class="text-lg font-bold mb-0.5">Encrypted Clinical Consent</h2>
-            <p class="text-xs text-muted mb-2">${STEP_SUBTITLES[1]}</p>
+          <div class="text-center py-0.5">
+            <span class="badge badge--info text-xs mb-0.5">🔒 Step 2: ABDM Data Privacy</span>
+            <h3 class="text-md font-bold mb-0.5">Encrypted Clinical Consent</h3>
+            <p class="text-xs text-muted mb-1">${STEP_SUBTITLES[1]}</p>
 
-            <div class="card p-2 text-left mb-2" style="max-width: 600px; margin: 0 auto; background: var(--bg-secondary); border-radius: var(--radius-md);">
-              <div class="flex-between align-center mb-1">
+            <div class="card p-1.5 text-left mb-1" style="max-width: 580px; margin: 0 auto; background: var(--bg-secondary); border-radius: var(--radius-md);">
+              <div class="flex-between align-center mb-0.5">
                 <strong class="text-xs text-primary">📜 Patient Care Consent</strong>
-                <button class="btn btn--ghost btn--xs" onclick="window.MediRoute.pages.intake.playAudio('I consent to sharing my clinical intake data with verified ER triage doctors and dispatchers.')">
-                  🔊 Listen to Audio Consent
+                <button class="btn btn--ghost btn--xs" onclick="window.MediRoute.pages.intake.playAudio('I consent to sharing my clinical intake data with verified ER triage doctors.')">
+                  🔊 Listen Audio
                 </button>
               </div>
-              <p class="text-xs text-secondary mb-1">
+              <p class="text-xs text-secondary mb-0.5">
                 MediRoute AI encrypts your chief complaints, vitals, and ABHA records using AES-256 standards for direct transmission to ER emergency triage.
               </p>
               
-              <div class="card p-1 text-xs mb-1" style="background: rgba(0, 212, 170, 0.08); border-color: var(--color-primary);">
+              <div class="card p-0.5 text-xs mb-1" style="background: rgba(0, 212, 170, 0.08); border-color: var(--color-primary);">
                 ✓ Compliant with NDHM / ABDM Health Data Privacy Framework
               </div>
 
-              <div class="card p-1 cursor-pointer text-center btn--glow mt-1" id="agree-consent-card" style="background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); color: white;">
+              <div class="card p-1 cursor-pointer text-center btn--glow intake-choice-card selected mt-0.5" 
+                   onclick="window.MediRoute.pages.intake.grantConsent()"
+                   style="background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); color: white;">
                 <strong class="text-sm">✓ Tap Here to Agree & Continue</strong>
               </div>
             </div>
@@ -182,30 +184,28 @@
 
       case 3:
         return `
-          <div class="py-1" style="max-width: 600px; margin: 0 auto;">
-            <div class="text-center mb-1">
+          <div class="py-0.5" style="max-width: 580px; margin: 0 auto;">
+            <div class="text-center mb-0.5">
               <span class="badge badge--info text-xs mb-0.5">🆔 Step 3: ABDM Health Locker</span>
-              <h2 class="text-lg font-bold m-0">Link ABHA Account</h2>
+              <h3 class="text-md font-bold m-0">Link ABHA Account</h3>
               <p class="text-xs text-muted m-0 mt-0.5">${STEP_SUBTITLES[2]}</p>
             </div>
 
-            <div class="card p-2 mb-2 text-center" style="background: var(--bg-secondary);">
+            <div class="card p-1.5 mb-1 text-center" style="background: var(--bg-secondary);">
               <div class="text-xl mb-0.5">🆔</div>
               <strong class="text-xs text-primary block mb-0.5">Ayushman Bharat Health Account (ABHA)</strong>
               
               <div class="form-group mb-1">
-                <input type="text" id="abha-input" class="form-input text-center text-md font-bold" value="${intakeData.abha}" placeholder="14-8921-3049-1234" style="letter-spacing: 2px;">
+                <input type="text" id="abha-input" class="form-input text-center text-sm font-bold" value="${intakeData.abha}" placeholder="14-8921-3049-1234">
               </div>
 
-              <div class="flex gap-1 justify-center">
-                <button id="btn-demo-abha" class="btn btn--primary btn--md btn--glow w-full">
-                  ⚡ 1-Tap Auto-Fetch ABHA Health Card & Records
-                </button>
-              </div>
+              <button class="btn btn--primary btn--md btn--glow w-full intake-choice-card" onclick="window.MediRoute.pages.intake.fetchABHA()">
+                ⚡ 1-Tap Auto-Fetch ABHA Health Card & Advance
+              </button>
             </div>
 
-            <div class="card p-1 text-xs flex-between align-center" style="background: rgba(46, 213, 115, 0.08); border-color: var(--color-success);">
-              <span><strong>Patient Name:</strong> Rahul Sharma (45M)</span>
+            <div class="card p-0.5 text-xs flex-between align-center" style="background: rgba(46, 213, 115, 0.08); border-color: var(--color-success);">
+              <span><strong>Patient:</strong> Rahul Sharma (45M)</span>
               <span class="badge badge--success text-xs">✓ ABHA Verified</span>
             </div>
           </div>
@@ -213,16 +213,16 @@
 
       case 4:
         return `
-          <div class="text-center py-1">
-            <span class="badge badge--info text-xs mb-1">🫀 Step 4: Anatomical Selector</span>
-            <h2 class="text-lg font-bold mb-0.5">Where does it hurt?</h2>
-            <p class="text-xs text-muted mb-2">${STEP_SUBTITLES[3]}</p>
+          <div class="text-center py-0.5">
+            <span class="badge badge--info text-xs mb-0.5">🫀 Step 4: Anatomical Selector</span>
+            <h3 class="text-md font-bold mb-0.5">Where does it hurt?</h3>
+            <p class="text-xs text-muted mb-1">${STEP_SUBTITLES[3]}</p>
 
-            <div class="grid grid--2 gap-2 align-center" style="max-width: 650px; margin: 0 auto;">
+            <div class="grid grid--2 gap-1.5 align-center" style="max-width: 620px; margin: 0 auto;">
               
-              <div class="card p-2 text-center flex-center flex-col" style="background: var(--bg-secondary); min-height: 220px;">
-                <div style="font-size: 4.5rem; animation: pulse 2s infinite;">🧍‍♂️</div>
-                <span class="badge badge--primary text-xs mt-1" id="selected-body-part">
+              <div class="card p-1 text-center flex-center flex-col" style="background: var(--bg-secondary); min-height: 180px;">
+                <div style="font-size: 3.5rem; animation: pulse 2s infinite;">🧍‍♂️</div>
+                <span class="badge badge--primary text-xs mt-0.5" id="selected-body-part">
                   Region: <strong>${intakeData.bodyPart || 'Chest'}</strong>
                 </span>
               </div>
@@ -235,11 +235,12 @@
                   { id: 'Limbs', icon: '🦴', label: 'Limbs & Joint Pain' },
                   { id: 'General', icon: '🔥', label: 'Fever & Systemic' }
                 ].map(part => `
-                  <button class="btn btn--ghost body-part-btn text-xs text-left p-1 ${intakeData.bodyPart === part.id ? 'btn--primary' : ''}" 
-                          data-part="${part.id}"
+                  <button class="btn btn--ghost intake-choice-card text-xs text-left p-0.5 ${intakeData.bodyPart === part.id ? 'selected' : ''}" 
+                          onclick="window.MediRoute.pages.intake.selectBodyPart('${part.id}')"
                           style="display: flex; align-items: center; gap: 0.5rem;">
                     <span>${part.icon}</span>
                     <span>${part.label}</span>
+                    ${intakeData.bodyPart === part.id ? '<span class="text-success ml-auto">✓</span>' : ''}
                   </button>
                 `).join('')}
               </div>
@@ -250,40 +251,40 @@
 
       case 5:
         return `
-          <div class="py-1" style="max-width: 650px; margin: 0 auto;">
-            <div class="text-center mb-1">
+          <div class="py-0.5" style="max-width: 620px; margin: 0 auto;">
+            <div class="text-center mb-0.5">
               <span class="badge badge--info text-xs mb-0.5">🧠 Step 5: AI Adaptive Voice Interview</span>
-              <h2 class="text-lg font-bold m-0">Tell us what you're experiencing</h2>
+              <h3 class="text-md font-bold m-0">Tell us what you're experiencing</h3>
               <p class="text-xs text-muted m-0 mt-0.5">${STEP_SUBTITLES[4]}</p>
             </div>
 
-            <div class="card p-1.5 mb-1.5" style="background: rgba(108, 99, 255, 0.08); border-color: var(--color-accent);">
+            <div class="card p-1 mb-1" style="background: rgba(108, 99, 255, 0.08); border-color: var(--color-accent);">
               <div class="flex-between align-center mb-0.5">
-                <strong class="text-xs text-accent">🤖 AI Assistant Voice Prompt:</strong>
-                <button class="btn btn--ghost btn--xs" onclick="window.MediRoute.pages.intake.playAudio('Describe your discomfort. Is it crushing, heavy, or radiating to your left arm?')">
-                  🔊 Listen Prompt
+                <strong class="text-xs text-accent">🤖 AI Prompt:</strong>
+                <button class="btn btn--ghost btn--xs" onclick="window.MediRoute.pages.intake.playAudio('Describe your discomfort. Is it crushing or radiating?')">
+                  🔊 Listen
                 </button>
               </div>
-              <p class="text-sm font-semibold m-0 text-primary">
+              <p class="text-xs font-semibold m-0 text-primary">
                 "Describe your discomfort. Is the pain crushing, heavy, or radiating to your left arm?"
               </p>
             </div>
 
-            <div class="form-group mb-1">
+            <div class="form-group mb-0.5">
               <label class="form-label text-xs">Patient Voice Transcript / Input</label>
               <div class="flex gap-0.5">
-                <input type="text" id="symptom-input" class="form-input text-xs" value="${intakeData.symptoms}" placeholder="Type or click mic to speak naturally...">
-                <button id="btn-mic" class="btn btn--primary btn--xs flex-shrink-0">🎤 Dictate Voice</button>
+                <input type="text" id="symptom-input" class="form-input text-xs" value="${intakeData.symptoms}" placeholder="Type or click mic to speak...">
+                <button id="btn-mic" class="btn btn--primary btn--xs flex-shrink-0" onclick="window.MediRoute.pages.intake.recordVoice()">🎤 Dictate</button>
               </div>
             </div>
 
-            <div class="text-xs text-muted mb-0.5">Or tap 1-click symptom chips:</div>
-            <div class="grid grid--3 gap-0.5 mb-1" id="symptom-options-grid">
+            <div class="text-xs text-muted mb-0.5">Tap 1-click symptom chips:</div>
+            <div class="grid grid--3 gap-0.5 mb-0.5" id="symptom-options-grid">
               ${[
                 'Crushing Pain', 'Cold Sweats', 'Left Arm Radiation',
                 'Shortness of Breath', 'Nausea', 'Dizziness'
               ].map(chip => `
-                <button class="btn btn--ghost tree-option text-xs p-0.5" data-val="${chip}">💥 ${chip}</button>
+                <button class="btn btn--ghost intake-choice-card text-xs p-0.5" onclick="window.MediRoute.pages.intake.addSymptomChip('${chip}')">💥 ${chip}</button>
               `).join('')}
             </div>
           </div>
@@ -291,19 +292,19 @@
 
       case 6:
         return `
-          <div class="text-center py-1">
-            <span class="badge badge--danger text-xs mb-1">🚨 Step 6: Corti Safety Scanner</span>
-            <h2 class="text-lg font-bold mb-0.5">Red-Flag Safety Scan</h2>
-            <p class="text-xs text-muted mb-2">${STEP_SUBTITLES[5]}</p>
+          <div class="text-center py-0.5">
+            <span class="badge badge--danger text-xs mb-0.5">🚨 Step 6: Corti Safety Scanner</span>
+            <h3 class="text-md font-bold mb-0.5">Red-Flag Safety Scan</h3>
+            <p class="text-xs text-muted mb-1">${STEP_SUBTITLES[5]}</p>
 
-            <div id="scanner-animation" class="mb-1" style="width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--color-emergency); margin: 0 auto; display: flex; align-items: center; justify-content: center; animation: pulse 1.2s infinite; font-size: 2rem;">
+            <div id="scanner-animation" class="mb-1" style="width: 70px; height: 70px; border-radius: 50%; border: 4px solid var(--color-emergency); margin: 0 auto; display: flex; align-items: center; justify-content: center; animation: pulse 1.2s infinite; font-size: 1.8rem;">
               🔍
             </div>
             
             <strong class="text-xs text-gradient block mb-1">AI Biomarker Screening Active...</strong>
 
-            <div class="card p-2 text-left" style="background: rgba(255, 71, 87, 0.12); border-color: var(--color-emergency); max-width: 600px; margin: 0 auto;">
-              <div class="flex align-center gap-1 mb-1">
+            <div class="card p-1.5 text-left" style="background: rgba(255, 71, 87, 0.12); border-color: var(--color-emergency); max-width: 580px; margin: 0 auto;">
+              <div class="flex align-center gap-1 mb-0.5">
                 <span class="text-xl">🚨</span>
                 <div>
                   <strong class="text-xs text-danger">LEVEL-1 RED-FLAG TRIAGE SIGNAL DETECTED</strong>
@@ -314,7 +315,7 @@
                 <li>&bull; <strong>Symptoms:</strong> Retrosternal Chest Pain + Diaphoresis + Left Arm Radiation</li>
                 <li>&bull; <strong>Clinical Priority:</strong> Level-1 High Priority Emergency</li>
               </ul>
-              <button class="btn btn--danger btn--xs w-full" onclick="window.location.hash='#emergency'">
+              <button class="btn btn--danger btn--xs w-full intake-choice-card" onclick="window.location.hash='#emergency'">
                 🚨 Tap for Immediate Ambulance Dispatch (#emergency)
               </button>
             </div>
@@ -323,14 +324,16 @@
 
       case 7:
         return `
-          <div class="py-1" style="max-width: 600px; margin: 0 auto;">
-            <div class="text-center mb-1">
+          <div class="py-0.5" style="max-width: 580px; margin: 0 auto;">
+            <div class="text-center mb-0.5">
               <span class="badge badge--info text-xs mb-0.5">📷 Step 7: OCR Scanner</span>
-              <h2 class="text-lg font-bold m-0">Prescription & Report OCR</h2>
+              <h3 class="text-md font-bold m-0">Prescription & Report OCR</h3>
               <p class="text-xs text-muted m-0 mt-0.5">${STEP_SUBTITLES[6]}</p>
             </div>
 
-            <div id="doc-scanner" class="card p-2 text-center mb-1 cursor-pointer btn--glow" style="border: 2px dashed var(--glass-border); background: var(--bg-secondary);">
+            <div id="doc-scanner" class="card p-1.5 text-center mb-1 cursor-pointer btn--glow intake-choice-card" 
+                 onclick="window.MediRoute.pages.intake.scanDoc()"
+                 style="border: 2px dashed var(--glass-border); background: var(--bg-secondary);">
               <div class="text-xl mb-0.5">📄</div>
               <strong class="text-xs text-primary block">Tap Here to Scan Prescription or Lab Report</strong>
               <p class="text-xs text-muted m-0">Simulates Camera Scan & Auto NLP Medication Parsing</p>
@@ -352,16 +355,16 @@
 
       case 8:
         return `
-          <div class="py-1" style="max-width: 600px; margin: 0 auto;">
-            <div class="text-center mb-1">
+          <div class="py-0.5" style="max-width: 580px; margin: 0 auto;">
+            <div class="text-center mb-0.5">
               <span class="badge badge--info text-xs mb-0.5">📅 Step 8: Longitudinal EHR</span>
-              <h2 class="text-lg font-bold m-0">Longitudinal Health Record</h2>
+              <h3 class="text-md font-bold m-0">Longitudinal Health Record</h3>
               <p class="text-xs text-muted m-0 mt-0.5">${STEP_SUBTITLES[7]}</p>
             </div>
 
-            <div class="timeline flex flex-col gap-1 pl-2" style="border-left: 2px solid var(--color-primary);">
+            <div class="timeline flex flex-col gap-0.5 pl-2" style="border-left: 2px solid var(--color-primary);">
               ${intakeData.timeline.map((item, idx) => `
-                <div class="card p-1 text-xs relative" style="margin-left: 10px;">
+                <div class="card p-1 text-xs relative intake-choice-card" style="margin-left: 10px;">
                   <div style="position: absolute; left: -22px; top: 12px; width: 10px; height: 10px; border-radius: 50%; background: ${idx === 2 ? 'var(--color-emergency)' : 'var(--color-primary)'};"></div>
                   <div class="flex-between">
                     <strong class="text-primary">${item.title}</strong>
@@ -376,14 +379,14 @@
 
       case 9:
         return `
-          <div class="py-1" style="max-width: 650px; margin: 0 auto;">
-            <div class="text-center mb-1">
+          <div class="py-0.5" style="max-width: 620px; margin: 0 auto;">
+            <div class="text-center mb-0.5">
               <span class="badge badge--info text-xs mb-0.5">📋 Step 9: Abridge AI Grounded Note</span>
-              <h2 class="text-lg font-bold m-0">Clinical Review & Summary</h2>
+              <h3 class="text-md font-bold m-0">Clinical Review & Summary</h3>
               <p class="text-xs text-muted m-0 mt-0.5">${STEP_SUBTITLES[8]}</p>
             </div>
 
-            <div class="grid grid--2 gap-1 mb-1 text-xs">
+            <div class="grid grid--2 gap-0.5 mb-0.5 text-xs">
               <div class="card p-1">
                 <strong class="text-primary block mb-0.5">Patient Profile</strong>
                 <div><strong>Name:</strong> ${intakeData.name} (${intakeData.age}M)</div>
@@ -401,7 +404,7 @@
 
             <div class="card p-1">
               <strong class="text-xs text-primary mb-0.5 block">🤖 Abridge AI Structured Clinical SBAR Note:</strong>
-              <pre class="text-xs p-1 m-0" style="background: var(--bg-secondary); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: monospace;">
+              <pre class="text-xs p-0.5 m-0" style="background: var(--bg-secondary); border-radius: var(--radius-sm); white-space: pre-wrap; font-family: monospace;">
 S: 45M presents with acute retrosternal chest pain radiating to left arm. Associated with diaphoresis & dyspnea.
 O: SpO2: 95%, BP: 140/90 mmHg. ABHA Verified. Active Meds: Aspirin, Metformin, Atorvastatin.
 A: Level-1 Acute Coronary Syndrome (ACS) suspected. Red-Flag Active.
@@ -413,13 +416,13 @@ P: Immediate ALS Ambulance Dispatch & Cath Lab Pre-Arrival Handoff.
 
       case 10:
         return `
-          <div class="text-center py-1" style="max-width: 600px; margin: 0 auto;">
+          <div class="text-center py-0.5" style="max-width: 580px; margin: 0 auto;">
             <span class="badge badge--success text-xs mb-0.5">✓ Step 10: Complete</span>
-            <h2 class="text-lg font-bold mb-0.5 text-success">Digital Pre-Arrival Pass Ready!</h2>
-            <p class="text-xs text-muted mb-1.5">${STEP_SUBTITLES[9]}</p>
+            <h3 class="text-md font-bold mb-0.5 text-success">Digital Pre-Arrival Pass Ready!</h3>
+            <p class="text-xs text-muted mb-1">${STEP_SUBTITLES[9]}</p>
 
-            <div class="card p-2 mb-2 inline-block" style="background: white; border-radius: var(--radius-md);">
-              <svg id="patient-qr" width="150" height="150" viewBox="0 0 100 100" style="display: block; margin: 0 auto;">
+            <div class="card p-1.5 mb-1 inline-block" style="background: white; border-radius: var(--radius-md);">
+              <svg id="patient-qr" width="130" height="130" viewBox="0 0 100 100" style="display: block; margin: 0 auto;">
                  <rect width="100" height="100" fill="#fff"/>
                  <rect x="10" y="10" width="30" height="30" fill="#0f172a"/>
                  <rect x="60" y="10" width="30" height="30" fill="#0f172a"/>
@@ -432,14 +435,14 @@ P: Immediate ALS Ambulance Dispatch & Cath Lab Pre-Arrival Handoff.
                  <rect x="20" y="70" width="10" height="10" fill="#0f172a"/>
                  <path d="M50,10 h10 v10 h-10 z M50,30 h20 v10 h-20 z M80,50 h10 v30 h-10 z M40,60 h30 v10 h-30 z M10,45 h30 v10 h-30 z M60,80 h30 v10 h-30 z M40,80 h10 v10 h-10 z" fill="#0f172a"/>
               </svg>
-              <div class="text-xs text-primary font-bold mt-1">PASS #MR-9021-ABHA</div>
+              <div class="text-xs text-primary font-bold mt-0.5">PASS #MR-9021-ABHA</div>
             </div>
 
-            <div class="flex flex-col gap-1">
-              <button class="btn btn--primary btn--md btn--glow w-full" onclick="window.MediRoute.pages.intake.completeAndHandoff()">
+            <div class="flex flex-col gap-0.5">
+              <button class="btn btn--primary btn--md btn--glow w-full intake-choice-card" onclick="window.MediRoute.pages.intake.completeAndHandoff()">
                 🏥 Hand Off to ER Doctor Portal (#doctor-triage)
               </button>
-              <button class="btn btn--danger btn--xs w-full" onclick="window.location.hash='#emergency'">
+              <button class="btn btn--danger btn--xs w-full intake-choice-card" onclick="window.location.hash='#emergency'">
                 🚨 Dispatch Emergency Ambulance (#emergency)
               </button>
             </div>
@@ -463,8 +466,6 @@ P: Immediate ALS Ambulance Dispatch & Cath Lab Pre-Arrival Handoff.
     const nextBtn = document.getElementById('btn-next');
     if (prevBtn) prevBtn.disabled = currentStep === 1;
     if (nextBtn) nextBtn.textContent = currentStep === TOTAL_STEPS ? '🚀 Hand Off to ER Doctor' : 'Continue ➡️';
-
-    bindStepEvents(currentStep);
   }
 
   function nextStep() {
@@ -476,88 +477,73 @@ P: Immediate ALS Ambulance Dispatch & Cath Lab Pre-Arrival Handoff.
     }
   }
 
-  function bindStepEvents(step) {
-    if (step === 1) {
-      document.querySelectorAll('.lang-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-          const lang = card.dataset.lang;
-          intakeData.language = lang;
-          if (window.MediRoute.components?.showToast) {
-            window.MediRoute.components.showToast(`🌐 Language set to ${lang}! Advancing...`);
-          }
-          setTimeout(nextStep, 300);
-        });
-      });
-    } else if (step === 2) {
-      const agreeCard = document.getElementById('agree-consent-card');
-      if (agreeCard) {
-        agreeCard.addEventListener('click', () => {
-          intakeData.consent = true;
-          if (window.MediRoute.components?.showToast) {
-            window.MediRoute.components.showToast('✓ Privacy Consent Granted!');
-          }
-          setTimeout(nextStep, 300);
-        });
-      }
-    } else if (step === 3) {
-      const btnDemo = document.getElementById('btn-demo-abha');
-      if (btnDemo) {
-        btnDemo.addEventListener('click', () => {
-          intakeData.name = 'Rahul Sharma';
-          intakeData.age = '45';
-          intakeData.abha = '14-8921-3049-1234';
-          if (window.MediRoute.components?.showToast) {
-            window.MediRoute.components.showToast('⚡ ABHA Health Records Fetched!');
-          }
-          setTimeout(nextStep, 300);
-        });
-      }
-    } else if (step === 4) {
-      document.querySelectorAll('.body-part-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const part = btn.dataset.part;
-          intakeData.bodyPart = part;
-          if (window.MediRoute.components?.showToast) {
-            window.MediRoute.components.showToast(`🫀 Selected ${part} Region! Advancing...`);
-          }
-          setTimeout(nextStep, 300);
-        });
-      });
-    } else if (step === 5) {
-      document.querySelectorAll('.tree-option').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const val = btn.dataset.val;
-          if (!intakeData.answers.includes(val)) intakeData.answers.push(val);
-          intakeData.symptoms += ', ' + val;
-          if (window.MediRoute.components?.showToast) {
-            window.MediRoute.components.showToast(`Added: ${val}`);
-          }
-        });
-      });
-
-      const micBtn = document.getElementById('btn-mic');
-      if (micBtn) {
-        micBtn.addEventListener('click', () => {
-          if (window.MediRoute.components?.showToast) {
-            window.MediRoute.components.showToast('🎤 Voice Dictation Active...');
-          }
-          setTimeout(() => {
-            intakeData.symptoms += ", Cold Sweats & Dyspnea";
-            const input = document.getElementById('symptom-input');
-            if (input) input.value = intakeData.symptoms;
-          }, 1000);
-        });
-      }
-    } else if (step === 7) {
-      const scanner = document.getElementById('doc-scanner');
-      if (scanner) {
-        scanner.addEventListener('click', () => {
-          if (window.MediRoute.components?.showToast) {
-            window.MediRoute.components.showToast('📄 OCR Prescription Scanned!');
-          }
-        });
-      }
+  function prevStep() {
+    if (currentStep > 1) {
+      currentStep--;
+      updateStepUI();
     }
+  }
+
+  function selectLanguage(lang) {
+    intakeData.language = lang;
+    if (window.MediRoute.components?.showToast) {
+      window.MediRoute.components.showToast(`🌐 Language set to ${lang}! Advancing...`);
+    }
+    setTimeout(nextStep, 250);
+  }
+
+  function grantConsent() {
+    intakeData.consent = true;
+    if (window.MediRoute.components?.showToast) {
+      window.MediRoute.components.showToast('✓ Privacy Consent Granted!');
+    }
+    setTimeout(nextStep, 250);
+  }
+
+  function fetchABHA() {
+    intakeData.name = 'Rahul Sharma';
+    intakeData.age = '45';
+    intakeData.abha = '14-8921-3049-1234';
+    if (window.MediRoute.components?.showToast) {
+      window.MediRoute.components.showToast('⚡ ABHA Health Records Fetched!');
+    }
+    setTimeout(nextStep, 250);
+  }
+
+  function selectBodyPart(part) {
+    intakeData.bodyPart = part;
+    if (window.MediRoute.components?.showToast) {
+      window.MediRoute.components.showToast(`🫀 Selected ${part} Region! Advancing...`);
+    }
+    setTimeout(nextStep, 250);
+  }
+
+  function addSymptomChip(chip) {
+    if (!intakeData.answers.includes(chip)) intakeData.answers.push(chip);
+    intakeData.symptoms += ', ' + chip;
+    const input = document.getElementById('symptom-input');
+    if (input) input.value = intakeData.symptoms;
+    if (window.MediRoute.components?.showToast) {
+      window.MediRoute.components.showToast(`Added ${chip}`);
+    }
+  }
+
+  function recordVoice() {
+    if (window.MediRoute.components?.showToast) {
+      window.MediRoute.components.showToast('🎤 Voice Dictation Active...');
+    }
+    setTimeout(() => {
+      intakeData.symptoms += ", Cold Sweats & Dyspnea";
+      const input = document.getElementById('symptom-input');
+      if (input) input.value = intakeData.symptoms;
+    }, 1000);
+  }
+
+  function scanDoc() {
+    if (window.MediRoute.components?.showToast) {
+      window.MediRoute.components.showToast('📄 OCR Prescription Scanned!');
+    }
+    setTimeout(nextStep, 350);
   }
 
   function completeAndHandoff() {
@@ -591,23 +577,6 @@ P: Immediate ALS Ambulance Dispatch & Cath Lab Pre-Arrival Handoff.
 
   function mount(container) {
     container.innerHTML = render();
-
-    const btnNext = document.getElementById('btn-next');
-    if (btnNext) {
-      btnNext.addEventListener('click', nextStep);
-    }
-
-    const btnPrev = document.getElementById('btn-prev');
-    if (btnPrev) {
-      btnPrev.addEventListener('click', () => {
-        if (currentStep > 1) {
-          currentStep--;
-          updateStepUI();
-        }
-      });
-    }
-
-    bindStepEvents(currentStep);
   }
 
   function speakStepPrompt() {
@@ -637,6 +606,14 @@ P: Immediate ALS Ambulance Dispatch & Cath Lab Pre-Arrival Handoff.
     speakStepPrompt,
     gotoStep,
     nextStep,
+    prevStep,
+    selectLanguage,
+    grantConsent,
+    fetchABHA,
+    selectBodyPart,
+    addSymptomChip,
+    recordVoice,
+    scanDoc,
     completeAndHandoff
   };
 
