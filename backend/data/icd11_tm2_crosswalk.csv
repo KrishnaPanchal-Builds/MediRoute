@@ -1,0 +1,8 @@
+icd11_code,title,namaste_code,category
+MD80.0,Epigastric pain / burning,AYU-AML-002,Gastrointestinal
+CA22.0,Chest congestion / dyspnea,AYU-KPH-011,Respiratory
+BA80.0,Acute Myocardial Infarction,AYU-HRD-005,Cardiovascular
+8A00.0,Acute Ischemic Stroke,AYU-VTA-003,Neurological
+5A11.0,Type 2 Diabetes Mellitus,AYU-AML-002,Endocrine
+FA00.0,Osteoarthritis of knee,AYU-SND-010,Musculoskeletal
+1A00.0,Febrile illness,AYU-JVR-001,Infectious

@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  fastapi_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - REDIS_URL=redis://redis:6379/0
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - BHASHINI_API_KEY=${BHASHINI_API_KEY}
+    depends_on:
+      - redis
+      - postgres_audit
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --save "" --appendonly no
+    ports:
+      - "6379:6379"
+
+  postgres_audit:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: mediroute_audit
+      POSTGRES_USER: mediroute_admin
+      POSTGRES_PASSWORD: audit_secure_password_2026
+    ports:
+      - "5432:5432"
+    volumes:
+      - audit_data:/var/lib/postgresql/data
+
+volumes:
+  audit_data:

@@ -83,7 +83,7 @@
                 </div>
 
                 <!-- 1-Tap Quick Selection Chips -->
-                <div class="flex gap-0.5 flex-wrap align-center mt-0.5">
+                <div class="flex gap-1 flex-wrap align-center mt-1">
                   <span class="text-xs text-muted">Quick Options:</span>
                   <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Cardiac / Heart Attack')">❤️ Cardiac</button>
                   <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Stroke / Brain Hemorrhage')">🧠 Stroke</button>
@@ -139,15 +139,14 @@
                 <p class="text-xs text-muted mb-2">Select your role gateway to access your dedicated clinical or emergency workspace</p>
 
                 <!-- 3 Massive 3x Larger Circular Icon Hub Buttons -->
-                <div class="icon-portal-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; justify-items: center; align-items: center; padding: 2rem 0;">
+                <div class="icon-portal-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; justify-items: center; align-items: center; padding: 0rem 0;">
                   
                   <!-- Massive Circular Icon 1: Doctor -->
                   <a href="#doctor-triage" class="icon-hub-btn flex flex-col align-center" style="text-decoration: none;" title="👨‍⚕️ Doctor Portal Gateway — Physician Login & Clinical Workspace">
                     <div class="hub-circle" style="font-size: 5.5rem; width: 175px; height: 175px; border-radius: 50%; background: linear-gradient(135deg, rgba(108, 99, 255, 0.3), rgba(0, 212, 170, 0.15)); border: 4px solid var(--color-accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(108, 99, 255, 0.5); transition: all 0.35s ease;">
                       👨‍⚕️
                     </div>
-                    <strong class="hub-label font-bold mt-1" style="color: var(--color-accent); font-size: 1.35rem;">Doctor</strong>
-                    <span class="text-xs text-muted mt-0.5" style="font-size: 0.9rem;">Clinical Workspace</span>
+                    <strong class="hub-label font-bold mt-9" style="color: var(--color-accent); font-size: 1.35rem;">Doctor</strong>
                   </a>
 
                   <!-- Massive Circular Icon 2: Patient -->
@@ -155,8 +154,7 @@
                     <div class="hub-circle" style="font-size: 5.5rem; width: 175px; height: 175px; border-radius: 50%; background: linear-gradient(135deg, rgba(0, 212, 170, 0.3), rgba(108, 99, 255, 0.15)); border: 4px solid var(--color-primary); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(0, 212, 170, 0.5); transition: all 0.35s ease;">
                       🧑‍🦽
                     </div>
-                    <strong class="hub-label font-bold mt-1" style="color: var(--color-primary); font-size: 1.35rem;">Patient</strong>
-                    <span class="text-xs text-muted mt-0.5" style="font-size: 0.9rem;">Patient Services</span>
+                    <strong class="hub-label font-bold mt-9" style="color: var(--color-primary); font-size: 1.35rem;">Patient</strong>
                   </a>
 
                   <!-- Massive Circular Icon 3: Admin -->
@@ -164,8 +162,7 @@
                     <div class="hub-circle" style="font-size: 5.5rem; width: 175px; height: 175px; border-radius: 50%; background: linear-gradient(135deg, rgba(255, 165, 2, 0.3), rgba(255, 71, 87, 0.15)); border: 4px solid var(--color-warning); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(255, 165, 2, 0.5); transition: all 0.35s ease;">
                       🛠️
                     </div>
-                    <strong class="hub-label font-bold mt-1" style="color: var(--color-warning); font-size: 1.35rem;">Admin</strong>
-                    <span class="text-xs text-muted mt-0.5" style="font-size: 0.9rem;">Hospital Admin</span>
+                    <strong class="hub-label font-bold mt-9" style="color: var(--color-warning); font-size: 1.35rem;">Admin</strong>
                   </a>
 
                 </div>

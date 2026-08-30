@@ -1,0 +1,9 @@
+code,term_en,term_hi,category,icd11_tm2_code
+AYU-AML-002,Amlapitta (Hyperacidity/Acid Peptic Disease),अम्लपित्त,Annavaha Srotas,TM2-AML
+AYU-PKT-001,Pitta Prakopa (Pitta Aggravation),पित्त प्रकोप,Dosha Imbalance,TM-PP-2A
+AYU-VTA-003,Vata Prakopa (Vata Aggravation),वात प्रकोप,Dosha Imbalance,TM-PP-2B
+AYU-KPH-011,Kapha Vriddhi (Kapha Worsening),कफ वृद्धि,Dosha Imbalance,TM-PP-2C
+AYU-HRD-005,Hridroga (Cardiac Symptoms/Chest Angina),हृद्रोग,Rasavaha Srotas,TM2-HRD
+AYU-APM-007,Apana Vayu Vaishamya (GI Discomfort/Distension),अपान वायु वैषम्य,Annavaha Srotas,TM2-APM
+AYU-SND-010,Sandhigata Vata (Osteoarthritis/Joint Stiffness),संधिगत वात,Asthivaha Srotas,TM2-SND
+AYU-JVR-001,Jwara (Fever / Febrile Syndrome),ज्वर,Raktavaha Srotas,TM2-JVR

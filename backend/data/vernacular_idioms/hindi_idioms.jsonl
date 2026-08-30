@@ -1,0 +1,6 @@
+{"phrase": "pitta bhadak gaya", "language": "hi", "mapped_namaste_code": "AYU-PKT-001", "mapped_icd11_code": "MD80.0", "dosha_indicators": ["pitta_aggravation", "burning_sensation"]}
+{"phrase": "pet me aag jaisi jalan", "language": "hi", "mapped_namaste_code": "AYU-AML-002", "mapped_icd11_code": "MD80.0", "dosha_indicators": ["hyperacidity", "pitta_aggravation"]}
+{"phrase": "chhati me thand baith gayi", "language": "hi", "mapped_namaste_code": "AYU-KPH-011", "mapped_icd11_code": "CA22.0", "dosha_indicators": ["kapha_worsening", "heaviness_post_meal"]}
+{"phrase": "vaat chadh gaya", "language": "hi", "mapped_namaste_code": "AYU-VTA-003", "mapped_icd11_code": "8A00.0", "dosha_indicators": ["vata_aggravation", "joint_stiffness"]}
+{"phrase": "naabhi khisak gayi", "language": "hi", "mapped_namaste_code": "AYU-APM-007", "mapped_icd11_code": "MD80.0", "dosha_indicators": ["constipation_hard", "vata_aggravation"]}
+{"phrase": "chhati me bhari dabaav", "language": "hi", "mapped_namaste_code": "AYU-HRD-005", "mapped_icd11_code": "BA80.0", "dosha_indicators": ["vata_aggravation", "pitta_aggravation"]}
