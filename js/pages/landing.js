@@ -80,81 +80,49 @@
               </div>
             </div>
 
-            <!-- Right Column: Clean 3-Portal Role Entry Gateway (Doctor, Patient, Admin) -->
-            <div class="home-right-col card card--glass p-1.5 flex flex-col justify-between">
+            <!-- Right Column: Clean 3 Circular Icon Portal Gateway Hub (Doctor, Patient, Admin) -->
+            <div class="home-right-col card card--glass p-1.5 flex flex-col justify-between align-center text-center">
               
-              <div>
-                <div class="flex-between align-center mb-1">
-                  <h3 class="m-0 text-gradient text-sm font-bold">🏥 Select Your Portal Gateway</h3>
-                  <span class="badge badge--success text-xs">Role-Based Access</span>
-                </div>
+              <div class="w-full">
+                <h3 class="hub-title text-center mb-1.5 text-gradient text-sm font-bold">⚡ Emergency Healthcare Portals</h3>
+                <p class="text-xs text-muted mb-2">Select your role to access your dedicated gateway</p>
 
-                <!-- 3 Master Role Portal Cards -->
-                <div class="flex flex-col gap-1 mb-1">
+                <!-- 3 Circular Icon Hub Buttons -->
+                <div class="icon-portal-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; justify-items: center; align-items: center; padding: 1rem 0;">
                   
-                  <!-- Portal 1: 👨‍⚕️ DOCTOR -->
-                  <div class="card card--glass p-1 cursor-pointer intake-choice-card" 
-                       onclick="window.location.hash='#doctor-triage'"
-                       style="border-left: 4px solid var(--color-primary); background: linear-gradient(135deg, rgba(0, 212, 170, 0.08), rgba(108, 99, 255, 0.05));">
-                    <div class="flex-between align-center mb-0.5">
-                      <div class="flex align-center gap-0.5">
-                        <span class="text-xl">👨‍⚕️</span>
-                        <div>
-                          <strong class="text-xs text-primary block font-bold">DOCTOR PORTAL</strong>
-                          <span class="text-xs text-muted">Physician Login / Registration</span>
-                        </div>
-                      </div>
-                      <span class="badge badge--primary text-xs">Enter Portal ➡️</span>
+                  <!-- Circular Icon 1: Doctor -->
+                  <a href="#doctor-triage" class="icon-hub-btn btn-glow-purple flex flex-col align-center" style="text-decoration: none;" title="👨‍⚕️ Doctor Portal Gateway — Physician Login & Clinical Workspace">
+                    <div class="hub-circle" style="font-size: 2.5rem; width: 85px; height: 85px; border-radius: 50%; background: rgba(108, 99, 255, 0.15); border: 2px solid var(--color-accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 25px rgba(108, 99, 255, 0.35); transition: all 0.3s ease;">
+                      👨‍⚕️
                     </div>
-                    <p class="text-xs text-secondary m-0">
-                      Access Assigned ER Patients &bull; 30-Sec AI SBAR Summary &bull; Voice Transcript &bull; Document OCR
-                    </p>
-                  </div>
+                    <strong class="hub-label font-bold text-xs mt-1" style="color: var(--color-accent);">Doctor</strong>
+                    <span class="text-xs text-muted mt-0.5">Clinical Workspace</span>
+                  </a>
 
-                  <!-- Portal 2: 🧑‍🦽 PATIENT -->
-                  <div class="card card--glass p-1 cursor-pointer intake-choice-card" 
-                       onclick="window.location.hash='#intake'"
-                       style="border-left: 4px solid var(--color-accent); background: linear-gradient(135deg, rgba(108, 99, 255, 0.08), rgba(0, 212, 170, 0.05));">
-                    <div class="flex-between align-center mb-0.5">
-                      <div class="flex align-center gap-0.5">
-                        <span class="text-xl">🧑‍🦽</span>
-                        <div>
-                          <strong class="text-xs text-accent block font-bold">PATIENT PORTAL</strong>
-                          <span class="text-xs text-muted">Patient Login & Emergency Services</span>
-                        </div>
-                      </div>
-                      <span class="badge badge--info text-xs">Enter Portal ➡️</span>
+                  <!-- Circular Icon 2: Patient -->
+                  <a href="#intake" class="icon-hub-btn btn-glow-blue flex flex-col align-center" style="text-decoration: none;" title="🧑‍🦽 Patient Portal Gateway — Patient Services & AI Intake">
+                    <div class="hub-circle" style="font-size: 2.5rem; width: 85px; height: 85px; border-radius: 50%; background: rgba(0, 212, 170, 0.15); border: 2px solid var(--color-primary); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 25px rgba(0, 212, 170, 0.35); transition: all 0.3s ease;">
+                      🧑‍🦽
                     </div>
-                    <p class="text-xs text-secondary m-0">
-                      Emergency AI Intake &bull; Read-Only Bed Availability &bull; Ambulance Request &bull; ABHA Pass &bull; AYUSH
-                    </p>
-                  </div>
+                    <strong class="hub-label font-bold text-xs mt-1" style="color: var(--color-primary);">Patient</strong>
+                    <span class="text-xs text-muted mt-0.5">Patient Services</span>
+                  </a>
 
-                  <!-- Portal 3: 🛠️ ADMIN -->
-                  <div class="card card--glass p-1 cursor-pointer intake-choice-card" 
-                       onclick="window.location.hash='#dashboard'"
-                       style="border-left: 4px solid var(--color-warning); background: linear-gradient(135deg, rgba(255, 165, 2, 0.08), rgba(255, 71, 87, 0.05));">
-                    <div class="flex-between align-center mb-0.5">
-                      <div class="flex align-center gap-0.5">
-                        <span class="text-xl">🛠️</span>
-                        <div>
-                          <strong class="text-xs text-warning block font-bold">HOSPITAL ADMIN PORTAL</strong>
-                          <span class="text-xs text-muted">Hospital Management & Compounder Login</span>
-                        </div>
-                      </div>
-                      <span class="badge badge--warning text-xs">Enter Portal ➡️</span>
+                  <!-- Circular Icon 3: Admin -->
+                  <a href="#dashboard" class="icon-hub-btn btn-glow-warning flex flex-col align-center" style="text-decoration: none;" title="🛠️ Admin Portal Gateway — Hospital Management & Bed Intelligence">
+                    <div class="hub-circle" style="font-size: 2.5rem; width: 85px; height: 85px; border-radius: 50%; background: rgba(255, 165, 2, 0.15); border: 2px solid var(--color-warning); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 25px rgba(255, 165, 2, 0.35); transition: all 0.3s ease;">
+                      🛠️
                     </div>
-                    <p class="text-xs text-secondary m-0">
-                      Full Bed Intelligence CRUD Control &bull; ICU Capacity Management &bull; OSRM Ambulance Fleet Dispatch
-                    </p>
-                  </div>
+                    <strong class="hub-label font-bold text-xs mt-1" style="color: var(--color-warning);">Admin</strong>
+                    <span class="text-xs text-muted mt-0.5">Hospital Admin</span>
+                  </a>
 
                 </div>
               </div>
 
               <!-- Service Capabilities Matrix Footer -->
-              <div class="card p-0.5 text-xs text-center" style="background: var(--bg-secondary);">
-                <span class="text-muted">⚡ Powered by AI Multi-Scoring, Voice Intake, Document OCR & OSRM Dispatch</span>
+              <div class="card p-0.5 text-xs text-center w-full mt-2" style="background: var(--bg-secondary);">
+                <span class="text-muted">⚡ Services: AI Multi-Scoring &bull; Voice Intake &bull; Document OCR &bull; OSRM Dispatch</span>
               </div>
 
             </div>
