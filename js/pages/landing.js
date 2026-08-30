@@ -32,19 +32,67 @@
               </p>
 
               <!-- Live Emergency Bed Quick Search Bar -->
-              <div class="quick-search-bar card card--glass animate-slide-up flex flex-wrap gap-1 mb-1">
-                <input type="text" id="hero-location-input" class="form-control text-xs" placeholder="City / Locality (e.g. Delhi)" style="flex: 1; min-width: 150px;">
-                <select id="hero-emergency-type" class="form-control text-xs" style="flex: 1; min-width: 130px;">
-                  <option value="Cardiac">Cardiac</option>
-                  <option value="Trauma">Trauma</option>
-                  <option value="Burns">Burns</option>
-                  <option value="Stroke">Stroke</option>
-                  <option value="Pediatric">Pediatric</option>
-                  <option value="General">General</option>
-                </select>
-                <button class="btn btn--danger btn--glow btn--xs" onclick="window.MediRoute.pages.landing.findNearestBed()">
-                  ⚡ Find Bed Now
-                </button>
+              <div class="quick-search-bar card card--glass animate-slide-up p-1 mb-1" style="border-radius: var(--radius-xl); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); border: 1px solid rgba(0, 230, 184, 0.35);">
+                
+                <div class="flex-between align-center mb-0.5">
+                  <span class="text-xs text-primary font-bold">⚡ Emergency Bed & ICU Search</span>
+                  <span class="badge badge--success text-xs">Direct Typing & Auto-Suggestions Active</span>
+                </div>
+
+                <div class="flex flex-wrap gap-0.5 align-center mb-0.5">
+                  <!-- Input 1: Location with Autocomplete Datalist -->
+                  <div style="position: relative; flex: 1.2; min-width: 160px;">
+                    <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 0.9rem;">📍</span>
+                    <input type="text" id="hero-location-input" list="location-suggestions" class="form-input text-xs" 
+                           placeholder="Type City, Locality or Hospital (e.g. Saket, Delhi)" 
+                           style="padding-left: 32px; border-radius: var(--radius-md); background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text-primary); width: 100%;">
+                    <datalist id="location-suggestions">
+                      <option value="AIIMS Delhi (Ansari Nagar)"></option>
+                      <option value="Safdarjung Hospital Delhi"></option>
+                      <option value="Max Super Specialty Saket"></option>
+                      <option value="Fortis Hospital Vasant Kunj"></option>
+                      <option value="Apollo Hospitals Sarita Vihar"></option>
+                      <option value="Mumbai Central Emergency"></option>
+                      <option value="Bangalore Indiranagar"></option>
+                    </datalist>
+                  </div>
+
+                  <!-- Input 2: Specialty / Symptom with Direct Typing + Datalist -->
+                  <div style="position: relative; flex: 1; min-width: 160px;">
+                    <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 0.9rem;">🩺</span>
+                    <input type="text" id="hero-emergency-type" list="specialty-suggestions" class="form-input text-xs" 
+                           placeholder="Type Specialty or Symptom (e.g. Heart Attack)" 
+                           style="padding-left: 32px; border-radius: var(--radius-md); background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text-primary); width: 100%;">
+                    <datalist id="specialty-suggestions">
+                      <option value="Cardiac / Heart Attack"></option>
+                      <option value="Trauma / Fracture / Accident"></option>
+                      <option value="Stroke / Brain Hemorrhage"></option>
+                      <option value="Respiratory / Severe Dyspnea"></option>
+                      <option value="Pediatric / Child ICU"></option>
+                      <option value="Burns & Plastic Surgery"></option>
+                      <option value="Maternity / High-Risk Delivery"></option>
+                      <option value="Poisoning / Toxicology"></option>
+                      <option value="General ICU & Ventilator"></option>
+                    </datalist>
+                  </div>
+
+                  <!-- Search Action Button -->
+                  <button class="btn btn--danger btn--glow btn--sm" onclick="window.MediRoute.pages.landing.findNearestBed()" style="padding: 0.5rem 1.25rem; font-weight: bold; border-radius: var(--radius-md);">
+                    ⚡ Find Bed Now
+                  </button>
+                </div>
+
+                <!-- 1-Tap Quick Selection Chips -->
+                <div class="flex gap-0.5 flex-wrap align-center mt-0.5">
+                  <span class="text-xs text-muted">Quick Options:</span>
+                  <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Cardiac / Heart Attack')">❤️ Cardiac</button>
+                  <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Stroke / Brain Hemorrhage')">🧠 Stroke</button>
+                  <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Trauma / Fracture / Accident')">🦴 Trauma</button>
+                  <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Respiratory / Severe Dyspnea')">🫁 Oxygen / ICU</button>
+                  <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Pediatric / Child ICU')">👶 Pediatric</button>
+                  <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Burns & Plastic Surgery')">🔥 Burns</button>
+                </div>
+
               </div>
 
               <!-- Live Platform Metrics Row -->
@@ -141,6 +189,14 @@
       `;
     },
     
+    quickSelect(val) {
+      const typeInput = document.getElementById('hero-emergency-type');
+      if (typeInput) {
+        typeInput.value = val;
+      }
+      this.findNearestBed();
+    },
+
     findNearestBed() {
       const loc = document.getElementById('hero-location-input')?.value || '';
       const type = document.getElementById('hero-emergency-type')?.value || '';
