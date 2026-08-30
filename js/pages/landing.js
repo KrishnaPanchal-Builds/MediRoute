@@ -1,3 +1,7 @@
+/* ============================================
+   MEDIROUTE — 3-Portal Entry Point Homepage
+   Roles: 👨‍⚕️ Doctor Gateway | 🧑‍🦽 Patient Gateway | 🛠️ Admin Gateway
+   ============================================ */
 (function() {
   window.MediRoute = window.MediRoute || {};
   window.MediRoute.pages = window.MediRoute.pages || {};
@@ -10,27 +14,27 @@
           <!-- Live Emergency Alert Ticker -->
           <div class="alert-ticker">
             <div class="alert-ticker__content">
-              🚨 LIVE UPDATE: Apollo Hospital Delhi added 5 ICU Beds &bull; 🚑 AMB-104 dispatched to Saket &bull; 🟢 48 Emergency Centers active across Delhi, Mumbai, Bangalore &bull; 🚨 LIVE UPDATE: Apollo Hospital Delhi added 5 ICU Beds
+              🚨 LIVE UPDATE: AIIMS Delhi ICU Bed Availability Updated &bull; 🚑 AMB-104 Dispatched to Saket &bull; 🟢 48 Emergency Centers Synchronized across ABDM Network &bull; 🚨 LIVE UPDATE: AIIMS Delhi ICU Bed Availability Updated
             </div>
           </div>
 
-          <!-- Single Screen Widescreen Split Layout (Left: Hero Text & Search | Right: Icon Portal Hub) -->
+          <!-- Widescreen 2-Column Split Layout -->
           <div class="home-split-grid container">
             
-            <!-- Left Column: Headline & Bed Search Bar -->
+            <!-- Left Column: Platform Headline & Quick Bed Finder -->
             <div class="home-left-col">
               <h1 class="hero-title animate-slide-up">
                 AI-POWERED EMERGENCY<br><span class="text-gradient">HEALTHCARE PLATFORM</span>
               </h1>
               
               <p class="hero-subtitle animate-slide-up">
-                Minimizing the critical delay between a medical emergency and hospital admission with real-time bed tracking, voice AI intake, and OSRM road navigation.
+                Minimizing the critical delay between a medical emergency and hospital admission with role-based clinical workspaces, real-time bed tracking, and OSRM navigation.
               </p>
 
               <!-- Live Emergency Bed Quick Search Bar -->
-              <div class="quick-search-bar card card--glass animate-slide-up flex flex-wrap gap-1">
-                <input type="text" id="hero-location-input" class="form-control" placeholder="City / Locality (e.g. Delhi)" style="flex: 1; min-width: 160px;">
-                <select id="hero-emergency-type" class="form-control" style="flex: 1; min-width: 140px;">
+              <div class="quick-search-bar card card--glass animate-slide-up flex flex-wrap gap-1 mb-1">
+                <input type="text" id="hero-location-input" class="form-control text-xs" placeholder="City / Locality (e.g. Delhi)" style="flex: 1; min-width: 150px;">
+                <select id="hero-emergency-type" class="form-control text-xs" style="flex: 1; min-width: 130px;">
                   <option value="Cardiac">Cardiac</option>
                   <option value="Trauma">Trauma</option>
                   <option value="Burns">Burns</option>
@@ -38,12 +42,12 @@
                   <option value="Pediatric">Pediatric</option>
                   <option value="General">General</option>
                 </select>
-                <button class="btn btn--danger btn--glow" onclick="window.MediRoute.pages.landing.findNearestBed()">
+                <button class="btn btn--danger btn--glow btn--xs" onclick="window.MediRoute.pages.landing.findNearestBed()">
                   ⚡ Find Bed Now
                 </button>
               </div>
 
-              <!-- Compact Live Stats Row -->
+              <!-- Live Platform Metrics Row -->
               <div class="compact-stats-row flex gap-2">
                 <div class="compact-stat-item">
                   <span class="stat-icon">🏥</span>
@@ -76,55 +80,85 @@
               </div>
             </div>
 
-            <!-- Right Column: Compact Circular Icon Portals Hub -->
-            <div class="home-right-col card card--glass">
-              <h3 class="hub-title text-center mb-2">⚡ Emergency Portals & Modules</h3>
+            <!-- Right Column: Clean 3-Portal Role Entry Gateway (Doctor, Patient, Admin) -->
+            <div class="home-right-col card card--glass p-1.5 flex flex-col justify-between">
               
-              <div class="icon-portal-grid">
-                <a href="#emergency" class="icon-hub-btn btn-glow-red" title="🚨 Emergency Hospital Finder — Instant AI scoring, OSRM routes, GPS">
-                  <div class="hub-circle">🚨</div>
-                  <span class="hub-label">Emergency</span>
-                </a>
-                <a href="#intake" class="icon-hub-btn btn-glow-blue" title="🤖 AI Clinical Intake — Voice & Touch Multilingual Triage, Body Map, QR">
-                  <div class="hub-circle">🤖</div>
-                  <span class="hub-label">AI Intake</span>
-                </a>
-                <a href="#doctor-triage" class="icon-hub-btn btn-glow-purple" title="👨‍⚕️ Doctor 30-Sec Review Portal — Live Triage Queue, Document OCR">
-                  <div class="hub-circle">👨‍⚕️</div>
-                  <span class="hub-label">Doctor Review</span>
-                </a>
-                <a href="#dashboard" class="icon-hub-btn btn-glow-green" title="🏥 Hospital Admin Dashboard — Live Bed Management & Registration">
-                  <div class="hub-circle">🏥</div>
-                  <span class="hub-label">Bed Dashboard</span>
-                </a>
-                <a href="#ambulance" class="icon-hub-btn btn-glow-warning" title="🚑 Ambulance Tracker & Dispatch — OSRM GPS Navigation">
-                  <div class="hub-circle">🚑</div>
-                  <span class="hub-label">Ambulances</span>
-                </a>
-                <a href="#patient" class="icon-hub-btn btn-glow-info" title="👤 Patient Portal & ABDM Health Pass QR">
-                  <div class="hub-circle">👤</div>
-                  <span class="hub-label">Patient Pass</span>
-                </a>
-                <a href="#ayush" class="icon-hub-btn btn-glow-ayush" title="🌿 AYUSH Traditional Medicine Mode">
-                  <div class="hub-circle">🌿</div>
-                  <span class="hub-label">AYUSH</span>
-                </a>
-                <a href="#admin" class="icon-hub-btn btn-glow-admin" title="⚙️ System Admin & Platform Analytics">
-                  <div class="hub-circle">⚙️</div>
-                  <span class="hub-label">Admin</span>
-                </a>
+              <div>
+                <div class="flex-between align-center mb-1">
+                  <h3 class="m-0 text-gradient text-sm font-bold">🏥 Select Your Portal Gateway</h3>
+                  <span class="badge badge--success text-xs">Role-Based Access</span>
+                </div>
+
+                <!-- 3 Master Role Portal Cards -->
+                <div class="flex flex-col gap-1 mb-1">
+                  
+                  <!-- Portal 1: 👨‍⚕️ DOCTOR -->
+                  <div class="card card--glass p-1 cursor-pointer intake-choice-card" 
+                       onclick="window.location.hash='#doctor-triage'"
+                       style="border-left: 4px solid var(--color-primary); background: linear-gradient(135deg, rgba(0, 212, 170, 0.08), rgba(108, 99, 255, 0.05));">
+                    <div class="flex-between align-center mb-0.5">
+                      <div class="flex align-center gap-0.5">
+                        <span class="text-xl">👨‍⚕️</span>
+                        <div>
+                          <strong class="text-xs text-primary block font-bold">DOCTOR PORTAL</strong>
+                          <span class="text-xs text-muted">Physician Login / Registration</span>
+                        </div>
+                      </div>
+                      <span class="badge badge--primary text-xs">Enter Portal ➡️</span>
+                    </div>
+                    <p class="text-xs text-secondary m-0">
+                      Access Assigned ER Patients &bull; 30-Sec AI SBAR Summary &bull; Voice Transcript &bull; Document OCR
+                    </p>
+                  </div>
+
+                  <!-- Portal 2: 🧑‍🦽 PATIENT -->
+                  <div class="card card--glass p-1 cursor-pointer intake-choice-card" 
+                       onclick="window.location.hash='#intake'"
+                       style="border-left: 4px solid var(--color-accent); background: linear-gradient(135deg, rgba(108, 99, 255, 0.08), rgba(0, 212, 170, 0.05));">
+                    <div class="flex-between align-center mb-0.5">
+                      <div class="flex align-center gap-0.5">
+                        <span class="text-xl">🧑‍🦽</span>
+                        <div>
+                          <strong class="text-xs text-accent block font-bold">PATIENT PORTAL</strong>
+                          <span class="text-xs text-muted">Patient Login & Emergency Services</span>
+                        </div>
+                      </div>
+                      <span class="badge badge--info text-xs">Enter Portal ➡️</span>
+                    </div>
+                    <p class="text-xs text-secondary m-0">
+                      Emergency AI Intake &bull; Read-Only Bed Availability &bull; Ambulance Request &bull; ABHA Pass &bull; AYUSH
+                    </p>
+                  </div>
+
+                  <!-- Portal 3: 🛠️ ADMIN -->
+                  <div class="card card--glass p-1 cursor-pointer intake-choice-card" 
+                       onclick="window.location.hash='#dashboard'"
+                       style="border-left: 4px solid var(--color-warning); background: linear-gradient(135deg, rgba(255, 165, 2, 0.08), rgba(255, 71, 87, 0.05));">
+                    <div class="flex-between align-center mb-0.5">
+                      <div class="flex align-center gap-0.5">
+                        <span class="text-xl">🛠️</span>
+                        <div>
+                          <strong class="text-xs text-warning block font-bold">HOSPITAL ADMIN PORTAL</strong>
+                          <span class="text-xs text-muted">Hospital Management & Compounder Login</span>
+                        </div>
+                      </div>
+                      <span class="badge badge--warning text-xs">Enter Portal ➡️</span>
+                    </div>
+                    <p class="text-xs text-secondary m-0">
+                      Full Bed Intelligence CRUD Control &bull; ICU Capacity Management &bull; OSRM Ambulance Fleet Dispatch
+                    </p>
+                  </div>
+
+                </div>
               </div>
 
-              <!-- Compact Capabilities Bar -->
-              <div class="capability-tags-row flex flex-center gap-1 flex-wrap mt-2">
-                <span class="cap-tag" title="Real-Time ICU Bed Intelligence">🛏️ Bed Intelligence</span>
-                <span class="cap-tag" title="AI Multi-Parameter Scoring">🧠 AI Multi-Scoring</span>
-                <span class="cap-tag" title="Voice-Guided Intake">🎤 Voice Intake</span>
-                <span class="cap-tag" title="Document OCR Traceability">📄 Document OCR</span>
-                <span class="cap-tag" title="Instant Ambulance GPS Dispatch">🚑 OSRM Dispatch</span>
-                <span class="cap-tag" title="ABDM Health Pass QR">📱 ABDM Pass</span>
+              <!-- Service Capabilities Matrix Footer -->
+              <div class="card p-0.5 text-xs text-center" style="background: var(--bg-secondary);">
+                <span class="text-muted">⚡ Powered by AI Multi-Scoring, Voice Intake, Document OCR & OSRM Dispatch</span>
               </div>
+
             </div>
+
           </div>
         </div>
       `;
@@ -137,21 +171,12 @@
       sessionStorage.setItem('search_location', loc);
       sessionStorage.setItem('search_type', type);
       
-      if (window.MediRoute.app && window.MediRoute.app.navigateTo) {
-        window.MediRoute.app.navigateTo('emergency');
-      } else {
-        window.location.hash = '#emergency';
-      }
+      window.location.hash = '#emergency';
     },
 
     mount() {
       if (window.MediRoute && window.MediRoute.components) {
-        const stats = {
-          hospitals: 48,
-          beds: 1250,
-          lives: 15400,
-          response: 7.5
-        };
+        const stats = { hospitals: 48, beds: 1250, lives: 15400, response: 7.5 };
         
         const hospitalsEl = document.getElementById('stat-hospitals');
         const bedsEl = document.getElementById('stat-beds');

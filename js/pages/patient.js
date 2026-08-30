@@ -76,6 +76,7 @@
               <!-- Tabs Header -->
               <div class="tabs mb-2" style="display:flex;gap:0;border-bottom:2px solid var(--glass-border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
                 <button class="tab-btn active" data-tab="overview" style="background:none;border:none;font-weight:600;cursor:pointer;padding:0.75rem 1.25rem;color:var(--text-primary);border-bottom:3px solid var(--color-primary);transition:all 0.2s ease;white-space:nowrap;font-size:0.9rem;">Overview</button>
+                <button class="tab-btn" data-tab="beds" style="background:none;border:none;font-weight:600;cursor:pointer;padding:0.75rem 1.25rem;color:var(--text-muted);border-bottom:3px solid transparent;transition:all 0.2s ease;white-space:nowrap;font-size:0.9rem;">🛏️ Bed Availability (Read-Only)</button>
                 <button class="tab-btn" data-tab="history" style="background:none;border:none;font-weight:600;cursor:pointer;padding:0.75rem 1.25rem;color:var(--text-muted);border-bottom:3px solid transparent;transition:all 0.2s ease;white-space:nowrap;font-size:0.9rem;">Medical History</button>
                 <button class="tab-btn" data-tab="insurance" style="background:none;border:none;font-weight:600;cursor:pointer;padding:0.75rem 1.25rem;color:var(--text-muted);border-bottom:3px solid transparent;transition:all 0.2s ease;white-space:nowrap;font-size:0.9rem;">Insurance</button>
                 <button class="tab-btn" data-tab="prescriptions" style="background:none;border:none;font-weight:600;cursor:pointer;padding:0.75rem 1.25rem;color:var(--text-muted);border-bottom:3px solid transparent;transition:all 0.2s ease;white-space:nowrap;font-size:0.9rem;">Prescriptions</button>
@@ -90,6 +91,60 @@
                   <div class="alert alert--danger mb-2" style="background-color: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger); padding: 1rem; border-radius: 0.25rem;">
                     <strong>⚠️ Allergies:</strong> ${patient.allergies ? patient.allergies.join(', ') : 'Penicillin, Sulfa drugs'}
                   </div>
+
+                <!-- Read-Only Beds Tab -->
+                <div class="tab-pane" id="tab-beds" style="display:none;" data-animate="fade-in">
+                  <div class="card card--glass p-1.5 mb-2">
+                    <div class="flex-between align-center mb-1">
+                      <h3 class="m-0 text-gradient text-xs font-bold">🛏️ Hospital Bed Availability (Patient View)</h3>
+                      <span class="badge badge--info text-xs">👁️ Read-Only View</span>
+                    </div>
+                    <p class="text-xs text-muted mb-1">Real-time synchronized hospital bed inventory. Patients can view live availability but cannot modify figures.</p>
+
+                    <table class="w-full text-xs" style="border-collapse: collapse;">
+                      <thead>
+                        <tr style="border-bottom: 2px solid var(--glass-border); text-align: left;">
+                          <th class="p-0.5">Department</th>
+                          <th class="p-0.5 text-success">Available</th>
+                          <th class="p-0.5 text-warning">Occupied</th>
+                          <th class="p-0.5">Total Capacity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr style="border-bottom: 1px solid var(--glass-border);">
+                          <td class="p-0.5 font-bold">General Ward</td>
+                          <td class="p-0.5 text-success font-bold">24</td>
+                          <td class="p-0.5 text-warning">56</td>
+                          <td class="p-0.5">80</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--glass-border);">
+                          <td class="p-0.5 font-bold">ICU (Intensive Care Unit)</td>
+                          <td class="p-0.5 text-success font-bold">3</td>
+                          <td class="p-0.5 text-warning">17</td>
+                          <td class="p-0.5">20</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--glass-border);">
+                          <td class="p-0.5 font-bold">Emergency Emergency Bay</td>
+                          <td class="p-0.5 text-success font-bold">5</td>
+                          <td class="p-0.5 text-warning">5</td>
+                          <td class="p-0.5">10</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--glass-border);">
+                          <td class="p-0.5 font-bold">Pediatric Ward</td>
+                          <td class="p-0.5 text-success font-bold">7</td>
+                          <td class="p-0.5 text-warning">8</td>
+                          <td class="p-0.5">15</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--glass-border);">
+                          <td class="p-0.5 font-bold">Isolation Unit</td>
+                          <td class="p-0.5 text-success font-bold">2</td>
+                          <td class="p-0.5 text-warning">6</td>
+                          <td class="p-0.5">8</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
                   
                   <div class="grid grid--2 gap-2 mb-2">
                     <div class="card card--glass">
