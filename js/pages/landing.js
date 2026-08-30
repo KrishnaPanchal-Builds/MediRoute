@@ -138,34 +138,34 @@
                 </div>
                 <p class="text-xs text-muted mb-2">Select your role gateway to access your dedicated clinical or emergency workspace</p>
 
-                <!-- 3 Large Circular Icon Hub Buttons -->
-                <div class="icon-portal-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; justify-items: center; align-items: center; padding: 1.5rem 0;">
+                <!-- 3 Massive 3x Larger Circular Icon Hub Buttons -->
+                <div class="icon-portal-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; justify-items: center; align-items: center; padding: 2rem 0;">
                   
-                  <!-- Large Circular Icon 1: Doctor -->
+                  <!-- Massive Circular Icon 1: Doctor -->
                   <a href="#doctor-triage" class="icon-hub-btn flex flex-col align-center" style="text-decoration: none;" title="👨‍⚕️ Doctor Portal Gateway — Physician Login & Clinical Workspace">
-                    <div class="hub-circle" style="font-size: 3.5rem; width: 110px; height: 110px; border-radius: 50%; background: linear-gradient(135deg, rgba(108, 99, 255, 0.25), rgba(0, 212, 170, 0.1)); border: 3px solid var(--color-accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 35px rgba(108, 99, 255, 0.4); transition: all 0.35s ease;">
+                    <div class="hub-circle" style="font-size: 5.5rem; width: 175px; height: 175px; border-radius: 50%; background: linear-gradient(135deg, rgba(108, 99, 255, 0.3), rgba(0, 212, 170, 0.15)); border: 4px solid var(--color-accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(108, 99, 255, 0.5); transition: all 0.35s ease;">
                       👨‍⚕️
                     </div>
-                    <strong class="hub-label font-bold text-sm mt-1" style="color: var(--color-accent); font-size: 1.1rem;">Doctor</strong>
-                    <span class="text-xs text-muted mt-0.5">Clinical Workspace</span>
+                    <strong class="hub-label font-bold mt-1" style="color: var(--color-accent); font-size: 1.35rem;">Doctor</strong>
+                    <span class="text-xs text-muted mt-0.5" style="font-size: 0.9rem;">Clinical Workspace</span>
                   </a>
 
-                  <!-- Large Circular Icon 2: Patient -->
+                  <!-- Massive Circular Icon 2: Patient -->
                   <a href="#intake" class="icon-hub-btn flex flex-col align-center" style="text-decoration: none;" title="🧑‍🦽 Patient Portal Gateway — Patient Services & AI Intake">
-                    <div class="hub-circle" style="font-size: 3.5rem; width: 110px; height: 110px; border-radius: 50%; background: linear-gradient(135deg, rgba(0, 212, 170, 0.25), rgba(108, 99, 255, 0.1)); border: 3px solid var(--color-primary); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 35px rgba(0, 212, 170, 0.4); transition: all 0.35s ease;">
+                    <div class="hub-circle" style="font-size: 5.5rem; width: 175px; height: 175px; border-radius: 50%; background: linear-gradient(135deg, rgba(0, 212, 170, 0.3), rgba(108, 99, 255, 0.15)); border: 4px solid var(--color-primary); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(0, 212, 170, 0.5); transition: all 0.35s ease;">
                       🧑‍🦽
                     </div>
-                    <strong class="hub-label font-bold text-sm mt-1" style="color: var(--color-primary); font-size: 1.1rem;">Patient</strong>
-                    <span class="text-xs text-muted mt-0.5">Patient Services</span>
+                    <strong class="hub-label font-bold mt-1" style="color: var(--color-primary); font-size: 1.35rem;">Patient</strong>
+                    <span class="text-xs text-muted mt-0.5" style="font-size: 0.9rem;">Patient Services</span>
                   </a>
 
-                  <!-- Large Circular Icon 3: Admin -->
+                  <!-- Massive Circular Icon 3: Admin -->
                   <a href="#dashboard" class="icon-hub-btn flex flex-col align-center" style="text-decoration: none;" title="🛠️ Admin Portal Gateway — Hospital Management & Bed Intelligence">
-                    <div class="hub-circle" style="font-size: 3.5rem; width: 110px; height: 110px; border-radius: 50%; background: linear-gradient(135deg, rgba(255, 165, 2, 0.25), rgba(255, 71, 87, 0.1)); border: 3px solid var(--color-warning); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 35px rgba(255, 165, 2, 0.4); transition: all 0.35s ease;">
+                    <div class="hub-circle" style="font-size: 5.5rem; width: 175px; height: 175px; border-radius: 50%; background: linear-gradient(135deg, rgba(255, 165, 2, 0.3), rgba(255, 71, 87, 0.15)); border: 4px solid var(--color-warning); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(255, 165, 2, 0.5); transition: all 0.35s ease;">
                       🛠️
                     </div>
-                    <strong class="hub-label font-bold text-sm mt-1" style="color: var(--color-warning); font-size: 1.1rem;">Admin</strong>
-                    <span class="text-xs text-muted mt-0.5">Hospital Admin</span>
+                    <strong class="hub-label font-bold mt-1" style="color: var(--color-warning); font-size: 1.35rem;">Admin</strong>
+                    <span class="text-xs text-muted mt-0.5" style="font-size: 0.9rem;">Hospital Admin</span>
                   </a>
 
                 </div>
