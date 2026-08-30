@@ -970,7 +970,8 @@
 }
 
 .icon-hub-btn:hover .hub-circle {
-  transform: scale(1.12) translateY(-4px) !important;
+  transform: scale(1.18) translateY(-6px) !important;
+  box-shadow: 0 15px 40px rgba(0, 230, 184, 0.5) !important;
 }
 
 .btn-glow-red:hover .hub-circle { border-color: #FF4757 !important; background: rgba(255, 71, 87, 0.2) !important; box-shadow: 0 0 22px rgba(255, 71, 87, 0.5) !important; }
