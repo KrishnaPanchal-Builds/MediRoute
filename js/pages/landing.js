@@ -10,13 +10,6 @@
     render() {
       return `
         <div mt=0, class="page page--landing animate-fade-in no-scroll-home">
-          
-          <!-- Live Emergency Alert Ticker -->
-          <div class="alert-ticker">
-            <div class="alert-ticker__content">
-              🚨 LIVE UPDATE: AIIMS Delhi ICU Bed Availability Updated &bull; 🚑 AMB-104 Dispatched to Saket &bull; 🟢 48 Emergency Centers Synchronized across ABDM Network &bull; 🚨 LIVE UPDATE: AIIMS Delhi ICU Bed Availability Updated
-            </div>
-          </div>
 
           <!-- Widescreen 2-Column Split Layout -->
           <div class="home-split-grid container">
