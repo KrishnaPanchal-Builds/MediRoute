@@ -9,43 +9,40 @@
   window.MediRoute.pages.landing = {
     render() {
       return `
-        <div class="page page--landing animate-fade-in no-scroll-home">
+        <div mt=0, class="page page--landing animate-fade-in no-scroll-home">
           
           <!-- Live Emergency Alert Ticker -->
           <div class="alert-ticker">
             <div class="alert-ticker__content">
               🚨 LIVE UPDATE: AIIMS Delhi ICU Bed Availability Updated &bull; 🚑 AMB-104 Dispatched to Saket &bull; 🟢 48 Emergency Centers Synchronized across ABDM Network &bull; 🚨 LIVE UPDATE: AIIMS Delhi ICU Bed Availability Updated
-            </div>
-          </div>
-
-          <!-- Widescreen 2-Column Split Layout -->
+           <!-- Widescreen 2-Column Split Layout -->
           <div class="home-split-grid container">
             
             <!-- Left Column: Platform Headline & Quick Bed Finder -->
             <div class="home-left-col">
-              <h1 class="hero-title animate-slide-up" style="font-size: 2.75rem; line-height: 1.15; margin-bottom: 0.75rem;">
+              <h1 class="hero-title animate-slide-up" style="font-size: 2.35rem; line-height: 1.15; margin-bottom: 0.35rem;">
                 AI-POWERED EMERGENCY<br><span class="text-gradient">HEALTHCARE PLATFORM</span>
               </h1>
               
-              <p class="hero-subtitle animate-slide-up" style="font-size: 1.05rem; margin-bottom: 1.25rem; max-width: 95%;">
+              <p class="hero-subtitle animate-slide-up" style="font-size: 0.95rem; margin-bottom: 0.65rem; max-width: 95%;">
                 Minimizing the critical delay between a medical emergency and hospital admission with role-based clinical workspaces, real-time bed tracking, and OSRM navigation.
               </p>
 
               <!-- Live Emergency Bed Quick Search Bar -->
-              <div class="quick-search-bar card card--glass animate-slide-up p-1.5 mb-1.5" style="border-radius: var(--radius-xl); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); border: 1px solid rgba(0, 230, 184, 0.35);">
+              <div class="quick-search-bar card card--glass animate-slide-up p-1 mb-0.5" style="border-radius: var(--radius-xl); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); border: 1px solid rgba(0, 230, 184, 0.35);">
                 
-                <div class="flex-between align-center mb-1">
+                <div class="flex-between align-center mb-0.5">
                   <span class="text-xs text-primary font-bold">⚡ Emergency Bed & ICU Search</span>
                   <span class="badge badge--success text-xs">Direct Typing & Auto-Suggestions Active</span>
                 </div>
 
-                <div class="flex flex-wrap gap-1 align-center mb-1">
+                <div class="flex flex-wrap gap-0.5 align-center mb-0.5">
                   <!-- Input 1: Location with Autocomplete Datalist -->
                   <div style="position: relative; flex: 1.2; min-width: 170px;">
                     <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.95rem;">📍</span>
                     <input type="text" id="hero-location-input" list="location-suggestions" class="form-input text-xs" 
                            placeholder="City, Locality or Hospital (e.g. Saket)" 
-                           style="padding-left: 36px; height: 42px; border-radius: var(--radius-md); background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text-primary); width: 100%;">
+                           style="padding-left: 36px; height: 38px; border-radius: var(--radius-md); background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text-primary); width: 100%;">
                     <datalist id="location-suggestions">
                       <option value="AIIMS Delhi (Ansari Nagar)"></option>
                       <option value="Safdarjung Hospital Delhi"></option>
@@ -62,7 +59,7 @@
                     <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.95rem;">🩺</span>
                     <input type="text" id="hero-emergency-type" list="specialty-suggestions" class="form-input text-xs" 
                            placeholder="Specialty or Symptom (e.g. Heart)" 
-                           style="padding-left: 36px; height: 42px; border-radius: var(--radius-md); background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text-primary); width: 100%;">
+                           style="padding-left: 36px; height: 38px; border-radius: var(--radius-md); background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text-primary); width: 100%;">
                     <datalist id="specialty-suggestions">
                       <option value="Cardiac / Heart Attack"></option>
                       <option value="Trauma / Fracture / Accident"></option>
@@ -77,13 +74,13 @@
                   </div>
 
                   <!-- Search Action Button -->
-                  <button class="btn btn--danger btn--glow btn--sm" onclick="window.MediRoute.pages.landing.findNearestBed()" style="height: 42px; padding: 0 1.25rem; font-weight: bold; border-radius: var(--radius-md);">
+                  <button class="btn btn--danger btn--glow btn--sm" onclick="window.MediRoute.pages.landing.findNearestBed()" style="height: 38px; padding: 0 1.15rem; font-weight: bold; border-radius: var(--radius-md);">
                     ⚡ Find Bed Now
                   </button>
                 </div>
 
                 <!-- 1-Tap Quick Selection Chips -->
-                <div class="flex gap-0.5 flex-wrap align-center mt-1 pt-0.5" style="border-top: 1px solid rgba(255,255,255,0.08);">
+                <div class="flex gap-0.5 flex-wrap align-center mt-0.5 pt-0.5" style="border-top: 1px solid rgba(255,255,255,0.08);">
                   <span class="text-xs text-muted" style="margin-right: 0.25rem;">Quick Options:</span>
                   <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Cardiac / Heart Attack')">❤️ Cardiac</button>
                   <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Stroke / Brain Hemorrhage')">🧠 Stroke</button>
@@ -132,11 +129,11 @@
             <div class="home-right-col card card--glass text-center">
               
               <div class="w-full">
-                <div class="flex-between align-center mb-1">
+                <div class="flex-between align-center mb-0.5">
                   <h3 class="hub-title m-0 text-gradient font-bold">⚡ Emergency Healthcare Portals</h3>
                   <span class="badge badge--success text-xs" style="animation: pulse 2s infinite;">Role-Based Access</span>
                 </div>
-                <p class="text-xs text-muted mb-2">Select your role gateway to access your dedicated clinical or emergency workspace</p>
+                <p class="text-xs text-muted mb-1">Select your role gateway to access your dedicated clinical workspace</p>
 
                 <!-- 3 Massive Circular Icon Hub Buttons -->
                 <div class="icon-portal-grid">
@@ -146,8 +143,8 @@
                     <div class="hub-circle">
                       👨‍⚕️
                     </div>
-                    <strong class="hub-label font-bold mt-1.5" style="color: var(--color-accent); font-size: 1.35rem;">Doctor</strong>
-                    <span class="text-xs text-muted mt-0.5">Clinical Workspace</span>
+                    <strong class="hub-label font-bold mt-1" style="color: var(--color-accent); font-size: 1.25rem;">Doctor</strong>
+                    <span class="text-xs text-muted mt-0.25">Clinical Workspace</span>
                   </a>
 
                   <!-- Massive Circular Icon 2: Patient -->
@@ -155,8 +152,8 @@
                     <div class="hub-circle">
                       🧑‍🦽
                     </div>
-                    <strong class="hub-label font-bold mt-1.5" style="color: var(--color-primary); font-size: 1.35rem;">Patient</strong>
-                    <span class="text-xs text-muted mt-0.5">Patient Services</span>
+                    <strong class="hub-label font-bold mt-1" style="color: var(--color-primary); font-size: 1.25rem;">Patient</strong>
+                    <span class="text-xs text-muted mt-0.25">Patient Services</span>
                   </a>
 
                   <!-- Massive Circular Icon 3: Admin -->
@@ -164,15 +161,15 @@
                     <div class="hub-circle">
                       🛠️
                     </div>
-                    <strong class="hub-label font-bold mt-1.5" style="color: var(--color-warning); font-size: 1.35rem;">Admin</strong>
-                    <span class="text-xs text-muted mt-0.5">Hospital Admin</span>
+                    <strong class="hub-label font-bold mt-1" style="color: var(--color-warning); font-size: 1.25rem;">Admin</strong>
+                    <span class="text-xs text-muted mt-0.25">Hospital Admin</span>
                   </a>
 
                 </div>
               </div>
 
               <!-- Service Capabilities Matrix Footer -->
-              <div class="card p-1 text-xs text-center w-full mt-2" style="background: rgba(255,255,255,0.03); border-color: var(--glass-border);">
+              <div class="card p-0.5 text-xs text-center w-full mt-1" style="background: rgba(255,255,255,0.03); border-color: var(--glass-border);">
                 <div class="flex-center gap-1 flex-wrap text-muted">
                   <span>🧠 AI Multi-Scoring</span> &bull;
                   <span>🎙️ Voice Intake</span> &bull;
