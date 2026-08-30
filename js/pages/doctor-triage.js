@@ -250,40 +250,54 @@
   }
 
   function handleSignIn() {
-    const docId = document.getElementById('signin-doc-id')?.value.trim() || 'MCI-89201-DEL';
-    const email = document.getElementById('signin-email')?.value.trim() || 'dr.sharma@aiims.edu';
+    const docId = document.getElementById('signin-doc-id')?.value.trim();
+    const email = document.getElementById('signin-email')?.value.trim();
     
+    if (!docId || !email) {
+      if (window.MediRoute.components?.showToast) {
+        window.MediRoute.components.showToast('Please enter your Doctor Registration ID and Email', 'warning');
+      }
+      return;
+    }
+
     currentUser = {
-      id: docId.toLowerCase().includes('trg') ? 'trg-501' : 'doc-101',
-      role: docId.toLowerCase().includes('trg') ? 'triage' : 'doctor',
-      name: docId.toLowerCase().includes('trg') ? 'Sister Priya Nair, RN' : 'Dr. Rahul Sharma, MD',
-      specialty: docId.toLowerCase().includes('trg') ? 'Emergency Triage Coordinator' : 'Interventional Cardiology',
-      hospital: 'AIIMS New Delhi',
-      avatar: docId.toLowerCase().includes('trg') ? '🚨' : '👨‍⚕️',
+      id: docId.toLowerCase(),
+      role: 'doctor',
+      name: docId.toUpperCase().startsWith('DR') ? docId : 'Dr. ' + docId.toUpperCase(),
+      specialty: 'Clinical Specialist',
+      hospital: 'Verified Emergency Center',
+      avatar: '👨‍⚕️',
       email: email,
       license: docId.toUpperCase()
     };
-    authRole = currentUser.role;
+    authRole = 'doctor';
     securityConsentAccepted = true;
 
     if (window.MediRoute.components?.showToast) {
-      window.MediRoute.components.showToast(`🔑 Welcome back ${currentUser.name}! Verified under license ${currentUser.license}.`, 'success');
+      window.MediRoute.components.showToast(`🔑 Verified Practitioner ${currentUser.license} signed in successfully!`, 'success');
     }
     updateUI();
   }
 
   function handleRegister() {
-    const name = document.getElementById('reg-name')?.value.trim() || 'Dr. Ananya Verma, MS';
-    const license = document.getElementById('reg-license')?.value.trim() || 'DEL-2026-8891';
-    const specialty = document.getElementById('reg-specialty')?.value || 'Emergency & Trauma Surgery';
-    const hospital = document.getElementById('reg-hospital')?.value.trim() || 'AIIMS New Delhi';
-    const email = document.getElementById('reg-email')?.value.trim() || 'dr.verma@aiims.edu';
+    const name = document.getElementById('reg-name')?.value.trim();
+    const license = document.getElementById('reg-license')?.value.trim();
+    const specialty = document.getElementById('reg-specialty')?.value;
+    const hospital = document.getElementById('reg-hospital')?.value.trim();
+    const email = document.getElementById('reg-email')?.value.trim();
+
+    if (!name || !license || !hospital || !email) {
+      if (window.MediRoute.components?.showToast) {
+        window.MediRoute.components.showToast('Please fill out all doctor registration fields', 'warning');
+      }
+      return;
+    }
 
     currentUser = {
-      id: 'doc-custom-' + Date.now(),
+      id: 'doc-' + Date.now(),
       role: 'doctor',
       name: name,
-      specialty: specialty,
+      specialty: specialty || 'Emergency Medicine',
       hospital: hospital,
       avatar: '👨‍⚕️',
       email: email,
@@ -293,17 +307,17 @@
     securityConsentAccepted = true;
 
     if (window.MediRoute.components?.showToast) {
-      window.MediRoute.components.showToast(`🎉 Registration Successful! Verified Doctor Profile ${currentUser.name} created.`, 'success');
+      window.MediRoute.components.showToast(`🎉 Welcome ${currentUser.name}! Doctor Account registered under ${currentUser.license}.`, 'success');
     }
     updateUI();
   }
 
   function quickLogin(roleId) {
     if (roleId === 'trg-501' || roleId === 'triage') {
-      currentUser = DEMO_USERS.triage;
+      currentUser = { id: 'trg-501', role: 'triage', name: 'Sister Priya Nair, RN', specialty: 'Emergency Triage Coordinator', hospital: 'AIIMS New Delhi', avatar: '🚨', email: 'priya@aiims.edu', license: 'INC-44102-DEL' };
       authRole = 'triage';
     } else {
-      currentUser = DEMO_USERS.doctor;
+      currentUser = { id: 'doc-101', role: 'doctor', name: 'Dr. Rahul Sharma, MD', specialty: 'Interventional Cardiology', hospital: 'AIIMS New Delhi', avatar: '👨‍⚕️', email: 'dr.sharma@aiims.edu', license: 'MCI-89201-DEL' };
       authRole = 'doctor';
     }
     securityConsentAccepted = true;
@@ -400,8 +414,8 @@
           <label class="text-xs text-primary font-bold block mb-0.25">Doctor ID / Medical Registration Number</label>
           <div style="position: relative;">
             <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.95rem;">🆔</span>
-            <input type="text" id="signin-doc-id" class="form-input text-xs" value="MCI-89201-DEL"
-                   placeholder="e.g. MCI-89201-DEL or DOC-101" required
+            <input type="text" id="signin-doc-id" class="form-input text-xs"
+                   placeholder="Enter your NMC / Medical License No. (e.g. MCI-89201-DEL)" required
                    style="padding-left: 36px; height: 40px; background: rgba(255,255,255,0.06); color: var(--text-primary); border-radius: var(--radius-md);">
           </div>
         </div>
@@ -410,8 +424,8 @@
           <label class="text-xs text-primary font-bold block mb-0.25">Email or Mobile Number</label>
           <div style="position: relative;">
             <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.95rem;">✉️</span>
-            <input type="text" id="signin-email" class="form-input text-xs" value="dr.sharma@aiims.edu"
-                   placeholder="e.g. dr.sharma@aiims.edu or +91 9876543210" required
+            <input type="text" id="signin-email" class="form-input text-xs"
+                   placeholder="Enter official email or mobile" required
                    style="padding-left: 36px; height: 40px; background: rgba(255,255,255,0.06); color: var(--text-primary); border-radius: var(--radius-md);">
           </div>
         </div>
@@ -419,12 +433,12 @@
         <div class="mb-1">
           <div class="flex-between align-center mb-0.25">
             <label class="text-xs text-primary font-bold">Security Password</label>
-            <a href="javascript:void(0)" onclick="alert('Password reset link sent to registered mobile/email via ABDM OTP Verification.')" class="text-xs text-accent">Forgot Password?</a>
+            <a href="javascript:void(0)" onclick="alert('Password reset link sent via ABDM OTP Verification.')" class="text-xs text-accent">Forgot Password?</a>
           </div>
           <div style="position: relative;">
             <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.95rem;">🔒</span>
-            <input type="password" id="signin-password" class="form-input text-xs" value="password123"
-                   placeholder="••••••••" required
+            <input type="password" id="signin-password" class="form-input text-xs"
+                   placeholder="Enter your security password" required
                    style="padding-left: 36px; height: 40px; background: rgba(255,255,255,0.06); color: var(--text-primary); border-radius: var(--radius-md);">
           </div>
         </div>
@@ -448,12 +462,12 @@
       <form onsubmit="event.preventDefault(); window.MediRoute.pages['doctor-triage'].handleRegister();" class="text-left">
         <div class="grid grid--2 gap-1 mb-1">
           <div>
-            <label class="text-xs text-primary font-bold block mb-0.25">Full Name & Qualification</label>
-            <input type="text" id="reg-name" class="form-input text-xs" placeholder="e.g. Dr. Ananya Verma, MS" value="Dr. Ananya Verma, MS" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+            <label class="text-xs text-primary font-bold block mb-0.25">Full Name & Degree</label>
+            <input type="text" id="reg-name" class="form-input text-xs" placeholder="e.g. Dr. Ananya Verma, MS" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
           </div>
           <div>
             <label class="text-xs text-primary font-bold block mb-0.25">Medical Council Reg. No.</label>
-            <input type="text" id="reg-license" class="form-input text-xs" placeholder="e.g. DEL-2026-8891" value="DEL-2026-8891" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+            <input type="text" id="reg-license" class="form-input text-xs" placeholder="e.g. DEL-2026-8891" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
           </div>
         </div>
 
@@ -461,8 +475,9 @@
           <div>
             <label class="text-xs text-primary font-bold block mb-0.25">Medical Specialty</label>
             <select id="reg-specialty" class="form-input text-xs" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+              <option value="" disabled selected>Select Medical Specialty</option>
               <option value="Interventional Cardiology">Interventional Cardiology</option>
-              <option value="Emergency & Trauma Surgery" selected>Emergency & Trauma Surgery</option>
+              <option value="Emergency & Trauma Surgery">Emergency & Trauma Surgery</option>
               <option value="Neurology / Stroke Care">Neurology / Stroke Care</option>
               <option value="Critical Care / ICU">Critical Care / ICU</option>
               <option value="Ayurvedic Medicine & Panchakarma">Ayurvedic Medicine & Panchakarma</option>
@@ -470,18 +485,18 @@
           </div>
           <div>
             <label class="text-xs text-primary font-bold block mb-0.25">Hospital Affiliation</label>
-            <input type="text" id="reg-hospital" class="form-input text-xs" placeholder="e.g. AIIMS New Delhi" value="AIIMS New Delhi" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+            <input type="text" id="reg-hospital" class="form-input text-xs" placeholder="e.g. AIIMS New Delhi" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
           </div>
         </div>
 
         <div class="grid grid--2 gap-1 mb-1">
           <div>
             <label class="text-xs text-primary font-bold block mb-0.25">Official Email</label>
-            <input type="email" id="reg-email" class="form-input text-xs" placeholder="e.g. dr.verma@aiims.edu" value="dr.verma@aiims.edu" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+            <input type="email" id="reg-email" class="form-input text-xs" placeholder="e.g. dr.verma@aiims.edu" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
           </div>
           <div>
             <label class="text-xs text-primary font-bold block mb-0.25">Security Password</label>
-            <input type="password" id="reg-password" class="form-input text-xs" placeholder="Create password" value="password123" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+            <input type="password" id="reg-password" class="form-input text-xs" placeholder="Create security password" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
           </div>
         </div>
 
