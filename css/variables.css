@@ -72,17 +72,17 @@
   --font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-display: 'Outfit', 'Inter', system-ui, sans-serif;
 
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
-  --text-5xl: 3rem;
+  --text-xs: 0.85rem;
+  --text-sm: 0.95rem;
+  --text-base: 1.05rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.45rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.15rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3.0rem;
   --text-6xl: 3.75rem;
-  --text-hero: clamp(2.5rem, 5vw, 4.5rem);
+  --text-hero: clamp(2.2rem, 4vw, 3.5rem);
 
   --weight-light: 300;
   --weight-normal: 400;
