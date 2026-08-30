@@ -9,7 +9,7 @@
   window.MediRoute.pages.landing = {
     render() {
       return `
-        <div mt=0, class="page page--landing animate-fade-in no-scroll-home">
+        <div mt=1, class="page page--landing animate-fade-in no-scroll-home">
 
           <!-- Widescreen 2-Column Split Layout -->
           <div class="home-split-grid container">
@@ -27,9 +27,8 @@
               <!-- Live Emergency Bed Quick Search Bar -->
               <div class="quick-search-bar card card--glass animate-slide-up p-1 mb-0.5" style="border-radius: var(--radius-xl); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); border: 1px solid rgba(0, 230, 184, 0.35);">
                 
-                <div class="flex-between align-center mb-0.5">
+                <div class="flex-between align-center mb-1">
                   <span class="text-xs text-primary font-bold">⚡ Emergency Bed & ICU Search</span>
-                  <span class="badge badge--success text-xs">Direct Typing & Auto-Suggestions Active</span>
                 </div>
 
                 <div class="flex flex-wrap gap-0.5 align-center mb-0.5">
@@ -76,8 +75,8 @@
                 </div>
 
                 <!-- 1-Tap Quick Selection Chips -->
-                <div class="flex gap-0.5 flex-wrap align-center mt-0.5 pt-0.5" style="border-top: 1px solid rgba(255,255,255,0.08);">
-                  <span class="text-xs text-muted" style="margin-right: 0.25rem;">Quick Options:</span>
+                <div class="flex gap-1 flex-wrap align-center mt-1 pt-1" style="border-top: 1px solid rgba(255,255,255,0.08);">
+                  <span class="text-xs text-muted" style="margin-right: 1rem;">Quick Options:</span>
                   <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Cardiac / Heart Attack')">❤️ Cardiac</button>
                   <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Stroke / Brain Hemorrhage')">🧠 Stroke</button>
                   <button class="btn btn--xs btn--ghost chip-btn" onclick="window.MediRoute.pages.landing.quickSelect('Trauma / Fracture / Accident')">🦴 Trauma</button>

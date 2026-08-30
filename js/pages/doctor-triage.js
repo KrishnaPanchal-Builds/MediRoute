@@ -242,9 +242,79 @@
   let selectedCaseId = 'MR-1047';
   let activeTab = 'summary'; // 'summary', 'history', 'docs', 'ayush', 'verification'
 
+  let activeAuthTab = 'signin'; // 'signin' or 'register'
+
+  function switchAuthTab(tab) {
+    activeAuthTab = tab;
+    updateUI();
+  }
+
+  function handleSignIn() {
+    const docId = document.getElementById('signin-doc-id')?.value.trim() || 'MCI-89201-DEL';
+    const email = document.getElementById('signin-email')?.value.trim() || 'dr.sharma@aiims.edu';
+    
+    currentUser = {
+      id: docId.toLowerCase().includes('trg') ? 'trg-501' : 'doc-101',
+      role: docId.toLowerCase().includes('trg') ? 'triage' : 'doctor',
+      name: docId.toLowerCase().includes('trg') ? 'Sister Priya Nair, RN' : 'Dr. Rahul Sharma, MD',
+      specialty: docId.toLowerCase().includes('trg') ? 'Emergency Triage Coordinator' : 'Interventional Cardiology',
+      hospital: 'AIIMS New Delhi',
+      avatar: docId.toLowerCase().includes('trg') ? '🚨' : '👨‍⚕️',
+      email: email,
+      license: docId.toUpperCase()
+    };
+    authRole = currentUser.role;
+    securityConsentAccepted = true;
+
+    if (window.MediRoute.components?.showToast) {
+      window.MediRoute.components.showToast(`🔑 Welcome back ${currentUser.name}! Verified under license ${currentUser.license}.`, 'success');
+    }
+    updateUI();
+  }
+
+  function handleRegister() {
+    const name = document.getElementById('reg-name')?.value.trim() || 'Dr. Ananya Verma, MS';
+    const license = document.getElementById('reg-license')?.value.trim() || 'DEL-2026-8891';
+    const specialty = document.getElementById('reg-specialty')?.value || 'Emergency & Trauma Surgery';
+    const hospital = document.getElementById('reg-hospital')?.value.trim() || 'AIIMS New Delhi';
+    const email = document.getElementById('reg-email')?.value.trim() || 'dr.verma@aiims.edu';
+
+    currentUser = {
+      id: 'doc-custom-' + Date.now(),
+      role: 'doctor',
+      name: name,
+      specialty: specialty,
+      hospital: hospital,
+      avatar: '👨‍⚕️',
+      email: email,
+      license: license.toUpperCase()
+    };
+    authRole = 'doctor';
+    securityConsentAccepted = true;
+
+    if (window.MediRoute.components?.showToast) {
+      window.MediRoute.components.showToast(`🎉 Registration Successful! Verified Doctor Profile ${currentUser.name} created.`, 'success');
+    }
+    updateUI();
+  }
+
+  function quickLogin(roleId) {
+    if (roleId === 'trg-501' || roleId === 'triage') {
+      currentUser = DEMO_USERS.triage;
+      authRole = 'triage';
+    } else {
+      currentUser = DEMO_USERS.doctor;
+      authRole = 'doctor';
+    }
+    securityConsentAccepted = true;
+    if (window.MediRoute.components?.showToast) {
+      window.MediRoute.components.showToast(`⚡ Authenticated as ${currentUser.name} (${currentUser.specialty})`, 'success');
+    }
+    updateUI();
+  }
+
   // ---- Main Page Renderer ----
   function render() {
-    // Check if security consent acknowledged
     if (!securityConsentAccepted || !authRole) {
       return renderAuthGateway();
     }
@@ -256,64 +326,169 @@
     }
   }
 
-  // ---- PART A: AUTHENTICATION & ROLE SELECTION GATEWAY ----
+  // ---- PART A: AUTHENTICATION & REGISTRATION GATEWAY ----
   function renderAuthGateway() {
     return `
-      <div class="page page--doctortriage animate-fade-in flex-center py-2" style="min-height: calc(100vh - 80px);">
-        <div class="card card--glass p-2 text-center" style="max-width: 580px; width: 100%; border-color: var(--color-primary); box-shadow: 0 12px 40px rgba(0,0,0,0.2);">
+      <div class="page page--doctortriage animate-fade-in flex-center py-1.5" style="min-height: calc(100vh - 80px);">
+        <div class="card card--glass p-2 text-center" style="max-width: 620px; width: 100%; border-color: var(--color-primary); box-shadow: 0 12px 40px rgba(0,0,0,0.35); border-radius: var(--radius-2xl);">
           
+          <!-- Header Badge Icon -->
           <div class="flex-center mb-1">
-            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 0 24px rgba(0, 212, 170, 0.4);">
-              🏥
+            <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); display: flex; align-items: center; justify-content: center; font-size: 2.4rem; box-shadow: 0 0 28px rgba(0, 230, 184, 0.45);">
+              👨‍⚕️
             </div>
           </div>
 
-          <h2 class="text-gradient text-md font-bold mb-0.5">MediRoute Clinical Command Workspace</h2>
-          <p class="text-xs text-muted mb-1.5">Secure, Role-Based & Auditable Access for Authorized Healthcare Professionals</p>
+          <h2 class="text-gradient text-xl font-bold mb-0.25">Doctor Portal Authentication</h2>
+          <p class="text-xs text-muted mb-1.5">National Medical Commission (NMC) & ABDM Verified Clinical Gateway</p>
 
-          <!-- 1-Tap Quick Demo Role Credentials -->
-          <strong class="text-xs text-primary block mb-0.5 text-left">Select Authorized Role Profile (1-Tap Login):</strong>
-          <div class="grid grid--2 gap-1 mb-1.5 text-left">
-            <div class="card card--glass p-1 cursor-pointer intake-choice-card" onclick="window.MediRoute.pages['doctor-triage'].selectDemoRole('doctor')">
-              <div class="flex align-center gap-0.5 mb-0.5">
-                <span class="text-lg">👨‍⚕️</span>
-                <div>
-                  <strong class="text-xs text-primary block">Dr. Rahul Sharma, MD</strong>
-                  <span class="text-xs text-muted">Physician / Cardiologist</span>
+          <!-- Interactive Toggle Tabs: Sign In vs Register -->
+          <div class="flex gap-0.5 mb-1.5 p-0.5" style="background: rgba(255,255,255,0.04); border-radius: var(--radius-lg); border: 1px solid var(--glass-border);">
+            <button class="btn btn--sm flex-1 ${activeAuthTab === 'signin' ? 'btn--primary' : 'btn--ghost'}" 
+                    onclick="window.MediRoute.pages['doctor-triage'].switchAuthTab('signin')">
+              🔑 Doctor Sign In
+            </button>
+            <button class="btn btn--sm flex-1 ${activeAuthTab === 'register' ? 'btn--primary' : 'btn--ghost'}" 
+                    onclick="window.MediRoute.pages['doctor-triage'].switchAuthTab('register')">
+              📝 Register Doctor Account
+            </button>
+          </div>
+
+          ${activeAuthTab === 'signin' ? renderSignInFormHTML() : renderRegisterFormHTML()}
+
+          <!-- 1-Tap Verified Quick Login Section -->
+          <div class="mt-1.5 pt-1.5 text-left" style="border-top: 1px solid rgba(255,255,255,0.08);">
+            <div class="flex-between align-center mb-0.5">
+              <strong class="text-xs text-primary">⚡ 1-Tap Verified Demo Login:</strong>
+              <span class="badge badge--success text-xs">Instantly Access Clinical Workspace</span>
+            </div>
+
+            <div class="grid grid--2 gap-1">
+              <div class="card card--glass p-1 cursor-pointer intake-choice-card" onclick="window.MediRoute.pages['doctor-triage'].quickLogin('doc-101')">
+                <div class="flex align-center gap-0.5 mb-0.5">
+                  <span class="text-lg">👨‍⚕️</span>
+                  <div>
+                    <strong class="text-xs text-primary block">Dr. Rahul Sharma, MD</strong>
+                    <span class="text-xs text-muted">Cardiology (MCI-89201-DEL)</span>
+                  </div>
                 </div>
+                <span class="badge badge--primary text-xs w-full text-center">Login as Dr. Sharma ➡️</span>
               </div>
-              <span class="badge badge--primary text-xs w-full text-center">Login as Doctor ➡️</span>
-            </div>
 
-            <div class="card card--glass p-1 cursor-pointer intake-choice-card" onclick="window.MediRoute.pages['doctor-triage'].selectDemoRole('triage')">
-              <div class="flex align-center gap-0.5 mb-0.5">
-                <span class="text-lg">🚨</span>
-                <div>
-                  <strong class="text-xs text-primary block">Sister Priya Nair, RN</strong>
-                  <span class="text-xs text-muted">Triage Coordinator</span>
+              <div class="card card--glass p-1 cursor-pointer intake-choice-card" onclick="window.MediRoute.pages['doctor-triage'].quickLogin('trg-501')">
+                <div class="flex align-center gap-0.5 mb-0.5">
+                  <span class="text-lg">🚨</span>
+                  <div>
+                    <strong class="text-xs text-primary block">Sister Priya Nair, RN</strong>
+                    <span class="text-xs text-muted">Triage RN (INC-44102-DEL)</span>
+                  </div>
                 </div>
+                <span class="badge badge--danger text-xs w-full text-center">Login as Triage RN ➡️</span>
               </div>
-              <span class="badge badge--danger text-xs w-full text-center">Login as Triage ➡️</span>
             </div>
           </div>
 
-          <!-- Security & Privacy Consent Acknowledgement -->
-          <div class="card p-1 text-left mb-1.5" style="background: var(--bg-secondary); border-color: var(--glass-border);">
-            <strong class="text-xs text-primary block mb-0.5">🔒 ABDM Security & Clinical Data Access Policy</strong>
-            <p class="text-xs text-muted m-0 mb-1">
-              You are accessing patient Protected Health Information (PHI). All activities, diagnostic lookups, and EMR modifications are logged and fully auditable under the ABDM Health Data Management Framework.
-            </p>
-            <label class="flex align-center gap-0.5 cursor-pointer">
-              <input type="checkbox" id="chk-security-consent" style="width: 16px; height: 16px;">
-              <strong class="text-xs text-success">I understand & acknowledge clinical audit logging</strong>
-            </label>
-          </div>
-
-          <button class="btn btn--primary btn--md btn--glow w-full" onclick="window.MediRoute.pages['doctor-triage'].proceedWithLogin()">
-            🔓 Sign In to Clinical Workspace
-          </button>
         </div>
       </div>
+    `;
+  }
+
+  function renderSignInFormHTML() {
+    return `
+      <form onsubmit="event.preventDefault(); window.MediRoute.pages['doctor-triage'].handleSignIn();" class="text-left">
+        <div class="mb-1">
+          <label class="text-xs text-primary font-bold block mb-0.25">Doctor ID / Medical Registration Number</label>
+          <div style="position: relative;">
+            <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.95rem;">🆔</span>
+            <input type="text" id="signin-doc-id" class="form-input text-xs" value="MCI-89201-DEL"
+                   placeholder="e.g. MCI-89201-DEL or DOC-101" required
+                   style="padding-left: 36px; height: 40px; background: rgba(255,255,255,0.06); color: var(--text-primary); border-radius: var(--radius-md);">
+          </div>
+        </div>
+
+        <div class="mb-1">
+          <label class="text-xs text-primary font-bold block mb-0.25">Email or Mobile Number</label>
+          <div style="position: relative;">
+            <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.95rem;">✉️</span>
+            <input type="text" id="signin-email" class="form-input text-xs" value="dr.sharma@aiims.edu"
+                   placeholder="e.g. dr.sharma@aiims.edu or +91 9876543210" required
+                   style="padding-left: 36px; height: 40px; background: rgba(255,255,255,0.06); color: var(--text-primary); border-radius: var(--radius-md);">
+          </div>
+        </div>
+
+        <div class="mb-1">
+          <div class="flex-between align-center mb-0.25">
+            <label class="text-xs text-primary font-bold">Security Password</label>
+            <a href="javascript:void(0)" onclick="alert('Password reset link sent to registered mobile/email via ABDM OTP Verification.')" class="text-xs text-accent">Forgot Password?</a>
+          </div>
+          <div style="position: relative;">
+            <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.95rem;">🔒</span>
+            <input type="password" id="signin-password" class="form-input text-xs" value="password123"
+                   placeholder="••••••••" required
+                   style="padding-left: 36px; height: 40px; background: rgba(255,255,255,0.06); color: var(--text-primary); border-radius: var(--radius-md);">
+          </div>
+        </div>
+
+        <div class="card p-0.75 text-left mb-1.5" style="background: var(--bg-secondary); border-color: var(--glass-border);">
+          <label class="flex align-center gap-0.5 cursor-pointer">
+            <input type="checkbox" id="chk-security-consent" checked style="width: 16px; height: 16px;">
+            <span class="text-xs text-muted">Acknowledge ABDM Security Policy & Clinical Audit Logging</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--md btn--glow w-full" style="height: 42px; font-weight: bold;">
+          🔓 Sign In & Launch Clinical Workspace
+        </button>
+      </form>
+    `;
+  }
+
+  function renderRegisterFormHTML() {
+    return `
+      <form onsubmit="event.preventDefault(); window.MediRoute.pages['doctor-triage'].handleRegister();" class="text-left">
+        <div class="grid grid--2 gap-1 mb-1">
+          <div>
+            <label class="text-xs text-primary font-bold block mb-0.25">Full Name & Qualification</label>
+            <input type="text" id="reg-name" class="form-input text-xs" placeholder="e.g. Dr. Ananya Verma, MS" value="Dr. Ananya Verma, MS" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+          </div>
+          <div>
+            <label class="text-xs text-primary font-bold block mb-0.25">Medical Council Reg. No.</label>
+            <input type="text" id="reg-license" class="form-input text-xs" placeholder="e.g. DEL-2026-8891" value="DEL-2026-8891" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+          </div>
+        </div>
+
+        <div class="grid grid--2 gap-1 mb-1">
+          <div>
+            <label class="text-xs text-primary font-bold block mb-0.25">Medical Specialty</label>
+            <select id="reg-specialty" class="form-input text-xs" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+              <option value="Interventional Cardiology">Interventional Cardiology</option>
+              <option value="Emergency & Trauma Surgery" selected>Emergency & Trauma Surgery</option>
+              <option value="Neurology / Stroke Care">Neurology / Stroke Care</option>
+              <option value="Critical Care / ICU">Critical Care / ICU</option>
+              <option value="Ayurvedic Medicine & Panchakarma">Ayurvedic Medicine & Panchakarma</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-primary font-bold block mb-0.25">Hospital Affiliation</label>
+            <input type="text" id="reg-hospital" class="form-input text-xs" placeholder="e.g. AIIMS New Delhi" value="AIIMS New Delhi" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+          </div>
+        </div>
+
+        <div class="grid grid--2 gap-1 mb-1">
+          <div>
+            <label class="text-xs text-primary font-bold block mb-0.25">Official Email</label>
+            <input type="email" id="reg-email" class="form-input text-xs" placeholder="e.g. dr.verma@aiims.edu" value="dr.verma@aiims.edu" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+          </div>
+          <div>
+            <label class="text-xs text-primary font-bold block mb-0.25">Security Password</label>
+            <input type="password" id="reg-password" class="form-input text-xs" placeholder="Create password" value="password123" required style="height: 38px; background: rgba(255,255,255,0.06); color: var(--text-primary);">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--success btn--glow w-full" style="height: 42px; font-weight: bold;">
+          📝 Register Doctor & Open Clinical Workspace
+        </button>
+      </form>
     `;
   }
 
@@ -829,6 +1004,10 @@
     render,
     mount,
     unmount: (c) => c.innerHTML = '',
+    switchAuthTab,
+    handleSignIn,
+    handleRegister,
+    quickLogin,
     selectDemoRole,
     proceedWithLogin,
     logout,
